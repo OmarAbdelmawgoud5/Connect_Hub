@@ -1,0 +1,52 @@
+[
+  {
+    "userName": "JohnDoe",
+    "email": "johndoe@example.com",
+    "dateOfBirth": "1990-01-01",
+    "profilePhoto": "D:\\Me\\vv.jpg",
+    "coverPhoto": "D:\\Me\\vv.jpg",
+    "password": "securePassword123",
+    "status": "active",
+    "id": "user123"
+  },
+  {
+    "userName": "JaneSmith",
+    "email": "janesmith@example.com",
+    "dateOfBirth": "1985-05-15",
+    "profilePhoto": "D:\\Me\\vv.jpg",
+    "coverPhoto": "D:\\Me\\vv.jpg",
+    "password": "anotherSecurePass",
+    "status": "inactive",
+    "id": "user124"
+  },
+  {
+    "userName": "AliceJohnson",
+    "email": "alicejohnson@example.com",
+    "dateOfBirth": "1992-07-08",
+    "profilePhoto": "D:\\Me\\vv.jpg",
+    "coverPhoto": "D:\\Me\\vv.jpg",
+    "password": "password1234",
+    "status": "active",
+    "id": "user125"
+  },
+  {
+    "userName": "BobBrown",
+    "email": "bobbrown@example.com",
+    "dateOfBirth": "1988-03-20",
+    "profilePhoto": "D:\\Me\\vv.jpg",
+    "coverPhoto": "D:\\Me\\vv.jpg",
+    "password": "secureBobPass",
+    "status": "active",
+    "id": "user126"
+  },
+  {
+    "userName": "CharlieDavis",
+    "email": "charliedavis@example.com",
+    "dateOfBirth": "1995-11-30",
+    "profilePhoto": "D:\\Me\\vv.jpg",
+    "coverPhoto": "D:\\Me\\vv.jpg",
+    "password": "charlie2023",
+    "status": "inactive",
+    "id": "user127"
+  }
+]
