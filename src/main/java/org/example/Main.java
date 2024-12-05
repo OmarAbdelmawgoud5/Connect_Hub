@@ -1,6 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.formdev.flatlaf.FlatLightLaf;
 import org.example.frontend.Profile;
 
 import java.io.File;
@@ -9,14 +10,17 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import  org.example.backend.*;
+
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) throws IOException {
-       /* FlatLightLaf.setup();
+       FlatLightLaf.setup();
         UIManager.put( "Button.arc", 15 );
 
-        new FriendManagementFrame();*/
+
         LocalDate c = LocalDate.now();
-        var x=new User("yousef","yousefe;hezawy75",c,"D:\\Me\\vv.jpg", "D:\\Me\\vv.jpg","krrp","2611210y","online","123");
+        var x=new User("yousef","yousefe;hezawy75",c,"src/main/resources/user.png", "src/main/resources/user.png","krrp","2611210y","online","123");
         new Profile(x);
 
         /*

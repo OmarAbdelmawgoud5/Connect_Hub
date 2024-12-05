@@ -108,7 +108,8 @@ public class Profile extends JFrame {
                 try {
                     buttonaction(evt,text);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+                     throw new RuntimeException(e);
                 }
                 System.out.println("lol");
             }
@@ -133,6 +134,7 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
         {
             // new newsfeed(myUser);
             break;
+
         }
         case "Friends":
         {
@@ -150,6 +152,7 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
             new ChangeBioDialog(this,myUser);
             break;
         }
+
     }
 }
     private JPanel createPostCard(Content post) {

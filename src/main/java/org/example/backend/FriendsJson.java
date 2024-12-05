@@ -25,6 +25,7 @@ public class FriendsJson {
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(id);
 
+
         ObjectNode friendData = objectNode.putObject(id); // Create a nested object for this ID
         for (Map.Entry<User, Integer> entry : t.entrySet()) {
             friendData.put(entry.getKey().getUserId(), entry.getValue());
@@ -35,7 +36,7 @@ public class FriendsJson {
     }
     void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\friendsdb.json"),rootNode);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(DatabaseFiles.FRIENDS_DB),rootNode);
         System.out.println(rootNode.toString());
     }
     public Map<User, Integer> getDb() {
@@ -46,7 +47,7 @@ public class FriendsJson {
         Map<User,Integer> mp=new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
         // Load the JSON as a tree
-        rootNode = objectMapper.readTree(new File("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\friendsdb.json"));
+        rootNode = objectMapper.readTree(new File(DatabaseFiles.FRIENDS_DB));
         var f=UserJson.getdb();
         JsonNode desiredFieldNode = rootNode.get(id);
         System.out.println(id);
