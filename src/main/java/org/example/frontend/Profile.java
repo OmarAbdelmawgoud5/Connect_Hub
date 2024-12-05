@@ -109,7 +109,8 @@ public class Profile extends JFrame {
                 try {
                     buttonaction(evt,text);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+                     throw new RuntimeException(e);
                 }
                 System.out.println("lol");
             }
@@ -135,8 +136,6 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
             break;
             case "Friends":
             {
-                myUser.setBio("a7a");
-                UserJson.getdb().editUser(myUser);
 
                 new FriendManagementFrame(myUser);
 
