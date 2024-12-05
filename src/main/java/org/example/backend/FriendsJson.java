@@ -25,12 +25,6 @@ public class FriendsJson {
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(id);
 
-
-
-
-
-
-
         ObjectNode friendData = objectNode.putObject(id); // Create a nested object for this ID
         for (Map.Entry<User, Integer> entry : t.entrySet()) {
             friendData.put(entry.getKey().getUserId(), entry.getValue());

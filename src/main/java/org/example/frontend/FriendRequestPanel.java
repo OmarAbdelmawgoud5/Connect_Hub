@@ -1,6 +1,8 @@
 package org.example.frontend;
 
+import org.example.backend.FriendsJson;
 import org.example.backend.User;
+import org.example.backend.UserJson;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,11 +14,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class FriendRequestPanel extends JPanel implements ActionListener {
-    private User user;
+    private FriendsJson user1;
+    private User user2;
     private JButton acceptButton;
     private JButton declineButton;
     public FriendRequestPanel(User user) {
-        this.user = user;
+        this.user2 = user;
+        
         this.setLayout(null);
         setSize(150,240);
         setVisible(true);
@@ -57,6 +61,7 @@ public class FriendRequestPanel extends JPanel implements ActionListener {
               declineButton.setText("Accepted");
               declineButton.setBackground(Color.LIGHT_GRAY);
               declineButton.setEnabled(false);
+
               repaint();
           }
           else if(e.getSource()==declineButton){
