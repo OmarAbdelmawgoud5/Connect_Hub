@@ -1,53 +1,60 @@
-package org.example.Backend;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+package org.example.backend;
 import com.fasterxml.jackson.databind.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import org.example.User;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.List;
-public class UserJson {
-    ObjectMapper c;
-    ArrayList<User> h;
-    UserJson()
-    {
-        LoadJson();
-    }
-    File x=new File("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\Users.Json");
-    ArrayList<User> LoadJson() {
 
-        c=new ObjectMapper();c.registerModule(new JavaTimeModule());
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+public class UserJson {
+
+    static UserJson db;
+
+    static {
         try {
-            h= c.readValue(x,  new TypeReference<ArrayList<User>>() {});
+            db = new UserJson();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return h;
+    }
+
+    JsonNode rootNode;
+    File x=new File("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\Users.Json");
+    static public UserJson getdb()
+    {
+        return db;
+    }
+    private UserJson() throws IOException {
+        LoadUser();
+    }
+    public void editUser(User user) throws IOException {
+        ObjectNode objectNode = (ObjectNode) rootNode;
+        objectNode.remove(user.getUserId());
+        objectNode.put(user.getUserId(), user.toJsonNode());
+        System.out.println(user.toString());
+        SaveJson();
     }
     void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-        for (User u : h) {
-            writer.writeValue(new File("D:/dataTwo.json"), u);
-        }
+        mapper.writeValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\Users.json"),rootNode);
+        System.out.println(rootNode.toString());
     }
-    User LoadUser(String id) {
-        for(User u:h) {
-            if(u.id.equals(id)) {
-                return u;
-            }
-        }
-        return null;
+    void LoadUser() throws IOException {
+        Map<User,Integer> mp=new HashMap<>();
+        ArrayList<Map<User,Integer>> temp=new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        rootNode = objectMapper.readTree(new File("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\Users.json"));
+    }
+    User LoadUser(String id) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        System.out.println(rootNode.get(id).toString());
+        User user = objectMapper.readValue(rootNode.get(id).toString(), User.class);
+        return  user;
     }
 }

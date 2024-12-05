@@ -13,8 +13,6 @@ import java.util.Map;
 
 public class ContentDatabaseLoader {
 
-
-
     public static ArrayList<Content> loadContent(String userId,String contentType) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<Content> extractedContent = new ArrayList<>();

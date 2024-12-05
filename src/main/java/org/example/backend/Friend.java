@@ -1,4 +1,4 @@
-package org.example.Backend;
+package org.example.backend;
 
 public class Friend {
 

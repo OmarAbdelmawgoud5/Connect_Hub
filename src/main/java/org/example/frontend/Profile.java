@@ -1,279 +1,215 @@
-package org.example.Frontend;
+package org.example.frontend;
 
-import org.example.Backend.Posts;
-import org.example.Backend.User;
+import org.example.backend.*;
 
-import  javax.swing.*;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Profile extends javax.swing.JFrame {
+public class Profile extends JFrame {
 
-    JLabel imagelabel;
-    int x=0;
-    JTextArea namelabel;
-    public User myUser;
-    public Profile(User user) {
-        myUser=user;
+    private final User myUser;
+
+    public Profile(User user) throws IOException {
+        myUser = user;
         initComponents();
         setTitle("My Profile");
-        setSize(500, 600);
-        intialFriendsButton();
-        intialCreatePostButton();
+        setSize(820, 600);
+        setLocationRelativeTo(null); // Center the frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        intialSetName();
-        intialSetProfile();
-       intialSetCover();
-        intialChangeBioButton();
-        intialChangePasswordButton();
-        intialBackButton();
-        imagelabel =new JLabel();
-        imagelabel.setIcon(new ImageIcon(new ImageIcon(myUser.getProfilePhoto()).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); //Sets the image to be displayed as an icon
-        fetchposts();
-        JLabel backgroundLabel = new JLabel(new ImageIcon("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\background.jpg"));
-        backgroundLabel.setBounds(0, 22, 500, 600);
+        setupLayout();
 
-        add(backgroundLabel);
-        JLabel l= new JLabel(new ImageIcon("D:\\College\\Term 5\\Programming 2\\lab9\\ConnectHub\\src\\main\\resources\\whitebar.png"));
-        l.setBounds(0,0,500,22);
-        add(l);
         this.setVisible(true);
     }
-    void intialBackButton()
-    {
 
-        var back = new javax.swing.JButton();
-        back.setFont(new java.awt.Font("Times New Roman", 0, 12));
-        back.setBackground(new java.awt.Color(255, 255, 255));
+    private void setupLayout() throws IOException {
+        Container container = getContentPane();
+        container.setLayout(null);
 
-        back.setText("Back");
-        back.setToolTipText("");
-        back.setBorder(null);
-        back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreatePostActionPerformed(evt);
-            }
-        });
-        back.setVisible(true);
-        back.setBounds(10,5 ,30 ,15);
-        add(back);
-    }
-    void intialSetCover()
-    {
-        ImageIcon bannerIcon = new ImageIcon("D:\\lol.jpg");
+        // Cover Photo
+        JLabel coverPhoto = new JLabel(new ImageIcon(
+                new ImageIcon(myUser.getCoverPhoto()).getImage().getScaledInstance(800, 100, Image.SCALE_SMOOTH)));
+        coverPhoto.setBounds(0, 0, 800, 100);
 
-        // Get the original dimensions of the banner image
-        int bannerWidth = bannerIcon.getIconWidth();
-        int bannerHeight = bannerIcon.getIconHeight();
 
-        // Resize the image to fit the panel's width, maintaining aspect ratio
-        int panelWidth = 500; // Example panel width
-        int panelHeight = 600; // Example panel height
-        float aspectRatio = (float) bannerWidth / bannerHeight;
+        // Profile Picture
+        JLabel profilePhoto = new JLabel(new ImageIcon(
+                new ImageIcon(myUser.getProfilePhoto()).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+        profilePhoto.setBounds(360, 70, 80, 80);
+        profilePhoto.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+        container.add(profilePhoto);
+        container.add(coverPhoto);
+        // User Name and Bio
+        JLabel userName = new JLabel(myUser.getUserName());
+        userName.setFont(new Font("Arial", Font.BOLD, 18));
+        userName.setHorizontalAlignment(SwingConstants.CENTER);
+        userName.setBounds(0, 150, 800, 25);
+        container.add(userName);
 
-        int newWidth, newHeight;
-        if (bannerWidth > bannerHeight) { // Landscape
-            newWidth = panelWidth;
-            newHeight = Math.round(panelWidth / aspectRatio);
-        } else { // Portrait or square
-            newHeight = panelHeight;
-            newWidth = Math.round(panelHeight * aspectRatio);
+        JLabel userBio = new JLabel(myUser.getBio()); // Replace with dynamic bio if needed
+        userBio.setFont(new Font("Arial", Font.ITALIC, 12));
+        userBio.setHorizontalAlignment(SwingConstants.CENTER);
+        userBio.setBounds(0, 170, 800, 20);
+        container.add(userBio);
+
+        // Buttons (Back and Change Password on the left, others on the right)
+        JButton backButton = createStyledButton("Back");
+        JButton changePasswordButton = createStyledButton("Change Password");
+        backButton.setBounds(10, 120, 160, 30);
+        changePasswordButton.setBounds(10, 170, 160, 30);
+        container.add(backButton);
+        container.add(changePasswordButton);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 2, 10, 10));
+        buttonPanel.setBounds(620, 120, 160, 60);
+        buttonPanel.setBackground(new Color(245, 245, 245));
+
+        JButton changeBioButton = createStyledButton("Change Bio");
+        JButton friendsListButton = createStyledButton("Friends");
+
+        buttonPanel.add(changeBioButton);
+        buttonPanel.add(friendsListButton);
+
+        container.add(buttonPanel);
+
+        // Content Area (Scrollable)
+        JPanel contentArea = new JPanel();
+        contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
+        contentArea.setBackground(Color.WHITE);
+
+        JScrollPane scrollPane = new JScrollPane(contentArea);
+        scrollPane.setBounds(0, 200, 800, 350);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        ArrayList<Content> posts = fetchPosts();
+        for (Content post : posts) {
+            contentArea.add(createPostCard(post));
         }
 
-        // Resize the image
-        Image scaledImage = bannerIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        container.add(scrollPane);
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setForeground(Color.WHITE);
+        button.setBackground(new Color(70, 130, 180)); // Steel Blue
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createLineBorder(new Color(70, 130, 180), 1));
+        button.setContentAreaFilled(true);
+
+        // Hover effect
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    buttonaction(evt,text);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("lol");
+            }
+        });
+
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(100, 149, 237)); // Light Steel Blue
+            }
 
 
-        JLabel label2 = new JLabel(); //JLabel Creation
-        label2.setIcon(new ImageIcon(scaledImage)); //Sets the image to be displayed as an icon
-        label2.setBounds(0, 22, 500, 60); //Sets the location of the image
-        add(label2);
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(70, 130, 180)); // Steel Blue
+            }
+        });
+        return button;
+    }
+private void buttonaction(ActionEvent evt, String k) throws IOException {
+    switch (k) {
+        case "Back":
+            // new newsfeed(myUser);
+            break;
+            case "Friends":
+            {
+                myUser.setBio("a7a");
+                UserJson.getdb().editUser(myUser);
+
+                new FriendManagementFrame(myUser);
+
+                this.dispose();
+
+            }
+    }
 }
-    void intialSetProfile()
-    {
-        Container c=getContentPane();
-        JLabel label = new JLabel(); //JLabel Creation
-        label.setIcon(new ImageIcon(new ImageIcon(myUser.getCoverPhoto()).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); //Sets the image to be displayed as an icon
-        label.setBounds(225, 40, 50, 50); //Sets the location of the image
-        c.add(label);
+    private JPanel createPostCard(Content post) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        panel.setBackground(Color.WHITE);
+        panel.setPreferredSize(new Dimension(780, 100));
 
-    }
+        // Profile Photo in Post
+        JLabel postProfilePhoto = new JLabel(new ImageIcon(
+                new ImageIcon(myUser.getProfilePhoto()).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        postProfilePhoto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.add(postProfilePhoto, BorderLayout.WEST);
 
-    void intialCreatePostButton()
-    {
-        var createpost = new javax.swing.JButton();
-        createpost.setBackground(new java.awt.Color(204, 204, 204));
-        createpost.setText("Create New Post");
-        createpost.setToolTipText("");
-        createpost.setBorder(null);
-        createpost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreatePostActionPerformed(evt);
-            }
-        });
-        createpost.setVisible(true);
-        createpost.setBounds(0,200 ,50 ,50);
-        // add(createpost);
-    }
-    void intialFriendsButton()
-    {
-        var friends = new javax.swing.JButton();
-        friends.setBackground(new java.awt.Color(204, 204, 204));
-        friends.setText("Friends");
-        friends.setToolTipText("");
-        friends.setBorder(null);
-        friends.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                friendsActionPerformed(evt);
-            }
-        });
-        friends.setVisible(true);
-        friends.setBounds(0,300 ,50 ,50);
-        // add(friends);
-    }
-    void intialChangePasswordButton()
-    {
-        var ChangePasswaord = new javax.swing.JButton();
-        ChangePasswaord.setBackground(new java.awt.Color(204, 204, 204));
-        ChangePasswaord.setText("Change Password");
-        ChangePasswaord.setToolTipText("");
-        ChangePasswaord.setBorder(null);
-        ChangePasswaord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logout(evt);
-            }
-        });
-        ChangePasswaord.setVisible(true);
-        ChangePasswaord.setBounds(0,150 ,50 ,50);
-        // add(ChangePasswaord);
-    }
-    void intialChangeBioButton()
-    {
-        var bio=new javax.swing.JTextArea();
-        bio.setEditable(false);
-        String s="Keep it Pure";
-        int tenp=s.length();
-        bio.setText(s);
-        bio.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        // Post Content
+        String contentText = post.getContent().getText();
+        JTextArea postContent = new JTextArea(contentText);
+        postContent.setEditable(false);
+        postContent.setFont(new Font("Arial", Font.PLAIN, 12));
+        postContent.setWrapStyleWord(true);
+        postContent.setLineWrap(true);
+        postContent.setOpaque(false);
+        postContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        bio.setBounds(250-(int)(2.25*tenp) ,115,(int)(5.5*tenp),20);
-        //bio.setSelectionColor(new java.awt.Color(255, 255, 255));
+        JScrollPane contentScrollPane = new JScrollPane(postContent);
+        contentScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        panel.add(contentScrollPane, BorderLayout.CENTER);
 
-        add(bio);
-    }
-    void intialSetName()
-    {
-        var name=new javax.swing.JTextArea();
-        name.setEditable(false);
-        String sx="Yousef";
-        int t=sx.length();
-        name.setText(sx);
-        name.setFont(new java.awt.Font("Showcard Gothic", 0, 24));
-        name.setBounds(250-(int)(7*t) ,92,15*t,25);
-        add(name);
-    }
-    private JPanel getpanel(Posts s, int i)
-    {
-        var panel=new JPanel();
-        panel.setBackground(new java.awt.Color(165,210,207));
-        panel.setLayout(null);
-        panel.setBounds(0,(i*75)+150,500,70);
-        var locallabel=new javax.swing.JLabel();
-        locallabel.setIcon(new ImageIcon(new ImageIcon(myUser.getProfilePhoto()).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); //Sets the image to be displayed as an icon
-        locallabel.setBounds(-5,-10,30,40);
-        panel.add(locallabel);
-        int n=myUser.getUserName().length();
-        var localname=new javax.swing.JTextArea();
-        localname.setBounds(16,-3,7*n,17);
-        localname.setEditable(false);
-        localname.setText(myUser.getUserName());
-        localname.setFont(new java.awt.Font("Segoe UI Variable", 0, 13));
-        panel.add(localname);
-        var localContent=new javax.swing.JTextArea();
-        localContent.setBounds(240-4*s.getContent().length(),25,9*s.getContent().length(),20);
-        localContent.setBackground(new java.awt.Color(165,210,207));
+        // "See More" Button if Text is Long
+        if (contentText.length() > 100) { // Adjust threshold as needed
+            JButton seeMoreButton = createStyledButton("See More");
+            seeMoreButton.setFont(new Font("Arial", Font.PLAIN, 10));
 
-        System.out.println(s.getContent().length());
-        localContent.setEditable(false);
-        localContent.setText(s.getContent());
-        localContent.setFont(new java.awt.Font("Lucida Console", 0, 15));
-        panel.add(localContent);
+            seeMoreButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JDialog dialog = new JDialog();
+                    dialog.setTitle("Post Details");
+                    dialog.setSize(400, 300);
+                    dialog.setLocationRelativeTo(null);
+
+                    JTextArea fullText = new JTextArea(contentText);
+                    fullText.setFont(new Font("Arial", Font.PLAIN, 12));
+                    fullText.setEditable(false);
+                    fullText.setWrapStyleWord(true);
+                    fullText.setLineWrap(true);
+                    fullText.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+                    JScrollPane dialogScroll = new JScrollPane(fullText);
+                    dialog.add(dialogScroll);
+
+                    dialog.setVisible(true);
+                }
+            });
+
+            panel.add(seeMoreButton, BorderLayout.SOUTH);
+        }
+
         return panel;
     }
-    private void fetchposts()
-    {
-        //ArrayList<Posts>=getposts(myUser.id);
-        ArrayList<Posts> listt =new ArrayList<Posts>();
-        var temp=new Posts("Omar is a good boy but have some issues");
-        listt.add(temp);
-        temp=new Posts("Yousef");
-        listt.add(temp);
-        temp=new Posts("Eyad");
-        listt.add(temp);
-        temp=new Posts("Khaled");
-        listt.add(temp);
-        temp=new Posts("More");
-        listt.add(temp);
-        var i=0;
-        for(;i<listt.size();i++)
-        {
-            var p=getpanel(listt.get(i),i);
-            add(p);
-        }
+
+    private ArrayList<Content> fetchPosts() throws IOException {
+        return ContentDatabaseLoader.loadContent(myUser.getUserId(), "post");
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+
     private void initComponents() {
-
-        jButton1 = new javax.swing.JButton();
-
-
-        jButton1.setText("jButton1");
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Profile");
-        //setBackground(new java.awt.Color(102, 153, 255));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-
-        pack();
-    }// </editor-fold>
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-
+        // Additional initialization if needed
     }
-    private void friendsActionPerformed(java.awt.event.ActionEvent evt) {
-        new friends(myUser);
-        this.dispose();
-
-    }
-    private void  CreatePostActionPerformed(java.awt.event.ActionEvent evt)
-    {
-        //new Createpost();
-        //this.dispose();
-    }
-    private void  logout(java.awt.event.ActionEvent evt)
-    {
-            //new login();
-        //this.dispose();
-
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-
-        /* Create and display the form */
-
-    // Variables declaration - do not modify
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    // End of variables declaration
 }

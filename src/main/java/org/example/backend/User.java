@@ -1,11 +1,18 @@
 package org.example.backend;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 public class User {
 
-    private String userId;
+    private String id;
     private String userName;
     private String email;
     private LocalDate dateOfBirth;
@@ -15,8 +22,35 @@ public class User {
     private String password;
     private String status;
 
+    @JsonCreator
+    public User(
+            @JsonProperty("userName") String userName,
+            @JsonProperty("email") String email,
+            @JsonProperty("dateOfBirth") LocalDate dateOfBirth,
+            @JsonProperty("profilePhoto") String profilePhoto,
+            @JsonProperty("coverPhoto") String coverPhoto,
+            @JsonProperty("bio") String bio, // Included the "bio" field
+            @JsonProperty("password") String password,
+            @JsonProperty("status") String status,
+            @JsonProperty("id") String id
+    ) {
+        this.id = id ;// Assign an ID if not provided
+        this.userName = userName;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.profilePhoto = profilePhoto;
+        this.coverPhoto = coverPhoto;
+        this.Bio = bio;
+        this.password = password;
+        this.status = status;
+    }
+
+
+
+
+
     public User(String userName, String email, LocalDate dateOfBirth, String profilePhoto, String coverPhoto, String Bio, String password, String status) {
-        this.userId = generateUserId();
+        this.id = generateUserId();
         this.userName = userName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
@@ -28,7 +62,7 @@ public class User {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.id = userId;
     }
 
     public void setUserName(String userName) {
@@ -64,7 +98,7 @@ public class User {
     }
 
     public String getUserId() {
-        return userId;
+        return id;
     }
 
     public String getEmail() {
@@ -79,6 +113,10 @@ public class User {
         return password;
     }
 
+    public String getBio() {
+        return Bio;
+    }
+
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
@@ -91,6 +129,19 @@ public class User {
         return profilePhoto;
     }
 
+    public ObjectNode toJsonNode() {
+        ObjectNode userNode = new ObjectMapper().createObjectNode();
+        userNode.put("userName", this.userName);
+        userNode.put("email", this.email);
+        userNode.put("dateOfBirth", this.dateOfBirth.toString());
+        userNode.put("profilePhoto", this.profilePhoto);
+        userNode.put("coverPhoto", this.coverPhoto);
+        userNode.put("password", this.password);
+        userNode.put("status", this.status);
+        userNode.put("bio", this.Bio);
+        userNode.put("id", this.id);
+        return userNode;
+    }
     public String getCoverPhoto() {
         return coverPhoto;
     }

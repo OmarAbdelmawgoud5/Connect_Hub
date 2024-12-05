@@ -1,18 +1,42 @@
 package org.example.frontend;
 
+import org.example.backend.FriendsJson;
 import org.example.backend.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class FriendManagementFrame extends JFrame {
-    public FriendManagementFrame() {
+    User user;
+    FriendsJson x;
+    public FriendManagementFrame(User myUser) throws IOException {
+
         super("Friend Management");
+        String id = myUser.getUserId();
+        user=myUser;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 800);
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // Create a "Back" button
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        backButton.setBackground(new Color(220, 220, 220));
+        backButton.setFocusPainted(false);
+
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    onBackButtonClicked();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         // Title for friend requests
         JLabel friendRequests = new JLabel("Friend Requests");
         friendRequests.setFont(new Font("Arial", Font.BOLD, 22));
@@ -20,12 +44,16 @@ public class FriendManagementFrame extends JFrame {
         // Horizontal friend request panel
         JPanel friendRequestParentPanel = new JPanel();
         friendRequestParentPanel.setLayout(new BoxLayout(friendRequestParentPanel, BoxLayout.X_AXIS));
-        for (int i = 0; i < 10; i++) {
-            FriendRequestPanel child = new FriendRequestPanel(new User("omar Abdelmawgoud",null,null,"C:\\Users\\Etijah\\IdeaProjects\\Connect_Hub\\src\\main\\resources\\user.png\\",null,null,null,null));
+        x = new FriendsJson(id);
+        Map<User, Integer> map = x.getDb();
+        for (Map.Entry<User,Integer> entry : map.entrySet())
+        {
+            FriendRequestPanel child = new FriendRequestPanel(entry.getKey());
             child.setPreferredSize(new Dimension(150, 250));
             friendRequestParentPanel.add(child);
             friendRequestParentPanel.add(Box.createHorizontalStrut(5));
         }
+
         JScrollPane horizontalScrollPane = new JScrollPane(friendRequestParentPanel);
         horizontalScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         horizontalScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
@@ -38,8 +66,9 @@ public class FriendManagementFrame extends JFrame {
         // Vertical friends list panel
         JPanel friendListParentPanel = new JPanel();
         friendListParentPanel.setLayout(new BoxLayout(friendListParentPanel, BoxLayout.Y_AXIS));
-        for (int i = 0; i < 10; i++) {
-            FriendsListPanel child = new FriendsListPanel(new User("omar Abdelmawgoud"+i,null,null,"C:\\Users\\Etijah\\IdeaProjects\\Connect_Hub\\src\\main\\resources\\user.png\\",null,null,null,null));
+        for (Map.Entry<User,Integer> entry : map.entrySet())
+        {
+            FriendsListPanel child = new FriendsListPanel(entry.getKey());
             child.setPreferredSize(new Dimension(500, 150));
             friendListParentPanel.add(child);
             friendListParentPanel.add(Box.createVerticalStrut(10));
@@ -60,13 +89,34 @@ public class FriendManagementFrame extends JFrame {
         JScrollPane verticalScrollPane = new JScrollPane(combinedPanel);
         verticalScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         verticalScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        // Add main scroll pane to the frame
-        add(verticalScrollPane);
         verticalScrollPane.setBorder(null);
         horizontalScrollPane.setBorder(null);
 
+        // Main layout for the frame
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(backButton, BorderLayout.NORTH); // Add the back button at the top
+        mainPanel.add(verticalScrollPane, BorderLayout.CENTER); // Add the scrollable content
+
+        // Add main panel to the frame
+        add(mainPanel);
+        x.editfirend(map);
         setVisible(true);
     }
 
+    private void onBackButtonClicked() throws IOException {
+
+       /* new Profile(user);
+        this.dispose();*/
+    }
+
+    public static ArrayList<User> extractKeys(ArrayList<Map<User, Integer>> db) {
+        ArrayList<User> keys = new ArrayList<>();
+
+        for (Map<User, Integer> map : db) {
+            keys.addAll(map.keySet()); // Add all keys (Users) from the current map
+        }
+
+        return keys;
+    }
 }
