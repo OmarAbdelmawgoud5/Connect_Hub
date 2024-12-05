@@ -1,6 +1,8 @@
 package org.example.frontend;
 
+
 import org.example.backend.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FriendRequestPanel extends JPanel implements ActionListener {
+
     private User user1;
     private User user2;
     private Map<User,Integer>map1;
@@ -26,6 +29,7 @@ public class FriendRequestPanel extends JPanel implements ActionListener {
         } catch ( IOException e) {
             System.out.println("hello");
         }
+
         this.setLayout(null);
         setSize(150,240);
         setVisible(true);
@@ -66,6 +70,7 @@ public class FriendRequestPanel extends JPanel implements ActionListener {
               declineButton.setText("Accepted");
               declineButton.setBackground(Color.LIGHT_GRAY);
               declineButton.setEnabled(false);
+
               repaint();
               try {
                   FriendsManagerWriter.friendsWriter(user1,user2, UserAction.AcceptRequest);

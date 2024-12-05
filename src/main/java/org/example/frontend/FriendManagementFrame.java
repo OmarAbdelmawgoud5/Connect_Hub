@@ -13,16 +13,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class FriendManagementFrame extends JFrame implements ActionListener {
     User user;
+
     JButton backButton;
     public FriendManagementFrame(User user)  throws IOException {
         super("Friend Management");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 800);
         setLocationRelativeTo(null);
         setResizable(false);
+
         this.user = user;
         ArrayList<User>pending= FriendsManagerReader.getFriends(user.getUserId(), FriendsStatus.Received);
         ArrayList<User>friends=FriendsManagerReader.getFriends(user.getUserId(),FriendsStatus.Friend);
@@ -32,6 +36,7 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         backButton = new JButton("Back");
         backButton.addActionListener(this);
         // Horizontal friend request panel
+
         JPanel friendRequestParentPanel = new JPanel();
         friendRequestParentPanel.setLayout(new BoxLayout(friendRequestParentPanel, BoxLayout.X_AXIS));
        friendRequestParentPanel.setPreferredSize(new Dimension(1200, 100));
@@ -41,7 +46,6 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
             friendRequestParentPanel.add(child);
             friendRequestParentPanel.add(Box.createHorizontalStrut(5));
         }
-
         JScrollPane horizontalScrollPane = new JScrollPane(friendRequestParentPanel);
         horizontalScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         horizontalScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
@@ -65,16 +69,17 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         // Combined panel: holds the horizontal pane and the friends list
         JPanel combinedPanel = new JPanel();
         combinedPanel.setLayout(new BoxLayout(combinedPanel, BoxLayout.Y_AXIS));
+
         combinedPanel.add(backButton);
         combinedPanel.add(friendRequests);
         combinedPanel.add(Box.createVerticalStrut(10)); // Spacer
+
         combinedPanel.add(horizontalScrollPane);
-        combinedPanel.add(Box.createVerticalStrut(20)); // Spacer
-        combinedPanel.add(friendsLabel);
-        combinedPanel.add(Box.createVerticalStrut(10)); // Spacer
+        combinedPanel.add(Box.createVerticalStrut(20));
+        combinedPanel.add(friendsLabel);combinedPanel.add(friendRequests);
+        combinedPanel.add(Box.createVerticalStrut(10));
         combinedPanel.add(friendListParentPanel);
 
-        // Vertical scroll pane for the entire combined panel
         JScrollPane verticalScrollPane = new JScrollPane(combinedPanel);
         verticalScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         verticalScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -83,6 +88,7 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         add(verticalScrollPane);
         verticalScrollPane.setBorder(null);
         horizontalScrollPane.setBorder(null);
+
 
         setVisible(true);
     }
@@ -97,5 +103,6 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
             }
         }
     }
+
 
 }
