@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.formdev.flatlaf.FlatLightLaf;
+import org.example.frontend.NewsFeedFrame;
 import org.example.frontend.Profile;
 
 import java.io.File;
@@ -21,8 +22,8 @@ public class Main {
 
         LocalDate c = LocalDate.now();
         var x=new User("yousef","yousefe;hezawy75",c,"src/main/resources/user.png", "src/main/resources/user.png","krrp","2611210y","online","123");
-        new Profile(x);
-
+        //new Profile(x);
+        new NewsFeedFrame(new NewsFeedPosts(x.getUserId()),new NewsFeedStory(x.getUserId()),x);
         /*
         var y=new org.example.backend.User("Omar","yousefe;hezawy75",c,"D:\\Me\\vv.jpg", "D:\\Me\\vv.jpg","2611210y","online","153");
         var z=new org.example.backend.User("eyad","yousefe;hezawy75",c,"D:\\Me\\vv.jpg", "D:\\Me\\vv.jpg","2611210y","online","153");
