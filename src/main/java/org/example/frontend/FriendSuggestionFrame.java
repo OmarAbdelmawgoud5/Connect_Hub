@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class FriendSuggestionFrame extends JFrame implements ActionListener {
     private User user;
     private JButton backButton;
+
     public FriendSuggestionFrame(User user)throws IOException {
         super("Friend Suggestion");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +25,7 @@ public class FriendSuggestionFrame extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         this.user = user;
-        ArrayList<User> friends = FriendsManagerReader.getFriends(user.getUserId(), FriendsStatus.Friend);
+        ArrayList<User> friends = FriendsSuggestionsGenerator.generate(user);
         JLabel friendListTitle = new JLabel("Add Friends");
         friendListTitle.setFont(new Font("Arial", Font.BOLD, 22));
         friendListTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -60,14 +61,23 @@ public class FriendSuggestionFrame extends JFrame implements ActionListener {
         JLabel nameLabel = new JLabel(friend.getUserName());
         nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
         nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        JButton addButton = new JButton("Add");
+       JButton  addButton = new JButton("Add");
         addButton.setFont(new Font("Arial", Font.PLAIN, 12));
         addButton.setBackground(new Color(59, 89, 182));
         addButton.setForeground(Color.WHITE);
         addButton.setFocusPainted(false);
         addButton.setMargin(new Insets(5, 15, 5, 15));
         addButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Friend request sent to: " + friend.getUserName());
+            addButton.setEnabled(false);
+            addButton.setBackground(new Color(180, 201, 236, 117));
+            addButton.setText("Sent");
+
+            // Add the friend using the FriendsManagerWriter
+            try {
+                FriendsManagerWriter.friendsWriter(user, friend,UserAction.SendRequest);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         JPanel textPanel = new JPanel(new BorderLayout());
         textPanel.add(nameLabel, BorderLayout.CENTER);
@@ -88,5 +98,6 @@ public class FriendSuggestionFrame extends JFrame implements ActionListener {
                 throw new RuntimeException(ex);
             }
         }
+
     }
 }
