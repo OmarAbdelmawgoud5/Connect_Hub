@@ -78,7 +78,7 @@ public class NewsFeedFrame extends JFrame {
         JPanel postsPanel = new JPanel();
         postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
         postsPanel.setBorder(BorderFactory.createTitledBorder("Posts"));
-        loadPosts(postsPanel, friends.get(0));
+        //loadPosts(postsPanel, friends.get(0));
         JButton loadMoreButton = new JButton("Refresh");
         loadMoreButton.setFocusable(false);
         setupLoadMoreButton(postsPanel, loadMoreButton, friends);

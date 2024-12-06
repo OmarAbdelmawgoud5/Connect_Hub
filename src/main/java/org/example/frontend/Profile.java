@@ -85,10 +85,18 @@ public class Profile extends JFrame {
         JScrollPane scrollPane = new JScrollPane(contentArea);
         scrollPane.setBounds(0, 200, 800, 350);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        ArrayList<Content> posts=null;
+        try {
+           posts = fetchPosts();
 
-        ArrayList<Content> posts = fetchPosts();
-        for (Content post : posts) {
-            contentArea.add(createPostCard(post));
+        }
+        catch (RuntimeException e) {
+            ;
+        }
+        if(posts!=null) {
+            for (Content post : posts) {
+                contentArea.add(createPostCard(post));
+            }
         }
         container.add(scrollPane);
     }
@@ -132,13 +140,15 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
     switch (k) {
         case "Back":
         {
-            // new newsfeed(myUser);
+            System.out.println(myUser.getUserId());
+            new NewsFeedFrame(new NewsFeedPosts(myUser.getUserId()),new NewsFeedStory(myUser.getUserId()),myUser);
+            this.dispose();
             break;
-
         }
         case "Friends":
         {
             new FriendManagementFrame(myUser);
+            System.out.println(myUser.getUserId());
             this.dispose();
             break;
         }
@@ -228,6 +238,7 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
     }
 
     private ArrayList<Content> fetchPosts() throws IOException {
+        System.out.println(myUser.getUserId());
         return ContentDatabaseLoader.loadContent(myUser.getUserId(), "post");
     }
 

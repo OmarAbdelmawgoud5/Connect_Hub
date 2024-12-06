@@ -36,26 +36,27 @@ public class FriendsJson {
     }
     void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(DatabaseFiles.FRIENDS_DB),rootNode);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\friendsdb.json"),rootNode);
         System.out.println(rootNode.toString());
     }
     public Map<User, Integer> getDb() {
         return db;
     }
-
     Map<User, Integer>  LoadFirendsJson() throws IOException {
         Map<User,Integer> mp=new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
         // Load the JSON as a tree
-        rootNode = objectMapper.readTree(new File(DatabaseFiles.FRIENDS_DB));
+        rootNode = objectMapper.readTree(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\friendsdb.json"));
         var f=UserJson.getdb();
         JsonNode desiredFieldNode = rootNode.get(id);
-        System.out.println(id);
-        Iterator<Map.Entry<String, JsonNode>> fields = desiredFieldNode.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> entry = fields.next();
-            User h=f.LoadUser(entry.getKey());
-            mp.put(h,entry.getValue().asInt());
+        if(desiredFieldNode!=null) {
+            System.out.println(id);
+            Iterator<Map.Entry<String, JsonNode>> fields = desiredFieldNode.fields();
+            while (fields.hasNext()) {
+                Map.Entry<String, JsonNode> entry = fields.next();
+                User h = f.LoadUser(entry.getKey());
+                mp.put(h, entry.getValue().asInt());
+            }
         }
         return mp;
     }

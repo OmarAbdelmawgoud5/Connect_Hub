@@ -29,10 +29,24 @@ public class ContentDatabaseLoader {
         else{
             throw new IOException(contentType);
         }
-        Map<String, List<Map<String, Object>>> contentData =
-                mapper.readValue(requiredFile, new TypeReference<>() {});
+        Map<String, List<Map<String, Object>>> contentData;
+        try {
 
+
+            contentData =
+                    mapper.readValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\posts.json"), new TypeReference<>() {
+                    });
+
+        }
+        catch (RuntimeException e) {
+
+            return null;
+        }
+
+        System.out.println("Omar");
         List<Map<String, Object>> userContent = contentData.get(userId);
+
+
         if (userContent == null) {
             return extractedContent;
         }

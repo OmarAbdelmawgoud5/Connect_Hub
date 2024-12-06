@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import javax.swing.*;
+
 public class User {
 
     private String id;
@@ -90,7 +92,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password=Encryption.hashPassword(password);
     }
 
     public void setStatus(String status) {
@@ -147,7 +149,8 @@ public class User {
     }
 
     private String generateUserId() {
-        return UUID.randomUUID().toString();
+        System.out.println( String.valueOf(this.hashCode()));
+        return  String.valueOf(this.hashCode());
     }
 
 }
