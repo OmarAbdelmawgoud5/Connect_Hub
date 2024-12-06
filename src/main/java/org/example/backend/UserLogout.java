@@ -9,6 +9,9 @@ public class UserLogout {
 
     private UserJson db = UserJson.getdb();
 
+    public UserLogout() throws IOException {
+    }
+
     public boolean logout(User x) {
         try {
             x.setStatus("Offline");

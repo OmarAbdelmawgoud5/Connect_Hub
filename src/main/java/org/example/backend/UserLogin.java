@@ -10,6 +10,9 @@ public class UserLogin {
     private UserJson db = UserJson.getdb();
     private User user=null;
 
+    public UserLogin() throws IOException {
+    }
+
     public User getUser() {
         return user;
     }

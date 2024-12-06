@@ -93,7 +93,12 @@ public class NewsFeedFrame extends JFrame {
         button6.addActionListener(e->{
             frame.setVisible(false);
 
-            var temp=new UserLogout();
+            UserLogout temp= null;
+            try {
+                temp = new UserLogout();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             temp.logout(user);
             new LoginPage();
             this.dispose();

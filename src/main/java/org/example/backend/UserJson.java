@@ -25,8 +25,8 @@ public class UserJson {
 
     JsonNode rootNode;
     File x=new File("src/main/resources/Users.Json");
-    static public UserJson getdb()
-    {
+    static public UserJson getdb() throws IOException {
+        db = new UserJson();
         return db;
     }
     private UserJson() throws IOException {
@@ -40,7 +40,7 @@ public class UserJson {
         SaveJson();
     }
 
-    Map<String, User> getmap() throws IOException {
+    synchronized Map<String, User> getmap() throws IOException {
         Map<String, User> mp = new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -73,18 +73,5 @@ public class UserJson {
         User user = objectMapper.readValue(rootNode.get(id).toString(), User.class);
         return  user;
     }
-    Map<String, User> getmap() throws IOException {
-        Map<String, User> mp = new HashMap<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
 
-        Iterator<Map.Entry<String, JsonNode>> fields = db.rootNode.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> entry = fields.next();
-            JsonNode userNode = entry.getValue();
-            User user = objectMapper.readValue(userNode.toString(), User.class);
-            mp.put(entry.getKey(), user);
-        }
-        return mp;
-    }
 }

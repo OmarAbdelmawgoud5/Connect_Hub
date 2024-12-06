@@ -9,6 +9,9 @@ public class UserSignUp {
 
     private UserJson db = UserJson.getdb();
 
+    public UserSignUp() throws IOException {
+    }
+
     public boolean signUp(User newUser) {
         try {
             for (JsonNode userNode : db.rootNode) {
