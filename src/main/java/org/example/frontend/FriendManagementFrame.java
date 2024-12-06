@@ -39,17 +39,19 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
 
         JPanel friendRequestParentPanel = new JPanel();
         friendRequestParentPanel.setLayout(new BoxLayout(friendRequestParentPanel, BoxLayout.X_AXIS));
-       friendRequestParentPanel.setPreferredSize(new Dimension(1200, 100));
-        for (int i = 0; i < 6; i++) {
-            FriendRequestPanel child = new FriendRequestPanel(pending.get(0),user);
+       //friendRequestParentPanel.setPreferredSize(new Dimension(1200, 100));
+        for (User pendingFriend : pending) {
+            FriendRequestPanel child = new FriendRequestPanel(pendingFriend,user);
             child.setPreferredSize(new Dimension(150, 240));
             friendRequestParentPanel.add(child);
-            friendRequestParentPanel.add(Box.createHorizontalStrut(5));
+           friendRequestParentPanel.add(Box.createHorizontalStrut(5));
         }
+
         JScrollPane horizontalScrollPane = new JScrollPane(friendRequestParentPanel);
         horizontalScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         horizontalScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        horizontalScrollPane.setPreferredSize(new Dimension(700, 265));
+        horizontalScrollPane.setPreferredSize(new Dimension(100, 265));
+
 
         // Title for friends list
         JLabel friendsLabel = new JLabel("Friends");
@@ -60,7 +62,7 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         friendListParentPanel.setPreferredSize(new Dimension(500, 400));
         friendListParentPanel.setLayout(new BoxLayout(friendListParentPanel, BoxLayout.Y_AXIS));
         for (User friend : friends) {
-            FriendsListPanel child = new FriendsListPanel(friend);
+            FriendsListPanel child = new FriendsListPanel(friend,user);
             child.setPreferredSize(new Dimension(500, 150));
             friendListParentPanel.add(child);
             friendListParentPanel.add(Box.createVerticalStrut(10));
