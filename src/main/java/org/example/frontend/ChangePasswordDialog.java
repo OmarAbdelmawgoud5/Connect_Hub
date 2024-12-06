@@ -1,5 +1,6 @@
 package org.example.frontend;
 
+import org.example.backend.Encryption;
 import org.example.backend.User;
 import org.example.backend.UserJson;
 
@@ -33,22 +34,31 @@ public class ChangePasswordDialog extends JDialog {
         // Action listener for Submit button
         submitButton.addActionListener(e -> {
             if(!oldPasswordField.getText().equals("") && (!newPasswordField.getText().equals(""))) {
-                if(oldPasswordField.getText().equals(user.getPassword()))
+
+                if(Encryption.verifyPassword(oldPasswordField.getText(), user.getPassword()))
                 {
                     System.out.println(newPasswordField.getText());
-                    user.setPassword(newPasswordField.getText());
-                    System.out.println("Yes");
-                    JOptionPane.showMessageDialog(this, "Ok!", "Done", 1);
-                    try {
-                        UserJson.getdb().editUser(user);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                    String g=newPasswordField.getText();
+                    if (!g.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$")) {
+                        JOptionPane.showMessageDialog(parent, "Invalid Password.", "Error", JOptionPane.ERROR_MESSAGE);
+                        System.out.println("lolpo");
+                        dispose();
+
+                    }
+                    else {
+                        user.setPassword(newPasswordField.getText());
+                        System.out.println("Yes");
+                        JOptionPane.showMessageDialog(this, "Ok!", "Done", 1);
+                        try {
+                            UserJson.getdb().editUser(user);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
                 else
                 {
                     JOptionPane.showMessageDialog(this, "Wrong Password", "Failed", 0);
-
                     System.out.println("No");
                 }
 

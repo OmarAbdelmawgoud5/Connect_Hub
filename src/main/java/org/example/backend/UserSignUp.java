@@ -20,8 +20,9 @@ public class UserSignUp {
                     return false;
                 }
             }
-        newUser.setPassword(Encryption.hashPassword(newUser.getPassword()));
 
+        newUser.setPassword(newUser.getPassword());
+            System.out.println("Debug");
             db.editUser(newUser);
             return true;
             

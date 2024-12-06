@@ -1,6 +1,6 @@
 package org.example.frontend;
 
-import org.example.backend.UserLogin;
+import org.example.backend.*;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
@@ -8,8 +8,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.example.backend.GettingUserByPass;
-import org.example.backend.User;
 
 public class LoginPage extends JFrame {
 
@@ -78,8 +76,8 @@ public class LoginPage extends JFrame {
                         JOptionPane.showMessageDialog(this, "Login Successful");
                         GettingUserByPass getUserBypass = new GettingUserByPass();
                         User user = getUserBypass.getUser(password);
+                        new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),new NewsFeedStory(user.getUserId()),user);
 
-                        Profile profilePage = new Profile(user);
                     } catch (IOException ex) {
                         Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
                     }

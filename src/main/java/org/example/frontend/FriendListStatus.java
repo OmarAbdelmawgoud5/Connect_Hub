@@ -26,7 +26,7 @@ public class FriendListStatus extends JFrame implements ActionListener {
         friendListParentPanel.setPreferredSize(new Dimension(500, 400));
         friendListParentPanel.setLayout(new BoxLayout(friendListParentPanel, BoxLayout.Y_AXIS));
         for (User friend : friends) {
-            FriendsListPanel child = new FriendsListPanel(friend);
+            FriendsListPanel child = new FriendsListPanel(friend,user);
             child.setPreferredSize(new Dimension(500, 150));
             friendListParentPanel.add(child);
             friendListParentPanel.add(Box.createVerticalStrut(10));
