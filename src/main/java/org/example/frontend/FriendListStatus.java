@@ -18,6 +18,10 @@ public class FriendListStatus extends JFrame implements ActionListener {
         setResizable(false);
         this.user = user;
         ArrayList<User>friends=FriendsManagerReader.getFriends(user.getUserId(),FriendsStatus.Friend);
+        for(int i=0;i<friends.size();i++)
+        {
+            System.out.println("hello "+friends.get(i).getUserId());
+        }
         JLabel friendRequests = new JLabel("Friend Status");
         friendRequests.setFont(new Font("Arial", Font.BOLD, 22));
         backButton = new JButton("Back");

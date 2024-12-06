@@ -129,9 +129,14 @@ public class SignUpPage extends JDialog {
                 LocalDate dob = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
                
                 User newUser = new User(name, email, dob, profilePhotoPath, coverPhotoPath, null,password, "Online");
-                
-                UserSignUp userSignUp = new UserSignUp();
-                
+
+                UserSignUp userSignUp = null;
+                try {
+                    userSignUp = new UserSignUp();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 boolean added = userSignUp.signUp(newUser);
 
                 String message = (added ? "User added successfully!" : "User already exists!");

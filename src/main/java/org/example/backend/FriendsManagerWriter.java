@@ -10,7 +10,7 @@ public class FriendsManagerWriter {
        Map<User,Integer>user1Map = new FriendsJson(coreUser.getUserId()).getDb();
        Map<User,Integer>user2Map = new FriendsJson(secondUser.getUserId()).getDb();
 
-
+        System.out.println("Debug 2"+coreUser.getUserId()+secondUser.getUserId());
         switch (action) {
             case SendRequest:
                 user1Map.put(secondUser,FriendsStatus.Sent.ordinal());
@@ -18,18 +18,17 @@ public class FriendsManagerWriter {
                 break;
 
             case AcceptRequest:
-                user1Map.put(secondUser,FriendsStatus.Friend.ordinal());
-                user2Map.put(coreUser,FriendsStatus.Friend.ordinal());
+                user1Map.put(getRightUser(user1Map,secondUser),FriendsStatus.Friend.ordinal());
+                user2Map.put(getRightUser(user2Map,coreUser),FriendsStatus.Friend.ordinal());
                 break;
 
             case BlockFriend:
 
-                user1Map.put(secondUser,FriendsStatus.Blocking.ordinal());
-                user2Map.put(coreUser,FriendsStatus.Blocked.ordinal());
+                user1Map.put(getRightUser(user1Map,secondUser),FriendsStatus.Blocking.ordinal());
+                user2Map.put(getRightUser(user2Map,coreUser),FriendsStatus.Blocked.ordinal());
                 break;
 
             case UnBlockFriend:
-
                 user1Map.remove(getRightUser(user1Map,secondUser));
                 user2Map.remove(getRightUser(user2Map,coreUser));
                 break;

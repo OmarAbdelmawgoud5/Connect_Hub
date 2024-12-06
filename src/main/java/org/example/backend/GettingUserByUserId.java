@@ -9,6 +9,9 @@ public class GettingUserByUserId {
 
  private UserJson db = UserJson.getdb();
 
+    public GettingUserByUserId() throws IOException {
+    }
+
     public User getUser(String userId) {
         try {
             for (JsonNode userNode : db.rootNode) {

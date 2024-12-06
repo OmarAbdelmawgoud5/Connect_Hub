@@ -69,7 +69,12 @@ public class LoginPage extends JFrame {
             if (email.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter both email and password!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                UserLogin userLogin = new UserLogin();
+                UserLogin userLogin = null;
+                try {
+                    userLogin = new UserLogin();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
                 if (userLogin.login(email, password)) {
                     try {

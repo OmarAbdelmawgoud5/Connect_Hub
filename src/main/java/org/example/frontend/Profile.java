@@ -201,7 +201,7 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
 
         if(path!=null) {
             JLabel c = new JLabel(new ImageIcon(
-                    new ImageIcon(myUser.getProfilePhoto()).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+                    new ImageIcon(post.getContent().getImage()).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
             c.setBounds(450, 50, 500, 100);
             panel.add(c);
         }panel.add(contentScrollPane, BorderLayout.CENTER);

@@ -10,6 +10,9 @@ public class GettingUserByPass {
 
     private UserJson db = UserJson.getdb();
 
+    public GettingUserByPass() throws IOException {
+    }
+
     public User getUser(String password) {
         try {
             for (JsonNode userNode : db.rootNode) {
