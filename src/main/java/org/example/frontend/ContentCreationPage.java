@@ -90,6 +90,7 @@ public class ContentCreationPage extends JDialog {
             }
 
             JOptionPane.showMessageDialog(this, "Post created successfully!");
+            dispose();
         });
 
         storyButton.addActionListener(e -> {
@@ -113,33 +114,11 @@ public class ContentCreationPage extends JDialog {
             }
 
             JOptionPane.showMessageDialog(this, "Story created successfully!");
-            try {
-                GettingUserByUserId getUserByUserId = new GettingUserByUserId();
-                User user = getUserByUserId.getUser(userId);
-
-                Profile profilePage = new Profile(user);
-                dispose();
-            } catch (IOException ex) {
-                Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            dispose();
         });
         this.setVisible(true);
 
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            FlatLightLaf.setup();
 
-            JFrame parentFrame = new JFrame();
-            parentFrame.setSize(800, 600);
-            parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            parentFrame.setVisible(true);
-
-            ContentCreationPage creationPage = new ContentCreationPage(parentFrame, "123");
-            creationPage.setVisible(true);
-
-        });
-    }
 }
