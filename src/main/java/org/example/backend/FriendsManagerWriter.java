@@ -23,17 +23,20 @@ public class FriendsManagerWriter {
                 break;
 
             case BlockFriend:
+
                 user1Map.put(secondUser,FriendsStatus.Blocking.ordinal());
                 user2Map.put(coreUser,FriendsStatus.Blocked.ordinal());
                 break;
 
             case UnBlockFriend:
-                user1Map.remove(secondUser);
-                user2Map.remove(coreUser);
+
+                user1Map.remove(getRightUser(user1Map,secondUser));
+                user2Map.remove(getRightUser(user2Map,coreUser));
+                break;
 
             case UnFriend:
-                user1Map.remove(secondUser);
-                user2Map.remove(coreUser);
+                user1Map.remove(getRightUser(user1Map,secondUser));
+                user2Map.remove(getRightUser(user2Map,coreUser));
                 break;
 
             default:
@@ -48,5 +51,13 @@ public class FriendsManagerWriter {
         FriendsJson friendsDatabase2=new FriendsJson(secondUser.getUserId());
         friendsDatabase2.editfirend(user2Map);
 
+    }
+    private static User getRightUser(Map<User,Integer>map,User removedUser){
+         for(Map.Entry<User,Integer> entry:map.entrySet()){
+             if(entry.getKey().getUserId().equals(removedUser.getUserId())){
+                 return entry.getKey();
+             }
+         }
+         return null;
     }
 }
