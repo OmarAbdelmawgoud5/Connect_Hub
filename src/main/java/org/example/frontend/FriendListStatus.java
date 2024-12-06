@@ -1,4 +1,5 @@
 package org.example.frontend;
+
 import org.example.backend.*;
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FriendListStatus extends JFrame implements ActionListener {
+
     private User user;
     private JButton backButton;
+
     public FriendListStatus(User user) throws IOException {
         super("Friend Management");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,7 +20,7 @@ public class FriendListStatus extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         this.user = user;
-        ArrayList<User>friends=FriendsManagerReader.getFriends(user.getUserId(),FriendsStatus.Friend);
+        ArrayList<User> friends = FriendsManagerReader.getFriends(user.getUserId(), FriendsStatus.Friend);
         JLabel friendRequests = new JLabel("Friend Status");
         friendRequests.setFont(new Font("Arial", Font.BOLD, 22));
         backButton = new JButton("Back");
@@ -45,12 +48,13 @@ public class FriendListStatus extends JFrame implements ActionListener {
         verticalScrollPane.setBorder(null);
         setVisible(true);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             setVisible(false);
             try {
-                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),new NewsFeedStory(user.getUserId()),user);
+                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()), new NewsFeedStory(user.getUserId()), user);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

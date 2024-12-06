@@ -85,11 +85,29 @@ public class ContentCreationPage extends JDialog {
                 GettingUserByUserId getUserByUserId = new GettingUserByUserId();
                 User user = getUserByUserId.getUser(userId);
                 ContentDatabaseSaver.saveContent(post);
+
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             JOptionPane.showMessageDialog(this, "Post created successfully!");
+
+            try {
+                GettingUserByUserId getUserByUserId = new GettingUserByUserId();
+                User user = getUserByUserId.getUser(userId);
+
+                NewsFeedPosts newsFeedPosts = new NewsFeedPosts(user.getUserId());
+
+                NewsFeedStory newsFeedStory;
+                newsFeedStory = new NewsFeedStory(user.getUserId());
+
+                NewsFeedFrame newsFeedFrame;
+                newsFeedFrame = new NewsFeedFrame(newsFeedPosts, newsFeedStory, user);
+                dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
 
         storyButton.addActionListener(e -> {
@@ -108,16 +126,24 @@ public class ContentCreationPage extends JDialog {
                 Story story = storyFactory.createContent("uniqueId", userId, timeStamp, mediaDetails);
 
                 ContentDatabaseSaver.saveContent(story);
+
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             JOptionPane.showMessageDialog(this, "Story created successfully!");
+
             try {
                 GettingUserByUserId getUserByUserId = new GettingUserByUserId();
                 User user = getUserByUserId.getUser(userId);
 
-                Profile profilePage = new Profile(user);
+                NewsFeedPosts newsFeedPosts = new NewsFeedPosts(user.getUserId());
+
+                NewsFeedStory newsFeedStory;
+                newsFeedStory = new NewsFeedStory(user.getUserId());
+
+                NewsFeedFrame newsFeedFrame;
+                newsFeedFrame = new NewsFeedFrame(newsFeedPosts, newsFeedStory, user);
                 dispose();
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,18 +153,4 @@ public class ContentCreationPage extends JDialog {
 
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            FlatLightLaf.setup();
-
-            JFrame parentFrame = new JFrame();
-            parentFrame.setSize(800, 600);
-            parentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            parentFrame.setVisible(true);
-
-            ContentCreationPage creationPage = new ContentCreationPage(parentFrame, "123");
-            creationPage.setVisible(true);
-
-        });
-    }
 }

@@ -41,5 +41,12 @@
       "image" : "/home/amr/Connect_Hub/src/main/resources/CreateContent.jpeg",
       "text" : "khaled......khaled tany"
     }
+  }, {
+    "timeStamp" : "2024-12-06T11:06:00.709452500",
+    "contentId" : "uniqueId",
+    "content" : {
+      "image" : "No image attached",
+      "text" : "saaaas"
+    }
   } ]
 }

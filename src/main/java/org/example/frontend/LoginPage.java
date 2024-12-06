@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.example.backend.GettingUserByPass;
+import org.example.backend.NewsFeedPosts;
+import org.example.backend.NewsFeedStory;
 import org.example.backend.User;
 
 public class LoginPage extends JFrame {
@@ -79,12 +81,20 @@ public class LoginPage extends JFrame {
                         GettingUserByPass getUserBypass = new GettingUserByPass();
                         User user = getUserBypass.getUser(password);
 
-                        Profile profilePage = new Profile(user);
+                        NewsFeedPosts newsFeedPosts = new NewsFeedPosts(user.getUserId());
+
+                        NewsFeedStory newsFeedStory;
+                        newsFeedStory = new NewsFeedStory(user.getUserId());
+
+                        NewsFeedFrame newsFeedFrame;
+                        newsFeedFrame = new NewsFeedFrame(newsFeedPosts, newsFeedStory, user);
+
                     } catch (IOException ex) {
                         Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.dispose();
+                    
                 } else {
                     JOptionPane.showMessageDialog(this, "Wrong username or password!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
