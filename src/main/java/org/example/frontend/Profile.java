@@ -15,12 +15,14 @@ public class Profile extends JFrame {
 
 
     public Profile(User user) throws IOException {
+
         myUser = user;
         initComponents();
         setTitle("My Profile");
         setSize(820, 600);
         setLocationRelativeTo(null); // Center the frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
         setupLayout();
         this.setVisible(true);
     }

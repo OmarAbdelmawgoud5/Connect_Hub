@@ -19,9 +19,12 @@ public class NewsFeedFrame extends JFrame {
     public NewsFeedFrame(NewsFeedPosts newsFeedPosts,NewsFeedStory newsFeedStory,User user) throws IOException {
         this.newsFeedPosts = newsFeedPosts;
         friends=newsFeedPosts.getFriends();
+
         this.newsFeedStory= newsFeedStory;
         this.user=user;
         JFrame frame = new JFrame("NewsFeed");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
         frame.setSize(600, 700);
         frame.setLocationRelativeTo(null);
         JPanel mainPanel = new JPanel();
@@ -82,18 +85,18 @@ public class NewsFeedFrame extends JFrame {
         //button5.setFont(new Font("Arial", Font.PLAIN, 7));
         button5.setFocusable(false);
         button5.addActionListener(e->{
-           // frame.setVisible(false);
-                new ContentCreationPage(this,user.getUserId());
+            // frame.setVisible(false);
+            new ContentCreationPage(this,user.getUserId());
         });
         JButton button6 = new JButton("Logout");
         button6.setFocusable(false);
         button6.addActionListener(e->{
             frame.setVisible(false);
 
-                var temp=new UserLogout();
-                temp.logout(user);
-                new LoginPage();
-                this.dispose();
+            var temp=new UserLogout();
+            temp.logout(user);
+            new LoginPage();
+            this.dispose();
 
         });
         sidePanel.add(button1);
@@ -111,37 +114,46 @@ public class NewsFeedFrame extends JFrame {
         sidePanel.add(button6);
 
         mainPanel.add(sidePanel, BorderLayout.WEST);
+
         JPanel storiesPanel = new JPanel();
         storiesPanel.setLayout(new BoxLayout(storiesPanel, BoxLayout.X_AXIS));
-        storiesPanel.setPreferredSize(new Dimension(400, 100));
+       // storiesPanel.setPreferredSize(new Dimension(300, 100)); // Adjust the dimensions
         storiesPanel.setBorder(BorderFactory.createTitledBorder("Stories"));
+
+        /*
         JPanel storiesContainer = new JPanel(new BorderLayout());
         storiesContainer.add(storiesPanel, BorderLayout.CENTER);
-        mainPanel.add(storiesContainer, BorderLayout.NORTH);
-
+      //  mainPanel.add(storiesContainer, BorderLayout.NORTH);
+*/
 
 
         JPanel postsPanel = new JPanel();
         postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
         postsPanel.setBorder(BorderFactory.createTitledBorder("Posts"));
-        var t=new postsDisplay(friends);
-        t.addposts(postsPanel);
-
-
-
-
-/*
         var storiesDisplay = new StoriesDisplay(friends);
         storiesDisplay.addStories(storiesPanel);
 
-        JScrollPane storiesScrollPane =     new JScrollPane(storiesPanel);
-        storiesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS); // Horizontal scrolling
-        storiesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // No vertical scrolling
+        var t=new postsDisplay(friends);
+        t.addposts(postsPanel);
 
-        mainPanel.add(storiesScrollPane, BorderLayout.NORTH); // Add stories at the top
-*/
+        JScrollPane postsScrollPane = new JScrollPane(postsPanel);
+        postsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Vertical scrolling
+        postsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // No horizontal scrolling
+
+
+
+
+
+        JScrollPane storiesScrollPane = new JScrollPane(storiesPanel);
+        storiesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        storiesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+
+        mainPanel.add(storiesScrollPane, BorderLayout.NORTH);
+        mainPanel.add(postsScrollPane);
         frame.add(mainPanel);
         frame.setVisible(true);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
     }
     private void loadPosts(JPanel postsPanel, User friend) throws IOException {
         ArrayList<Content> posts = newsFeedPosts.getPostsForFriend(friend);

@@ -32,7 +32,7 @@ public class UserJson {
     private UserJson() throws IOException {
         LoadUser();
     }
-    public void editUser(User user) throws IOException {
+    synchronized  public void editUser(User user) throws IOException {
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(user.getUserId());
         objectNode.put(user.getUserId(), user.toJsonNode());
@@ -54,18 +54,18 @@ public class UserJson {
         }
         return mp;
     }
-    void SaveJson() throws IOException {
+    synchronized  void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(new File(DatabaseFiles.USERS_DB),rootNode);
         System.out.println(rootNode.toString());
     }
-    void LoadUser() throws IOException {
+    synchronized  void LoadUser() throws IOException {
         Map<User,Integer> mp=new HashMap<>();
         ArrayList<Map<User,Integer>> temp=new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         rootNode = objectMapper.readTree(new File(DatabaseFiles.USERS_DB));
     }
-    User LoadUser(String id) throws IOException {
+    synchronized  User LoadUser(String id) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
