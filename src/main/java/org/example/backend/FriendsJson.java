@@ -21,7 +21,7 @@ public class FriendsJson {
         db=LoadFirendsJson();
     }
 
-    public void editfirend(Map<User,Integer> t) throws IOException {
+    synchronized public void editfirend(Map<User,Integer> t) throws IOException {
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(id);
 
@@ -34,12 +34,12 @@ public class FriendsJson {
 
         SaveJson();
     }
-    void SaveJson() throws IOException {
+    synchronized void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\friendsdb.json"),rootNode);
         System.out.println(rootNode.toString());
     }
-    public Map<User, Integer> getDb() {
+    synchronized public Map<User, Integer> getDb() {
         return db;
     }
     Map<User, Integer>  LoadFirendsJson() throws IOException {

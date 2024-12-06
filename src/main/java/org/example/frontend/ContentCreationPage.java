@@ -76,7 +76,10 @@ public class ContentCreationPage extends JDialog {
                 JOptionPane.showMessageDialog(this, "Cannot post an empty content!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            imagePath=null;
+            if(imagePath.equals("No image attached"))
+            {
+                imagePath=null;
+            }
             mediaDetails = new MediaDetails(text, imagePath);
             try {
                 PostFactory postFactory = new PostFactory();
@@ -101,7 +104,10 @@ public class ContentCreationPage extends JDialog {
                 JOptionPane.showMessageDialog(this, "Cannot make story with empty content!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            imagePath=null;
+            if(imagePath.equals("No image attached"))
+            {
+                imagePath=null;
+            }
             mediaDetails = new MediaDetails(text, imagePath);
 
             try {

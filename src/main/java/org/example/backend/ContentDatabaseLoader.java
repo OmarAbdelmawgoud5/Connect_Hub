@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ContentDatabaseLoader {
 
-    public static ArrayList<Content> loadContent(String userId,String contentType) throws IOException {
+    synchronized  public static ArrayList<Content> loadContent(String userId,String contentType) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<Content> extractedContent = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class ContentDatabaseLoader {
 
 
             contentData =
-                    mapper.readValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\posts.json"), new TypeReference<>() {
+                    mapper.readValue(requiredFile, new TypeReference<>() {
                     });
 
         }
@@ -69,7 +69,7 @@ public class ContentDatabaseLoader {
         return extractedContent;
     }
 
-    private static void validateField(Object field, String fieldName) {
+    synchronized private static void validateField(Object field, String fieldName) {
         if (field == null || field.toString().isEmpty()) {
             throw new IllegalArgumentException(fieldName + " is missing or empty.");
         }

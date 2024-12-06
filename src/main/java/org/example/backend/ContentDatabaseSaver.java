@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ContentDatabaseSaver {
-    public static void saveContent(Content content) throws IOException {
+    synchronized  public static void saveContent(Content content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         File postsFile = new File(DatabaseFiles.POSTS_DB);
         File storiesFile = new File(DatabaseFiles.STORIES_DB);
