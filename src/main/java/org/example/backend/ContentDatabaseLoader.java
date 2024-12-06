@@ -34,7 +34,7 @@ public class ContentDatabaseLoader {
 
 
             contentData =
-                    mapper.readValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\posts.json"), new TypeReference<>() {
+                    mapper.readValue(requiredFile, new TypeReference<>() {
                     });
 
         }

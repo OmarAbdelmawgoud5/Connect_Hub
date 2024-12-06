@@ -40,14 +40,14 @@ public class UserJson {
     }
     void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\Users.Json"),rootNode);
+        mapper.writeValue(new File(DatabaseFiles.USERS_DB),rootNode);
         System.out.println(rootNode.toString());
     }
     void LoadUser() throws IOException {
         Map<User,Integer> mp=new HashMap<>();
         ArrayList<Map<User,Integer>> temp=new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        rootNode = objectMapper.readTree(new File("D:\\College\\Term 5\\Programming 2\\lab9\\MergeVersion\\Connect_Hub\\src\\main\\resources\\Users.Json"));
+        rootNode = objectMapper.readTree(new File(DatabaseFiles.USERS_DB));
     }
     User LoadUser(String id) throws IOException {
 
