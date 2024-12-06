@@ -39,6 +39,21 @@ public class UserJson {
         System.out.println(user.toString());
         SaveJson();
     }
+
+    Map<String, User> getmap() throws IOException {
+        Map<String, User> mp = new HashMap<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        Iterator<Map.Entry<String, JsonNode>> fields = db.rootNode.fields();
+        while (fields.hasNext()) {
+            Map.Entry<String, JsonNode> entry = fields.next();
+            JsonNode userNode = entry.getValue();
+            User user = objectMapper.readValue(userNode.toString(), User.class);
+            mp.put(entry.getKey(), user);
+        }
+        return mp;
+    }
     void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(new File(DatabaseFiles.USERS_DB),rootNode);

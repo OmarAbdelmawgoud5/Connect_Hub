@@ -40,7 +40,25 @@ public class FriendsListPanel extends JPanel implements ActionListener {
         nameLabel.setBounds(180, 80, 200, 20);
         add(nameLabel);
 
-         optionsButton=new JButton("...");
+        JLabel status = new JLabel(user1.getStatus());
+        status.setFont(new Font("Arial", Font.BOLD, 12)); // Modern font
+        status.setOpaque(true);
+
+        if (user1.getStatus().equalsIgnoreCase("online")) {
+            status.setBackground(new Color(0, 200, 0));
+            status.setForeground(Color.WHITE);
+        } else {
+            status.setBackground(new Color(200, 0, 0));
+            status.setForeground(Color.WHITE);
+        }
+
+
+        status.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        status.setHorizontalAlignment(SwingConstants.CENTER);
+        status.setBounds(500, 75, 80, 25);
+
+        add(status);
+        optionsButton=new JButton("...");
         optionsButton.setFont(new Font("Arial", Font.BOLD, 30));
         optionsButton.setBounds(630,60,30,30);
         optionsButton.setOpaque(false);

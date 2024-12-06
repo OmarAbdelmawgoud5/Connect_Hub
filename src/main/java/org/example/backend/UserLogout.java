@@ -9,22 +9,13 @@ public class UserLogout {
 
     private UserJson db = UserJson.getdb();
 
-    public boolean logout(String email) {
+    public boolean logout(User x) {
         try {
-            for (JsonNode userNode : db.rootNode) {
-                ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.registerModule(new JavaTimeModule());
-                User user = objectMapper.treeToValue(userNode, User.class);
-
-                if (user.getEmail().equals(email)) {
-
-                    user.setStatus("Offline");
-
-                    db.editUser(user);
-                    return true;
-                }
+            x.setStatus("Offline");
+            db.editUser(x);
+            return true;
             }
-        } catch (IOException e) {
+         catch (IOException e) {
             e.printStackTrace();
         }
 

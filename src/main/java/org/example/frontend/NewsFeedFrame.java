@@ -2,6 +2,8 @@ package org.example.frontend;
 import org.example.backend.*;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,7 +54,9 @@ public class NewsFeedFrame extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-        JButton button3 = new JButton("FriendSuggestion");
+        JButton button3 = new JButton("Friend Suggestion");
+        button3.setFont(new Font("Arial", Font.PLAIN, 7));
+
         button3.setFocusable(false);
         button3.addActionListener(e->{
             frame.setVisible(false);
@@ -62,11 +66,50 @@ public class NewsFeedFrame extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
+        JButton button4 = new JButton("Reload");
+        button4.setFocusable(false);
+        button4.addActionListener(e->{
+            frame.setVisible(false);
+            try {
+                this.dispose();
+                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),new NewsFeedStory(user.getUserId()),user);
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        JButton button5 = new JButton("Create Post");
+        //button5.setFont(new Font("Arial", Font.PLAIN, 7));
+        button5.setFocusable(false);
+        button5.addActionListener(e->{
+           // frame.setVisible(false);
+                new ContentCreationPage(this,user.getUserId());
+        });
+        JButton button6 = new JButton("Logout");
+        button6.setFocusable(false);
+        button6.addActionListener(e->{
+            frame.setVisible(false);
+
+                var temp=new UserLogout();
+                temp.logout(user);
+                new LoginPage();
+                this.dispose();
+
+        });
         sidePanel.add(button1);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(button2);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(button3);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidePanel.add(button4);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidePanel.add(button4);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidePanel.add(button5);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidePanel.add(button6);
+
         mainPanel.add(sidePanel, BorderLayout.WEST);
         JPanel storiesPanel = new JPanel();
         storiesPanel.setLayout(new BoxLayout(storiesPanel, BoxLayout.X_AXIS));
@@ -75,17 +118,28 @@ public class NewsFeedFrame extends JFrame {
         JPanel storiesContainer = new JPanel(new BorderLayout());
         storiesContainer.add(storiesPanel, BorderLayout.CENTER);
         mainPanel.add(storiesContainer, BorderLayout.NORTH);
+
+
+
         JPanel postsPanel = new JPanel();
         postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
         postsPanel.setBorder(BorderFactory.createTitledBorder("Posts"));
-        //loadPosts(postsPanel, friends.get(0));
-        JButton loadMoreButton = new JButton("Refresh");
-        loadMoreButton.setFocusable(false);
-        setupLoadMoreButton(postsPanel, loadMoreButton, friends);
-        JScrollPane postsScrollPane = new JScrollPane(postsPanel);
-        postsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        mainPanel.add(postsScrollPane, BorderLayout.CENTER);
-        mainPanel.add(loadMoreButton, BorderLayout.SOUTH);
+        var t=new postsDisplay(friends);
+        t.addposts(postsPanel);
+
+
+
+
+/*
+        var storiesDisplay = new StoriesDisplay(friends);
+        storiesDisplay.addStories(storiesPanel);
+
+        JScrollPane storiesScrollPane =     new JScrollPane(storiesPanel);
+        storiesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS); // Horizontal scrolling
+        storiesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // No vertical scrolling
+
+        mainPanel.add(storiesScrollPane, BorderLayout.NORTH); // Add stories at the top
+*/
         frame.add(mainPanel);
         frame.setVisible(true);
     }
@@ -95,15 +149,33 @@ public class NewsFeedFrame extends JFrame {
             Content post = posts.get(i);
             JPanel postPanel = new JPanel();
             postPanel.setLayout(new BorderLayout());
-            postPanel.setPreferredSize(new Dimension(350, 150));
-            postPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+            postPanel.setPreferredSize(new Dimension(350, 200));
+            postPanel.setBackground(new Color(245, 245, 245)); // Light neutral background
+            postPanel.setBorder(new CompoundBorder(
+                    new LineBorder(new Color(200, 200, 200), 1, true), // Rounded border
+                    BorderFactory.createEmptyBorder(10, 10, 10, 10) // Padding
+            ));
+
+// Title Label
             JLabel titleLabel = new JLabel(friend.getUserName(), JLabel.CENTER);
+            titleLabel.setFont(new Font("Arial", Font.BOLD, 14)); // Modern font
+            titleLabel.setForeground(new Color(50, 50, 50)); // Dark text
+            postPanel.add(titleLabel, BorderLayout.NORTH);
+
+// Description Area
             JTextArea descriptionArea = new JTextArea(post.getContent().getText());
             descriptionArea.setLineWrap(true);
             descriptionArea.setWrapStyleWord(true);
             descriptionArea.setEditable(false);
-            postPanel.add(titleLabel, BorderLayout.NORTH);
-            postPanel.add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
+            descriptionArea.setFont(new Font("Arial", Font.PLAIN, 12));
+            descriptionArea.setBackground(new Color(255, 255, 255));
+            descriptionArea.setForeground(new Color(70, 70, 70)); // Soft gray text
+            descriptionArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            JScrollPane scrollPane = new JScrollPane(descriptionArea);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder()); // No border for scroll
+            postPanel.add(scrollPane, BorderLayout.CENTER);
+
+// Media Section
             MediaDetails media = post.getContent();
             if (media != null && media.getImage() != null) {
                 try {
@@ -112,34 +184,20 @@ public class NewsFeedFrame extends JFrame {
                     ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
                     JLabel imageLabel = new JLabel(scaledIcon);
+                    imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0)); // Padding
                     postPanel.add(imageLabel, BorderLayout.SOUTH);
                 } catch (Exception e) {
                     System.err.println("Error resizing image: " + e.getMessage());
                 }
             }
+
+// Add Spacing Between Posts
+            postPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
             postsPanel.add(postPanel);
-            postsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            postsPanel.add(Box.createRigidArea(new Dimension(0, 15))); // Add space
         }
     }
-    private  void setupLoadMoreButton(JPanel postsPanel, JButton loadMoreButton, ArrayList<User> friends) {
-        loadMoreButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    loadPosts(postsPanel, friends.get(currentFriendIndex));
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
 
-                // Update the current friend index to the next friend
-                currentFriendIndex = (currentFriendIndex + 1) % friends.size(); // Loops back to the first friend if we reach the end
-
-                // Refresh the UI after adding new posts
-                postsPanel.revalidate();
-                postsPanel.repaint();
-            }
-        });
-    }
 //    private void loadStories(JPanel storiesPanel, User friend) throws IOException {
 //        storiesPanel.removeAll(); // Clear existing stories
 //
@@ -198,7 +256,7 @@ public class NewsFeedFrame extends JFrame {
 //                }
 //
 //
-//                currentFriendIndex = (currentFriendIndex + 1) % friends.size(); 
+//                currentFriendIndex = (currentFriendIndex + 1) % friends.size();
 //            }
 //        });
 //    }

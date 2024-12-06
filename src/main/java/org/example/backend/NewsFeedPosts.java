@@ -1,6 +1,7 @@
 package org.example.backend;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 public class NewsFeedPosts {
     private String userId;
@@ -20,6 +21,7 @@ public class NewsFeedPosts {
             if (value==4)
                 friends.add(entry.getKey());
         }
+        Collections.shuffle(friends);
         return friends;
     }
     public ArrayList<Content> getPostsForFriend(User friend) throws IOException {
