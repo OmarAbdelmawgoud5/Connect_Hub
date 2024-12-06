@@ -74,8 +74,7 @@ public class LoginPage extends JFrame {
                 if (userLogin.login(email, password)) {
                     try {
                         JOptionPane.showMessageDialog(this, "Login Successful");
-                        GettingUserByPass getUserBypass = new GettingUserByPass();
-                        User user = getUserBypass.getUser(password);
+                        User user = userLogin.getUser();
                         new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),new NewsFeedStory(user.getUserId()),user);
 
                     } catch (IOException ex) {

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -37,6 +38,21 @@ public class UserJson {
         objectNode.put(user.getUserId(), user.toJsonNode());
         System.out.println(user.toString());
         SaveJson();
+    }
+
+    Map<String, User> getmap() throws IOException {
+        Map<String, User> mp = new HashMap<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        Iterator<Map.Entry<String, JsonNode>> fields = db.rootNode.fields();
+        while (fields.hasNext()) {
+            Map.Entry<String, JsonNode> entry = fields.next();
+            JsonNode userNode = entry.getValue();
+            User user = objectMapper.readValue(userNode.toString(), User.class);
+            mp.put(entry.getKey(), user);
+        }
+        return mp;
     }
     void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();

@@ -8,18 +8,23 @@ import java.io.IOException;
 public class UserLogin {
 
     private UserJson db = UserJson.getdb();
+    private User user=null;
+
+    public User getUser() {
+        return user;
+    }
 
     public boolean login(String email, String password) {
         try {
             for (JsonNode userNode : db.rootNode) {
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.registerModule(new JavaTimeModule());
-                User user = objectMapper.treeToValue(userNode, User.class);
+                user = objectMapper.treeToValue(userNode, User.class);
 
                 if (user.getEmail().equals(email) && Encryption.verifyPassword(password, user.getPassword())) {
                     
                     user.setStatus("Online");
-
+                    System.out.println("I am "+user.getUserName());
                     db.editUser(user);
                     return true; 
                 }
