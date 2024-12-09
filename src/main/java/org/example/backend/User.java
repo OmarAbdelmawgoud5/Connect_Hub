@@ -149,8 +149,7 @@ public class User {
     }
 
     private String generateUserId() {
-        System.out.println( String.valueOf(this.hashCode()));
-        return  String.valueOf(this.hashCode());
+        return  UUID.randomUUID().toString();
     }
 
 }

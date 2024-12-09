@@ -90,7 +90,6 @@ public class Profile extends JFrame {
         ArrayList<Content> posts=null;
         try {
            posts = fetchPosts();
-
         }
         catch (RuntimeException e) {
             ;
@@ -142,15 +141,15 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
     switch (k) {
         case "Back":
         {
-            System.out.println(myUser.getUserId());
-            new NewsFeedFrame(new NewsFeedPosts(myUser.getUserId()),new NewsFeedStory(myUser.getUserId()),myUser);
+           // System.out.println(myUser.getUserId());
+            new NewsFeedFrame(new NewsFeedPosts(myUser.getUserId()),myUser);
             this.dispose();
             break;
         }
         case "Friends":
         {
             new FriendManagementFrame(myUser);
-            System.out.println(myUser.getUserId());
+            //System.out.println(myUser.getUserId());
             this.dispose();
             break;
         }
@@ -240,7 +239,7 @@ private void buttonaction(ActionEvent evt, String k) throws IOException {
     }
 
     private ArrayList<Content> fetchPosts() throws IOException {
-        System.out.println(myUser.getUserId());
+       // System.out.println(myUser.getUserId());
         return ContentDatabaseLoader.loadContent(myUser.getUserId(), "post");
     }
 

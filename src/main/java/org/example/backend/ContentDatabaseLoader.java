@@ -17,8 +17,8 @@ public class ContentDatabaseLoader {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<Content> extractedContent = new ArrayList<>();
 
-        File postsFile = new File(DatabaseFiles.POSTS_DB);
-        File storiesFile = new File(DatabaseFiles.STORIES_DB);
+        File postsFile =FileGenerator.getFile(DatabaseFiles.POSTS_DB);
+        File storiesFile = FileGenerator.getFile(DatabaseFiles.STORIES_DB);
         File requiredFile ;
         if(contentType.equals("post")){
             requiredFile = postsFile;
@@ -29,10 +29,9 @@ public class ContentDatabaseLoader {
         else{
             throw new IOException(contentType);
         }
+
         Map<String, List<Map<String, Object>>> contentData;
         try {
-
-
             contentData =
                     mapper.readValue(requiredFile, new TypeReference<>() {
                     });
@@ -45,13 +44,9 @@ public class ContentDatabaseLoader {
 
         System.out.println("Omar");
         List<Map<String, Object>> userContent = contentData.get(userId);
-
-
         if (userContent == null) {
             return extractedContent;
         }
-
-
         for (Map<String, Object> singleUserContent : userContent) {
             String contentId = (String) singleUserContent.get("contentId");
             LocalDateTime timeStamp = LocalDateTime.parse((String) singleUserContent.get("timeStamp"));

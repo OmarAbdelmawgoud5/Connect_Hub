@@ -13,8 +13,8 @@ import java.util.Map;
 public class ContentDatabaseSaver {
     synchronized  public static void saveContent(Content content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        File postsFile = new File(DatabaseFiles.POSTS_DB);
-        File storiesFile = new File(DatabaseFiles.STORIES_DB);
+        File postsFile = FileGenerator.getFile(DatabaseFiles.POSTS_DB);
+        File storiesFile = FileGenerator.getFile(DatabaseFiles.STORIES_DB);
         File requiredFile ;
         if(content instanceof Post) {
             requiredFile = postsFile;
@@ -35,7 +35,6 @@ public class ContentDatabaseSaver {
          userContent.add(newContentData);
         }
 
-
         else {
             ArrayList<Map<String,Object>> newArrayList=new ArrayList<>();
             newArrayList.add(newContentData);
@@ -43,9 +42,5 @@ public class ContentDatabaseSaver {
         }
 
         mapper.writerWithDefaultPrettyPrinter().writeValue(requiredFile , contentData);
-
-
-
-
     }
 }

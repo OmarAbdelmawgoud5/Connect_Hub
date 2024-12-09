@@ -50,7 +50,7 @@ public class ChangePasswordDialog extends JDialog {
                         System.out.println("Yes");
                         JOptionPane.showMessageDialog(this, "Ok!", "Done", 1);
                         try {
-                            UserJson.getdb().editUser(user);
+                            new UserJson().editUser(user);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -67,7 +67,6 @@ public class ChangePasswordDialog extends JDialog {
             dispose();
         });
         setVisible(true);
-        // Action listener for Cancel button
         cancelButton.addActionListener(e -> dispose());
     }
 }

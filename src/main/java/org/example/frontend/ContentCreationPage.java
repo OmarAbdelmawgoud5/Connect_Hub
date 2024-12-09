@@ -82,11 +82,9 @@ public class ContentCreationPage extends JDialog {
             }
             mediaDetails = new MediaDetails(text, imagePath);
             try {
-                PostFactory postFactory = new PostFactory();
-                Post post = postFactory.createContent("uniqueId", userId, timeStamp, mediaDetails);
-
-                GettingUserByUserId getUserByUserId = new GettingUserByUserId();
-                User user = getUserByUserId.getUser(userId);
+                ContentFactory contentFactory = ContentFactoryRegistry.getInstance().getContentFactory("post");
+                Content post = contentFactory.createContent("uniqueId", userId, timeStamp, mediaDetails);
+                User user=new UserJson().LoadUser(userId);
                 ContentDatabaseSaver.saveContent(post);
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,9 +109,8 @@ public class ContentCreationPage extends JDialog {
             mediaDetails = new MediaDetails(text, imagePath);
 
             try {
-                StoryFactory storyFactory = new StoryFactory();
-                Story story = storyFactory.createContent("uniqueId", userId, timeStamp, mediaDetails);
-
+                ContentFactory contentFactory = ContentFactoryRegistry.getInstance().getContentFactory("story");
+                Content story = contentFactory.createContent("uniqueId", userId, timeStamp, mediaDetails);
                 ContentDatabaseSaver.saveContent(story);
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
