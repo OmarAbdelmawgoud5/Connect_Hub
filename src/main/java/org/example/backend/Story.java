@@ -6,4 +6,7 @@ public class Story extends Content{
     public Story(String contentId, String authorId, LocalDateTime timeStamp,MediaDetails content) {
         super(contentId, authorId, timeStamp,content);
     }
+    public Story(String authorId, LocalDateTime timeStamp,MediaDetails content) {
+        super(authorId, timeStamp,content);
+    }
 }

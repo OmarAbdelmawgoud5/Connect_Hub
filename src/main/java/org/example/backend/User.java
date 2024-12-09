@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +25,7 @@ public class User {
     private String Bio;
     private String password;
     private String status;
+    private ArrayList<Map<String,String>> groups;
 
     @JsonCreator
     public User(
@@ -61,6 +64,7 @@ public class User {
         this.Bio = Bio;
         this.password = password;
         this.status = status;
+        groups = new ArrayList<>();
     }
 
     public void setUserId(String userId) {

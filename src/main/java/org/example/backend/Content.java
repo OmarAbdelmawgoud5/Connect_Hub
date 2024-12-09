@@ -3,19 +3,30 @@ package org.example.backend;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class Content {
     private String contentId;
     private String authorId;
     private LocalDateTime timeStamp;
     private MediaDetails content;
-    Content(String contentId, String authorId, LocalDateTime timeStamp, MediaDetails content) {
+    Content(String authorId, LocalDateTime timeStamp, MediaDetails content) {
+        this.contentId = generateUniqueId();
+        this.authorId = authorId;
+        this.timeStamp = timeStamp;
+        this.content = content;
+    }
+    Content(String contentId,String authorId, LocalDateTime timeStamp, MediaDetails content) {
         this.contentId = contentId;
         this.authorId = authorId;
         this.timeStamp = timeStamp;
         this.content = content;
     }
 
+    public String generateUniqueId()
+    {
+        return UUID.randomUUID().toString();
+    }
     public String getContentId() {
         return contentId;
     }
