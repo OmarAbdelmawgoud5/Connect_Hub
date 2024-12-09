@@ -1,5 +1,8 @@
 package org.example.backend;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,11 +10,14 @@ public class MediaDetails {
     private String text;
     private String image;
 
-    public MediaDetails(String text, String image) {
-        this.text = text;
-        this.image = image;
-    }
 
+    @JsonCreator
+    public MediaDetails(
+            @JsonProperty("image") String image,
+            @JsonProperty("text") String text) {
+        this.image = image;
+        this.text = text;
+    }
     public String getText() {
         return text;
     }

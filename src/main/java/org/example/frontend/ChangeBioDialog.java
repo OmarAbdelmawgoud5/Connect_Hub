@@ -27,17 +27,17 @@ public class ChangeBioDialog extends JDialog {
         buttonPanel.add(submitButton);
         buttonPanel.add(cancelButton);
 
-        // Add components
+
         add(bioLabel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Action listener for Submit button
+
         submitButton.addActionListener(e -> {
             String newBio = bioTextArea.getText();
             user.setBio(newBio);
             try {
-                UserJson.getdb().editUser(user);
+                new UserJson().editUser(user);
                 parent.userBio.setText(newBio );
                 JOptionPane.showMessageDialog(this, "Ok!", "Done", 1);
 
@@ -46,7 +46,7 @@ public class ChangeBioDialog extends JDialog {
             }
             dispose();
         });
-        // Action listener for Cancel button
+
         cancelButton.addActionListener(e -> this.dispose());
         setVisible(true);
 

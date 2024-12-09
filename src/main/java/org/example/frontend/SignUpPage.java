@@ -113,7 +113,6 @@ public class SignUpPage extends JDialog {
             String month = monthField.getText();
             String day = dayField.getText();
             String password = new String(passwordField.getPassword());
-
             if (!name.matches("^[a-zA-Z ]+$")) {
                 JOptionPane.showMessageDialog(this, "Invalid Name", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")) {
@@ -122,14 +121,16 @@ public class SignUpPage extends JDialog {
                 JOptionPane.showMessageDialog(this, "Invalid date. Enter valid numeric values for year, month, and day.", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (!password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$")) {
                 JOptionPane.showMessageDialog(this, "Invalid Password.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (profilePhotoPath.equals("No file chosen") || coverPhotoPath.equals("No file chosen")) {
+            }
+            else if (profilePhotoPath==null || coverPhotoPath==null) {
                 JOptionPane.showMessageDialog(this, "You have to choose Pics.", "Error", JOptionPane.ERROR_MESSAGE);
-
-            } else {
+            }
+            else if (profilePhotoPath.equals("No file chosen") || coverPhotoPath.equals("No file chosen")) {
+                JOptionPane.showMessageDialog(this, "You have to choose Pics.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
                 LocalDate dob = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-               
                 User newUser = new User(name, email, dob, profilePhotoPath, coverPhotoPath, null,password, "Online");
-
                 UserSignUp userSignUp = null;
                 try {
                     userSignUp = new UserSignUp();
@@ -142,10 +143,8 @@ public class SignUpPage extends JDialog {
                 String message = (added ? "User added successfully!" : "User already exists!");
                 JOptionPane.showMessageDialog(null, message);
                 if (added) {
-                    
                     try {
-                        new NewsFeedFrame(new NewsFeedPosts(newUser.getUserId()),new NewsFeedStory(newUser.getUserId()),newUser);
-
+                        new NewsFeedFrame(new NewsFeedPosts(newUser.getUserId()),newUser);
                     } catch (IOException ex) {
                         Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, null, ex);
                     }

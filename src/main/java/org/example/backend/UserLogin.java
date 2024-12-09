@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class UserLogin {
 
-    private UserJson db = UserJson.getdb();
+    private UserJson db = new UserJson();
     private User user=null;
 
     public UserLogin() throws IOException {
@@ -23,11 +23,8 @@ public class UserLogin {
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.registerModule(new JavaTimeModule());
                 user = objectMapper.treeToValue(userNode, User.class);
-
                 if (user.getEmail().equals(email) && Encryption.verifyPassword(password, user.getPassword())) {
-                    
                     user.setStatus("Online");
-                    System.out.println("I am "+user.getUserName());
                     db.editUser(user);
                     return true; 
                 }
@@ -35,7 +32,6 @@ public class UserLogin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 }

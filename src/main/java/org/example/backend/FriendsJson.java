@@ -22,32 +22,31 @@ public class FriendsJson {
     }
 
     synchronized public void editfirend(Map<User,Integer> t) throws IOException {
+        if(t==null) return;
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(id);
-
-
         ObjectNode friendData = objectNode.putObject(id); // Create a nested object for this ID
         for (Map.Entry<User, Integer> entry : t.entrySet()) {
             friendData.put(entry.getKey().getUserId(), entry.getValue());
         }
-
-
         SaveJson();
     }
     synchronized void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(DatabaseFiles.FRIENDS_DB),rootNode);
+
+        mapper.writerWithDefaultPrettyPrinter().writeValue(FileGenerator.getFile(DatabaseFiles.FRIENDS_DB),rootNode);
         System.out.println(rootNode.toString());
     }
-    synchronized public Map<User, Integer> getDb() {
+    synchronized public Map<User, Integer> getDb()
+    {
         return db;
     }
     Map<User, Integer>  LoadFirendsJson() throws IOException {
         Map<User,Integer> mp=new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
         // Load the JSON as a tree
-        rootNode = objectMapper.readTree(new File(DatabaseFiles.FRIENDS_DB));
-        var f=UserJson.getdb();
+        rootNode = objectMapper.readTree(FileGenerator.getFile(DatabaseFiles.FRIENDS_DB));
+        var f= new UserJson();
         JsonNode desiredFieldNode = rootNode.get(id);
         if(desiredFieldNode!=null) {
             System.out.println(id);
@@ -60,6 +59,4 @@ public class FriendsJson {
         }
         return mp;
     }
-
-
 }

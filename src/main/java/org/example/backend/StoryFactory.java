@@ -9,5 +9,9 @@ public class StoryFactory extends ContentFactory {
             return  new Story(contentId, authorId, timeStamp, content);
         }
 
+    public Story createContent(String authorId, LocalDateTime timeStamp, MediaDetails content){
+        return  new Story(authorId, timeStamp, content);
+    }
+
     }
 

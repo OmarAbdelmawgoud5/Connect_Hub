@@ -6,12 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 
 public class UserLogout {
-
-    private UserJson db = UserJson.getdb();
-
+    private UserJson db = new UserJson();
     public UserLogout() throws IOException {
     }
-
     public boolean logout(User x) {
         try {
             x.setStatus("Offline");
@@ -21,7 +18,6 @@ public class UserLogout {
          catch (IOException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 }

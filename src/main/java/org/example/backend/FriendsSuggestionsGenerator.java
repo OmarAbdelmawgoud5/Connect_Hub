@@ -29,17 +29,12 @@ public class FriendsSuggestionsGenerator {
           else {
               other.add(entry.getKey());
           }
-
         }
-
-
         if(friends.isEmpty())
         {
-
             ArrayList<User>allUsers=getAllUsers();
             for(User u:allUsers)
             {
-
                 if(!contains(other,u)&&!u.getUserId().equals(user.getUserId())){
                     System.out.println(u.getUserId());
                     suggestions.add(u);
@@ -68,15 +63,8 @@ public class FriendsSuggestionsGenerator {
                     suggestions.add(friends2.get(j));
                     other.add(friends2.get(j));
                 }
-
             }
-
         }
-
-
-
-
-
         return suggestions;
     }
 
@@ -85,18 +73,15 @@ public class FriendsSuggestionsGenerator {
             if(u.getUserId().equals(user.getUserId())){
                 return true;
             }
-
-
         }
         return false;
     }
+
     private static ArrayList<User>getAllUsers(){
         try {
-            return new ArrayList<>(UserJson.getdb().getmap().values())  ;
+            return new ArrayList<>(new UserJson().getmap().values())  ;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }

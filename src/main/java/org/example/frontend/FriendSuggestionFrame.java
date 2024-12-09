@@ -118,7 +118,7 @@ public class FriendSuggestionFrame extends JFrame implements ActionListener {
         if (e.getSource() == backButton) {
             setVisible(false);
             try {
-                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()), new NewsFeedStory(user.getUserId()), user);
+                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()), user);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

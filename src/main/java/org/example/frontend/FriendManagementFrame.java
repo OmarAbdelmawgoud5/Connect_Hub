@@ -40,7 +40,10 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
             child.setPreferredSize(new Dimension(150, 240));
             friendRequestParentPanel.add(child);
             friendRequestParentPanel.add(Box.createHorizontalStrut(5));
-        }
+        }    // Vertical friends list panel
+        JPanel friendListParentPanel = new JPanel();
+        friendListParentPanel.setLayout(new BoxLayout(friendListParentPanel, BoxLayout.Y_AXIS));
+
         if(pending.isEmpty()) {
             JLabel noPending = new JLabel("No Pending Requests");
             noPending.setFont(new Font("Arial", Font.BOLD, 30));
@@ -60,10 +63,7 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         JLabel friendsLabel = new JLabel("Friends");
         friendsLabel.setFont(new Font("Arial", Font.BOLD, 22));
 
-        // Vertical friends list panel
-        JPanel friendListParentPanel = new JPanel();
-        friendListParentPanel.setPreferredSize(new Dimension(500, 400));
-        friendListParentPanel.setLayout(new BoxLayout(friendListParentPanel, BoxLayout.Y_AXIS));
+
         for (User friend : friends) {
             FriendsListPanel child = new FriendsListPanel(friend,user);
             child.setPreferredSize(new Dimension(500, 150));
@@ -80,6 +80,7 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         }
 
         // Combined panel: holds the horizontal pane and the friends list
+       //
         JPanel combinedPanel = new JPanel();
         combinedPanel.setLayout(new BoxLayout(combinedPanel, BoxLayout.Y_AXIS));
         combinedPanel.add(backButton);
@@ -100,7 +101,6 @@ public class FriendManagementFrame extends JFrame implements ActionListener {
         add(verticalScrollPane);
         verticalScrollPane.setBorder(null);
         horizontalScrollPane.setBorder(null);
-
         setVisible(true);
     }
     @Override
