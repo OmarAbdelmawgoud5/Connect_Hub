@@ -8,4 +8,7 @@ public class PostFactory extends ContentFactory{
         return  new Post(contentId, authorId, timeStamp, content);
     }
 
+    public Post createContent( String authorId, LocalDateTime timeStamp, MediaDetails content){
+        return  new Post(authorId, timeStamp, content);
+    }
 }

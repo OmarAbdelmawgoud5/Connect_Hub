@@ -8,7 +8,6 @@ public class NewsFeedPosts {
     private FriendsJson friendsJson;
     private Map<User, Integer> fr;
     private ArrayList<User> friends;
-    private ArrayList<Content> posts;
     public NewsFeedPosts(String userid) throws IOException {
         this.userId = userid;
         friendsJson = new FriendsJson(userid);
@@ -24,10 +23,4 @@ public class NewsFeedPosts {
         Collections.shuffle(friends);
         return friends;
     }
-    public ArrayList<Content> getPostsForFriend(User friend) throws IOException {
-        posts = new ArrayList<>();
-        posts.addAll(ContentDatabaseLoader.loadContent(friend.getUserId(), "post"));
-        return posts;
-    }
-
 }

@@ -13,39 +13,24 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class UserJson {
 
-    static UserJson db;
-
-    static {
-        try {
-            db = new UserJson();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     JsonNode rootNode;
-    File x=new File("src/main/resources/Users.Json");
-    static public UserJson getdb() throws IOException {
-        db = new UserJson();
-        return db;
-    }
-    private UserJson() throws IOException {
+
+    public UserJson() throws IOException {
         LoadUser();
     }
-    synchronized  public void editUser(User user) throws IOException {
+    public synchronized  void editUser(User user) throws IOException {
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(user.getUserId());
         objectNode.put(user.getUserId(), user.toJsonNode());
-        System.out.println(user.toString());
         SaveJson();
     }
 
-    synchronized Map<String, User> getmap() throws IOException {
+    public synchronized Map<String, User> getmap() throws IOException {
         Map<String, User> mp = new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-
-        Iterator<Map.Entry<String, JsonNode>> fields = db.rootNode.fields();
+        Iterator<Map.Entry<String, JsonNode>> fields = rootNode.fields();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> entry = fields.next();
             JsonNode userNode = entry.getValue();
@@ -54,19 +39,18 @@ public class UserJson {
         }
         return mp;
     }
-    synchronized  void SaveJson() throws IOException {
+    public synchronized  void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File(DatabaseFiles.USERS_DB),rootNode);
+        mapper.writeValue(FileGenerator.getFile(DatabaseFiles.USERS_DB),rootNode);
         System.out.println(rootNode.toString());
     }
-    synchronized  void LoadUser() throws IOException {
+    public synchronized  void LoadUser() throws IOException {
         Map<User,Integer> mp=new HashMap<>();
         ArrayList<Map<User,Integer>> temp=new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        rootNode = objectMapper.readTree(new File(DatabaseFiles.USERS_DB));
+        rootNode = objectMapper.readTree(FileGenerator.getFile(DatabaseFiles.USERS_DB));
     }
-    synchronized  User LoadUser(String id) throws IOException {
-
+    public synchronized  User LoadUser(String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         System.out.println(rootNode.get(id).toString());

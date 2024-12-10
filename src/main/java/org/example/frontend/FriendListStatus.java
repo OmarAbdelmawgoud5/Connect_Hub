@@ -18,10 +18,6 @@ public class FriendListStatus extends JFrame implements ActionListener {
         setResizable(false);
         this.user = user;
         ArrayList<User>friends=FriendsManagerReader.getFriends(user.getUserId(),FriendsStatus.Friend);
-        for(int i=0;i<friends.size();i++)
-        {
-            System.out.println("hello "+friends.get(i).getUserId());
-        }
         JLabel friendRequests = new JLabel("Friend Status");
         friendRequests.setFont(new Font("Arial", Font.BOLD, 22));
         backButton = new JButton("Back");
@@ -54,7 +50,7 @@ public class FriendListStatus extends JFrame implements ActionListener {
         if (e.getSource() == backButton) {
             setVisible(false);
             try {
-                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),new NewsFeedStory(user.getUserId()),user);
+                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

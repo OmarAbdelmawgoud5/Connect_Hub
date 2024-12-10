@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class FriendsManagerReader {
     public static ArrayList<User> getFriends(String id,FriendsStatus status) throws IOException {
-
         FriendsJson friendsJson=new FriendsJson(id);
         ArrayList<User> friends=new ArrayList<>();
         Map<User,Integer>fullMap;

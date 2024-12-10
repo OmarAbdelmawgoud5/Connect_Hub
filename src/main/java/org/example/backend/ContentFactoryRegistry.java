@@ -15,12 +15,10 @@ public class ContentFactoryRegistry {
     {
         if (instance == null)
             instance = new ContentFactoryRegistry();
-
         return instance;
-
     }
+
     public ContentFactory getContentFactory(String type) {
         return factories.get(type);
     }
-
 }

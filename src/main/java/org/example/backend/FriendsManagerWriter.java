@@ -10,7 +10,6 @@ public class FriendsManagerWriter {
        Map<User,Integer>user1Map = new FriendsJson(coreUser.getUserId()).getDb();
        Map<User,Integer>user2Map = new FriendsJson(secondUser.getUserId()).getDb();
 
-        System.out.println("Debug 2"+coreUser.getUserId()+secondUser.getUserId());
         switch (action) {
             case SendRequest:
                 user1Map.put(secondUser,FriendsStatus.Sent.ordinal());
@@ -41,7 +40,6 @@ public class FriendsManagerWriter {
             default:
                 System.out.println("Unknown action.");
         }
-        System.out.println("print");
         for(Map.Entry<User,Integer> entry:user1Map.entrySet()){
             System.out.println(entry.getKey()+" "+entry.getValue());
         }

@@ -80,7 +80,7 @@ public class LoginPage extends JFrame {
                     try {
                         JOptionPane.showMessageDialog(this, "Login Successful");
                         User user = userLogin.getUser();
-                        new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),new NewsFeedStory(user.getUserId()),user);
+                        new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
 
                     } catch (IOException ex) {
                         Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);

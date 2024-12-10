@@ -92,7 +92,6 @@ public class StoriesDisplay {
     public StoriesDisplay(ArrayList<User> friends) throws IOException {
         for (User friend : friends) {
             friendsMap.put(friend.getUserId(), friend);
-
             stories.addAll(ContentDatabaseLoader.loadContent(friend.getUserId(), "story"));
         }
     }
