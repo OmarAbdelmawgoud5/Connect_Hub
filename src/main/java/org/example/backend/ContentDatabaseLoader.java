@@ -13,12 +13,12 @@ import java.util.Map;
 
 public class ContentDatabaseLoader {
 
-    synchronized  public static ArrayList<Content> loadContent(String userId,String contentType) throws IOException {
+    public static ArrayList<Content> loadContent(String userId,String contentType) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<Content> extractedContent = new ArrayList<>();
 
-        File postsFile =FileGenerator.getFile(DatabaseFiles.POSTS_DB);
-        File storiesFile = FileGenerator.getFile(DatabaseFiles.STORIES_DB);
+        File postsFile = new File(DatabaseFiles.POSTS_DB);
+        File storiesFile = new File(DatabaseFiles.STORIES_DB);
         File requiredFile ;
         if(contentType.equals("post")){
             requiredFile = postsFile;
@@ -29,9 +29,10 @@ public class ContentDatabaseLoader {
         else{
             throw new IOException(contentType);
         }
-
         Map<String, List<Map<String, Object>>> contentData;
         try {
+
+
             contentData =
                     mapper.readValue(requiredFile, new TypeReference<>() {
                     });
@@ -44,14 +45,18 @@ public class ContentDatabaseLoader {
 
         System.out.println("Omar");
         List<Map<String, Object>> userContent = contentData.get(userId);
+
+
         if (userContent == null) {
             return extractedContent;
         }
+
+
         for (Map<String, Object> singleUserContent : userContent) {
             String contentId = (String) singleUserContent.get("contentId");
             LocalDateTime timeStamp = LocalDateTime.parse((String) singleUserContent.get("timeStamp"));
             Map<String, String> mediaDetails = mapper.convertValue(singleUserContent.get("content"), new TypeReference<>() {});
-
+           // mapper.readValue(rootNode.get(id).toString(), User.class);
             validateField(contentId, "contentId");
             validateField(timeStamp, "timeStamp");
             validateField(mediaDetails.get("text"), "text");
@@ -64,7 +69,7 @@ public class ContentDatabaseLoader {
         return extractedContent;
     }
 
-    synchronized private static void validateField(Object field, String fieldName) {
+    private static void validateField(Object field, String fieldName) {
         if (field == null || field.toString().isEmpty()) {
             throw new IllegalArgumentException(fieldName + " is missing or empty.");
         }

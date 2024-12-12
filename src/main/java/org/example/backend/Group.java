@@ -7,6 +7,7 @@ public class Group {
     ArrayList<String> membersId;
     String name;
     String photoPath;
+    public String id="123";
 
     public ArrayList<String> getContentId() {
         return contentId;

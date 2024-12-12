@@ -39,7 +39,7 @@ public class User {
             @JsonProperty("status") String status,
             @JsonProperty("id") String id
     ) {
-        this.id = id ;// Assign an ID if not provided
+        this.id = id ;  // Assign an ID if not provided
         this.userName = userName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
