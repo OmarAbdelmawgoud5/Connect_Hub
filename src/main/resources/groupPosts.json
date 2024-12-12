@@ -1,29 +1,20 @@
 {
-  "567": {
-    "timeStamp" : "2024-12-09T08:23:25.804360400",
-    "contentId" : "uniqueId",
-    "content" : {
-      "image" : null,
-      "text" : "Hello World 1"
-    },
-    "authorId": "3edf7101-272a-42d1-8a55-9849a80b0227"
+  "c74258b5-6a7f-4c66-9441-9a1d9cc33599": {
+    "contentId": "c74258b5-6a7f-4c66-9441-9a1d9cc33599",
+    "authorId": "23c53980-fb8a-4523-aa97-3f209e963260",
+    "timeStamp": "2024-12-12T20:07:47.991854900",
+    "content": {
+      "text": "jo",
+      "image": null
+    }
   },
-  "879": {
-    "timeStamp" : "2024-12-09T08:23:25.804360400",
-    "contentId" : "uniqueId",
-    "content" : {
-      "image" : null,
-      "text" : "Hello World 2"
-    },
-    "authorId": "f6582e5d-e5cd-4b35-98be-a554d5fdd022"
-  },
-  "850": {
-    "timeStamp" : "2024-12-09T08:23:25.804360400",
-    "contentId" : "uniqueId",
-    "content" : {
-      "image" : null,
-      "text" : "Hello World 3"
-    },
-    "authorId": "3edf7101-272a-42d1-8a55-9849a80b0227"
+  "a16315f7-74e3-4dc3-be57-1e18f7b61032": {
+    "contentId": "a16315f7-74e3-4dc3-be57-1e18f7b61032",
+    "authorId": "23c53980-fb8a-4523-aa97-3f209e963260",
+    "timeStamp": "2024-12-12T20:29:08.711126400",
+    "content": {
+      "text": "h",
+      "image": null
+    }
   }
 }

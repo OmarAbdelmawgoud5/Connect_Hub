@@ -58,7 +58,7 @@ public class Profile extends JFrame {
 
         // Buttons
         JButton backButton = postCard.createStyledButton("Back");
-        JButton groups = postCard.createStyledButton("Groups.json");
+        JButton groups = postCard.createStyledButton("My groups");
         JButton changePasswordButton = postCard.createStyledButton("Change password");
         backButton.setBounds(10, 120, 140, 30);
         changePasswordButton.setBounds(10, 170, 160, 30);
@@ -93,7 +93,7 @@ public class Profile extends JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 try {
-                    buttonaction("Groups.json");
+                    buttonaction("Groups");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -158,7 +158,9 @@ public class Profile extends JFrame {
         }
         if(posts!=null) {
             for (Content post : posts) {
-                contentArea.add(postCard.createPostCard(post,myUser.getUserName(),myUser.getProfilePhoto()));
+                System.out.println("ahmed "+post.getAuthorId());
+
+                contentArea.add(postCard.createPostCard(post,myUser.getUserName(),myUser.getProfilePhoto(),null,null));
             }
         }
         container.add(scrollPane);
@@ -199,13 +201,10 @@ private void buttonaction(String k) throws IOException {
             new ChangeBioDialog(this,myUser);
             break;
         }
-        case "Groups.json":
+        case "Groups":
         {
             var g=new Group("Test","D:\\College\\Term 5\\Programming 2\\lab9\\Connect_Hub\\src\\main\\resources\\Login.jpeg","NEW");
-            g.addMember(myUser.getUserId());
-            g.addContent("2024-12-09T21:02:34.618409200");
-            g.addContent("2024-12-09T21:02:27.533824300");
-            g.addContent("c44768f4-1a81-4dcd-bea8-ab04907a74ed");
+
             new groupsPage(myUser,g);
             this.dispose();
             break;
