@@ -1,7 +1,10 @@
 {
-  "123": [
-    "567",
-    "879",
-    "850"
-  ]
+  "65c159da-b0e8-42a6-ac1e-f047901955d8" : {
+    "membersId" : [ "member1" ],
+    "photoPath" : "photopath",
+    "name" : "test",
+    "contentId" : [ ],
+    "description" : "description",
+    "groupId": "65c159da-b0e8-42a6-ac1e-f047901955d8"
+  }
 }

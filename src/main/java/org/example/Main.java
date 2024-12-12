@@ -9,6 +9,7 @@ import org.example.frontend.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import  org.example.backend.*;
@@ -17,9 +18,14 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-       FlatLightLaf.setup();
-        UIManager.put( "Button.arc", 15 );
-        new LoginPage();
+//       FlatLightLaf.setup();
+//        UIManager.put( "Button.arc", 15 );
+//        new LoginPage();
+//        Group group =new Group("test","photopath","description");
+//        group.addMember("member1");
+//        GroupDBWriter.addGroup(group);
+      //  GroupDBReader.readGroups();
+        ArrayList<Group>groups=GroupDBReader.getInstance().readGroups();
 
     }
 }
