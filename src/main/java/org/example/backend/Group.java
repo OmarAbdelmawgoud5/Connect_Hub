@@ -6,32 +6,51 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Group {
-    ArrayList<String> contentId;
-    ArrayList<String> membersId;
-    String name;
-    String photoPath;
-
-    String groupId;
+   private ArrayList<String> contentId;
+   private ArrayList<String> membersId;
+   private  String name;
+   private  String photoPath;
+   private String groupId;
 
 
     public ArrayList<String> getContentId() {
         return contentId;
     }
 
+    public void addContentId(String Id) {
+        membersId.add(Id);
+    }
+
     public ArrayList<String> getMembersId() {
         return membersId;
+    }
+
+    public void addMembersId(String Id) {
+        membersId.add(Id);
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPhotoPath() {
         return photoPath;
     }
 
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getGroupId() {
