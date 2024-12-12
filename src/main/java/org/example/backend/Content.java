@@ -1,5 +1,8 @@
 package org.example.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,17 @@ public abstract class Content {
         this.timeStamp = timeStamp;
         this.content = content;
     }
+
+    public ObjectNode toJsonNode() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode contentNode = mapper.createObjectNode();
+        contentNode.put("contentId", this.contentId);
+        contentNode.put("authorId", this.authorId);
+        contentNode.put("timeStamp", this.timeStamp.toString());
+        contentNode.put("content", this.content.toJsonNode()); // Assuming MediaDetails has a toJsonNode method
+        return contentNode;
+    }
+
 
     public String generateUniqueId()
     {

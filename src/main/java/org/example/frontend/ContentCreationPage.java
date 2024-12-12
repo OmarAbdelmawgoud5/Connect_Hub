@@ -13,15 +13,16 @@ public class ContentCreationPage extends JDialog {
 
     private String userId;
     MediaDetails mediaDetails;
-
-    public ContentCreationPage(JFrame parent, String userId) {
+    JButton storyButton;
+    JPanel panel ;
+    public ContentCreationPage(JFrame parent, String userId,String type,String gpid) {
         super(parent, "Create Post or Story", true);
         this.userId = userId;
         setSize(600, 450);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(null);
 
         JLabel backgroundLabel = new JLabel(new ImageIcon("src/main/resources/CreateContent.jpeg"));
@@ -53,7 +54,7 @@ public class ContentCreationPage extends JDialog {
         postButton.setForeground(Color.WHITE);
         panel.add(postButton);
 
-        JButton storyButton = new JButton("Create Story");
+        storyButton = new JButton("Create Story");
         storyButton.setBounds(300, 250, 150, 40);
         storyButton.setBackground(new Color(59, 89, 152));
         storyButton.setForeground(Color.WHITE);
@@ -85,6 +86,12 @@ public class ContentCreationPage extends JDialog {
                 ContentFactory contentFactory = ContentFactoryRegistry.getInstance().getContentFactory("post");
                 Content post = contentFactory.createContent(userId, timeStamp, mediaDetails);
                 User user=new UserJson().LoadUser(userId);
+                if(type.equals("group"))
+                {
+                    groupPostsJson.editContent(post,gpid);
+                    groupPostsJson.SaveJson();
+                }
+                else
                 ContentDatabaseSaver.saveContent(post);
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ContentDatabaseLoaderByID {
-    static Content loadPost(String id) throws IOException {
+    public static Content loadPost(String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         JsonNode rootNode= objectMapper.readTree(FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB));

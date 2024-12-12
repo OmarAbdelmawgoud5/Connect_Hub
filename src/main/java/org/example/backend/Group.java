@@ -10,7 +10,9 @@ public class Group {
     ArrayList<String> membersId;
     String name;
     String photoPath;
+
     String groupId;
+
 
     public ArrayList<String> getContentId() {
         return contentId;
