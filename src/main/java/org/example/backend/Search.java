@@ -15,7 +15,7 @@ public class Search {
         return instance;
     }
     private void setData() throws IOException {
-        users = UserJson.getdb().getmap().values();
+        users =new  UserJson().getmap().values();
     }
     private void setMap() {
         for (User user : users) {
@@ -31,7 +31,7 @@ public class Search {
         ArrayList<String> list = map.get(username);
         ArrayList<User> users = new ArrayList<>();
         for (String s : list) {
-            users.add(UserJson.db.LoadUser(s));
+            users.add(new UserJson().LoadUser(s));
         }
         return users;
     }

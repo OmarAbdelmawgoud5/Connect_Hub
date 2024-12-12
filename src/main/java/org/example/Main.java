@@ -18,14 +18,14 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//       FlatLightLaf.setup();
-//        UIManager.put( "Button.arc", 15 );
-//        new LoginPage();
+       FlatLightLaf.setup();
+        UIManager.put( "Button.arc", 15 );
+        new LoginPage();
 //        Group group =new Group("test","photopath","description");
 //        group.addMember("member1");
 //        GroupDBWriter.addGroup(group);
       //  GroupDBReader.readGroups();
-        ArrayList<Group>groups=GroupDBReader.getInstance().readGroups();
+
 
     }
 }

@@ -28,7 +28,7 @@ public class groupsPage extends JFrame {
         JPanel headerPanel = createHeaderPanel(user, group);
 
         // Navigation Bar
-        JPanel navPanel = createNavPanel(user,group.id);
+        JPanel navPanel = createNavPanel(user,group.getGroupId());
 
         // Content Area for Posts
         JScrollPane scrollPane = createContentScrollPane(group);
