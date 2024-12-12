@@ -7,7 +7,8 @@ import java.io.IOException;
 
 public class GettingUserByUserId {
 
- private UserJson db = UserJson.getdb();
+    
+ private UserJson db = new UserJson();
 
     public GettingUserByUserId() throws IOException {
     }

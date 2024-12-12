@@ -56,5 +56,15 @@
     "notificationId" : "notify-1733865095397",
     "type" : "friend request",
     "message" : "You have a new friend request from kh"
+  } ],
+  "d4805154-8f3d-42b4-affe-609395e309de" : [ {
+    "timeStamp" : "2024-12-12T23:47:51.834317925",
+    "senderId" : "903df94d-e43f-47d1-82d2-469aff148b72",
+    "expireTime" : "2024-12-13T23:47:51.835411807",
+    "isRead" : true,
+    "recipientId" : "d4805154-8f3d-42b4-affe-609395e309de",
+    "notificationId" : "notify-1734040071826",
+    "type" : "friend request",
+    "message" : "You have a new friend request from Ali"
   } ]
 }

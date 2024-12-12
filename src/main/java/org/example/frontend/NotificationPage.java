@@ -22,6 +22,7 @@ public class NotificationPage extends JDialog {
         setTitle("Notifications");
         setSize(600, 600);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
