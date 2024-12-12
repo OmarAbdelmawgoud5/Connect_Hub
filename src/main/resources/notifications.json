@@ -1,0 +1,60 @@
+{
+  "2120605047" : [ {
+    "timeStamp" : "2024-12-10T21:30:07.374436950",
+    "senderId" : "1545945162",
+    "expireTime" : "2024-12-11T21:30:07.375547822",
+    "isRead" : true,
+    "recipientId" : "2120605047",
+    "notificationId" : "notif-1733859007367",
+    "type" : "friend request",
+    "message" : "You have a new friend request from Khaled Ahmed"
+  }, {
+    "timeStamp" : "2024-12-10T23:38:02.305037594",
+    "senderId" : "1545945162",
+    "expireTime" : "2024-12-11T23:38:02.305828545",
+    "isRead" : true,
+    "recipientId" : "2120605047",
+    "notificationId" : "notify-1733866682298",
+    "type" : "friend request",
+    "message" : "You have a new friend request from Khaled Ahmed"
+  } ],
+  "1545945162" : [ {
+    "timeStamp" : "2024-12-10T22:03:53.879626973",
+    "senderId" : "2120605047",
+    "expireTime" : "2024-12-11T22:03:53.880905585",
+    "isRead" : true,
+    "recipientId" : "1545945162",
+    "notificationId" : "notif-1733861033871",
+    "type" : "friend request",
+    "message" : "You have a new friend request from kh"
+  } ],
+  "660586792" : [ {
+    "timeStamp" : "2024-12-10T23:05:10.542185531",
+    "senderId" : "1545945162",
+    "expireTime" : "2024-12-11T23:05:10.543241360",
+    "isRead" : true,
+    "recipientId" : "660586792",
+    "notificationId" : "notify-1733864710533",
+    "type" : "friend request",
+    "message" : "You have a new friend request from Khaled Ahmed"
+  }, {
+    "timeStamp" : "2024-12-10T23:20:20.345626330",
+    "senderId" : "1545945162",
+    "expireTime" : "2024-12-11T23:20:20.345667107",
+    "isRead" : false,
+    "recipientId" : "660586792",
+    "notificationId" : "notify-1733865620345",
+    "type" : "friend request",
+    "message" : "You have a new friend request from Khaled Ahmed"
+  } ],
+  "1191092372" : [ {
+    "timeStamp" : "2024-12-10T23:11:35.403633076",
+    "senderId" : "2120605047",
+    "expireTime" : "2024-12-11T23:11:35.404383728",
+    "isRead" : false,
+    "recipientId" : "1191092372",
+    "notificationId" : "notify-1733865095397",
+    "type" : "friend request",
+    "message" : "You have a new friend request from kh"
+  } ]
+}
