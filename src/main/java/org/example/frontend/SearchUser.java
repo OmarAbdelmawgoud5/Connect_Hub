@@ -62,8 +62,12 @@ public class SearchUser extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
-            setVisible(false);
-            parent.setVisible(true);
+            dispose();
+            try {
+                new NewsFeedFrame(new NewsFeedPosts(currentUser.getUserId()),currentUser);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 

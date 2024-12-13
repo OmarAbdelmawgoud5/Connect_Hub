@@ -103,6 +103,7 @@ public class NewsFeedFrame {
         Search.setFocusable(false);
         Search.addActionListener(e->{
             new SearchDialog(frame,user);
+            frame.dispose();
         });
 
         JButton buttonNotifications = new JButton("Notifications");

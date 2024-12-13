@@ -13,6 +13,7 @@ public class SearchDialog extends JDialog {
     private User user;
     public SearchDialog(JFrame parent,User user) {
         super(parent, "Search Content", true);
+
         this.user = user;
         setSize(600, 450);
         setLocationRelativeTo(parent);
@@ -79,6 +80,7 @@ public class SearchDialog extends JDialog {
             return;
         }
         new SearchUser(this,user,users);
+        this.dispose();
     }
     private void performGroupSearch(String query) {
         SearchGroups search=SearchGroups.getInstance();
@@ -89,8 +91,10 @@ public class SearchDialog extends JDialog {
         }
         try {
             new SearchGroup(this,user,groups);
+            this.dispose();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.dispose();
     }
 }

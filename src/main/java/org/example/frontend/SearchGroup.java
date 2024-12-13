@@ -66,8 +66,12 @@ public class SearchGroup extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
-            setVisible(false);
-            parent.setVisible(true);
+            dispose();
+            try {
+                new NewsFeedFrame(new NewsFeedPosts(currentUser.getUserId()),currentUser);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
     private ArrayList<Group> getGroupsList() {
@@ -128,6 +132,7 @@ public class SearchGroup extends JFrame implements ActionListener {
         viewGroupButton.addActionListener(e -> {
             try {
                 new groupsPage(currentUser, group);
+                this.dispose();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

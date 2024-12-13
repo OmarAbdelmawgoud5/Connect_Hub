@@ -90,7 +90,7 @@ public class createnewgroup extends JDialog {
                  g=new Group(getGroupName(),getGroupPhotoPath(),getGroupDescription());
                  g.addMember(u.getUserId());
                  GroupDBWriter.addGroup(g);
-                 u.addGroup(g.getGroupId(),"Owner");
+                 u.addGroup(g.getGroupId(),"owner");
                 try {
                     new UserJson().editUser(u);
                 } catch (IOException ex) {

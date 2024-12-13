@@ -26,21 +26,13 @@
     "description" : "popo"
 
   },
-  "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920" : {
-    "membersId" : [ "c0ba4cb6-aad8-45ba-afc0-b7c91da34453", "21250e09-54bc-4886-aafd-8e85ad172dea" ],
-    "photoPath" : "/home/amr/Pictures/Screenshot_2024-08-29_03_28_53.png",
-    "groupId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "name" : "AlAhly",
-    "contentId" : [ "34afb88d-9d64-4970-a267-c277c9636624", "ee9072fb-2df0-4536-b733-5676a1d5b45e", "1fea6065-c285-4a63-b01f-5a78b06d04f3", "b4cdd79f-16b7-4fda-bddc-2739f7113d02", "1a438372-2018-4177-901f-240df1eb660b", "6d8844d1-8410-49ea-ad26-d19db23d2636" ],
-    "description" : "boooooooom"
-  },
-  "f16d4b12-3894-44dc-97c0-3f948f9827e1" : {
-    "membersId" : [ "21250e09-54bc-4886-aafd-8e85ad172dea" ],
-    "photoPath" : "/home/amr/Pictures/Screenshot_2024-08-29_02_11_26.png",
-    "groupId" : "f16d4b12-3894-44dc-97c0-3f948f9827e1",
-    "name" : "group made by B",
-    "contentId" : [ ],
-    "description" : "000000000"
-
+  "569f936e-d46c-4a8d-a3f6-484bd106e8fc" : {
+    "membersId" : [ "1106bf71-948a-4590-8f76-0294e2a8b475" ],
+    "photoPath" : "D:\\Graphic\\logo 2.jpg",
+    "groupId" : "569f936e-d46c-4a8d-a3f6-484bd106e8fc",
+    "name" : "Final",
+    "contentId" : [ "3bcf5714-9ec7-4c4c-a156-519aefbd03ee", "1cc469c3-77c0-467f-bb54-026a6079749b", "c1b9066a-007d-49dd-bf4a-de18f4ecac65" ],
+    "description" : "WHy"
+\
   }
 }
