@@ -20,4 +20,16 @@ public class GroupDBWriter {
             throw new RuntimeException(e);
         }
     }
+
+    public static void deleteGroup(Group group) {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String,Map<String,Object>> map = new HashMap<>();
+        try {
+            map=mapper.readValue(GroupsFile.getInstance().getDatabaseFile(), new TypeReference<>() {});
+            map.remove(group.getGroupId());
+            mapper.writerWithDefaultPrettyPrinter().writeValue(GroupsFile.getInstance().getDatabaseFile(),map);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

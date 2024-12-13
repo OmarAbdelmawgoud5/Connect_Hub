@@ -70,6 +70,25 @@ public class groupsPage extends JFrame implements ActionListener {
         headerPanel.add(groupName, BorderLayout.CENTER);
         if(!user.getGroups().containsKey(group.getGroupId())) {
             JButton joinButton = createButton("Join Group", 14, Color.WHITE, Color.decode("#4267B2"));
+            joinButton.addActionListener(evt -> {
+                group.addMember(user.getUserId());
+                GroupDBWriter.addGroup(group);
+                user.addGroup(group.getGroupId(),"member");
+                try {
+                    new UserJson().editUser(user);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    new groupsPage(user,group);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                this.dispose();
+
+
+            });
+
             headerPanel.add(joinButton, BorderLayout.EAST);
         }
         else if(user.getGroups().get(group.getGroupId()).equals("Requested")) {
@@ -110,6 +129,21 @@ public class groupsPage extends JFrame implements ActionListener {
                 throw new RuntimeException(e);
             }
         });
+        if(user.getGroups().get(g.getGroupId()).equals("Owner")) {
+            JButton deletegroup = createNavButton("Delete Group");
+            navPanel.add(deletegroup);
+
+            deletegroup.addActionListener(evt -> {
+                user.getGroups().remove(g.getGroupId());
+                try {
+                    new UserJson().editUser(user);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                GroupDBWriter.deleteGroup(g);
+                this.dispose();
+            });
+        }
 
         navPanel.add(membersButton);
 
