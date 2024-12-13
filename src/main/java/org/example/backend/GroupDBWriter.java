@@ -51,7 +51,7 @@ public class GroupDBWriter {
 
         for (String memberId : group.getMembersId()) {
             if (!memberId.equals(senderId)) {
-                NotificationAbstract notification = new GroupActivityNotification(
+                NotificationAbstract notification = new NewPostNotification(
                         "notif-" + System.currentTimeMillis(),
                         memberId,
                         groupId,
