@@ -120,13 +120,15 @@
     "status" : "Online",
     "bio" : "okay",
     "id" : "e7cc1603-9853-4b39-be55-ce51d2fb7f03",
-    "groups" : null
+    "groups" : {
+      "2e9c8b7e-2cdb-4b7d-b9a4-203f97ae28e2" : "owner"
+    }
   },
   "1106bf71-948a-4590-8f76-0294e2a8b475" : {
     "userName" : "OmarAbdelmawgoud",
     "email" : "ooo@gmail.com",
     "dateOfBirth" : "2001-02-02",
-    "profilePhoto" : "D:\\College\\Term 5\\Programming 2\\Lab10\\Connect_Hub\\src\\main\\resources\\hi.jpg",
+    "profilePhoto" : "src/main/resources/user.png",
     "coverPhoto" : "C:\\Users\\Etijah\\Pictures\\12_3_2023 5_40_30 PM.png",
     "password" : "$2a$10$STxoEvN4UrmGXq7oRwQspOHc8ZUR.VYQz1xdUlg43xH2F5yQJ/EcG",
     "status" : "Online",

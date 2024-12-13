@@ -160,8 +160,12 @@ public class groupsPage extends JFrame {
 
     private void navigateToProfile(User user) {
 
-           new MyGroupsFrame(user);
-            dispose();
+        try {
+            new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        dispose();
 
     }
 

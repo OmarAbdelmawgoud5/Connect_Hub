@@ -52,7 +52,7 @@ public class NewsFeedFrame  {
             }
         });
 
-        JButton suggestion = new JButton("Suggestion");
+        JButton suggestion = new JButton("Friend Suggestion");
         suggestion.setFocusable(false);
         suggestion.addActionListener(e->{
             frame.setVisible(false);
@@ -61,6 +61,13 @@ public class NewsFeedFrame  {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+        });
+
+        JButton gSuggestion = new JButton("Group Suggestion");
+        gSuggestion.setFocusable(false);
+        gSuggestion.addActionListener(e->{
+           new MyGroupsFrame(user,GroupSuggestionsGenerator.generate(user),"Group Suggestion");
+           frame.dispose();
         });
 
         JButton reload = new JButton("Reload");
@@ -102,6 +109,8 @@ public class NewsFeedFrame  {
         sidePanel.add(profile);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(suggestion);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidePanel.add(gSuggestion);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(reload);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
