@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,36 +16,36 @@ import java.util.Map;
 
 public class groupPostsJson {
     static JsonNode rootNode;
-    static public ArrayList<Content> loadPosts(String contentid) throws IOException {
-        File f=FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB);
-        ObjectMapper objectMapper = new ObjectMapper();
-        rootNode = objectMapper.readTree(f);
-        JsonNode x=rootNode.get(contentid);
-        ArrayList<Content> posts=new ArrayList<>();
-        if(x!=null) {
-            ArrayList<String> db = objectMapper.readValue(x.toString(), new TypeReference<>() {
-            });
-            for (String s : db) {
-                Content c = ContentDatabaseLoaderByID.loadPost(s);
-                posts.add(c);
-            }
 
-            return posts;
-        }
-        return null;
-    }
-    public static synchronized  void editContent(Content c,String groupId) throws IOException {
+    public static synchronized  void editContent(Content c) throws IOException {
         File f=FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB);
         ObjectMapper objectMapper = new ObjectMapper();
         rootNode = objectMapper.readTree(f);
+        System.out.println(rootNode.toString());
         ObjectNode objectNode = (ObjectNode) rootNode;
         objectNode.remove(c.getContentId());
         objectNode.put(c.getContentId(), c.toJsonNode());
+        SaveJson();
+    }
+    public static synchronized  void delete(Content c) throws IOException {
+        File f=FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB);
+        ObjectMapper objectMapper = new ObjectMapper();
+        rootNode = objectMapper.readTree(f);
+        System.out.println(rootNode.toString());
+        ObjectNode objectNode = (ObjectNode) rootNode;
+        objectNode.remove(c.getContentId());
         SaveJson();
     }
 
     static public synchronized  void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB),rootNode);
+    }
+    public static void main(String[] args) throws IOException {
+        MediaDetails md = new MediaDetails();
+        md.setImage("lol");
+        md.setText("pop");
+        Content c=new Post("123", LocalDateTime.now(),md);
+        editContent(c);
     }
 }

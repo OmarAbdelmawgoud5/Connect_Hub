@@ -12,6 +12,7 @@ public class ContentDatabaseLoaderByID {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         JsonNode rootNode= objectMapper.readTree(FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB));
+        if(rootNode==null) return null;
         Content c = objectMapper.readValue(rootNode.get(id).toString(), Post.class);
         return c;
     }

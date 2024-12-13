@@ -1,0 +1,12 @@
+{
+  "d4805154-8f3d-42b4-affe-609395e309de" : [ {
+    "timeStamp" : "2024-12-13T02:31:26.484506142",
+    "senderId" : "903df94d-e43f-47d1-82d2-469aff148b72",
+    "expireTime" : "2024-12-14T02:31:26.485522119",
+    "isRead" : true,
+    "recipientId" : "d4805154-8f3d-42b4-affe-609395e309de",
+    "notificationId" : "notify-1734049886476",
+    "type" : "friend request",
+    "message" : "You have a new friend request from Ali"
+  } ]
+}

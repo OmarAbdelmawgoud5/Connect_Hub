@@ -5,15 +5,23 @@ import org.example.backend.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class groupsPage extends JFrame {
+public class groupsPage extends JFrame implements ActionListener {
     private User currentUser;
+    private Group currentGroup;
 
+    private JButton optionsButton;
+    private JPopupMenu popupMenu;
+    private JMenuItem item1;
+    private JMenuItem item2;
     public groupsPage(User user, Group group) throws IOException {
         this.currentUser = user;
+        this.currentGroup = group;
         this.setTitle("Groups");
         setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,18 +34,22 @@ public class groupsPage extends JFrame {
 
         // Header Section
         JPanel headerPanel = createHeaderPanel(user, group);
-
-        // Navigation Bar
-        JPanel navPanel = createNavPanel(user,group.getGroupId());
-
-        // Content Area for Posts
-        JScrollPane scrollPane = createContentScrollPane(group);
-
-        // Adding Components to Main Panel
         mainPanel.add(headerPanel, BorderLayout.NORTH);
-        mainPanel.add(navPanel, BorderLayout.SOUTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
 
+        if(user.getGroups().containsKey(group.getGroupId())) {
+            if(!user.getGroups().get(group.getGroupId()).equals("Requested")) {
+                // Navigation Bar
+                JPanel navPanel = createNavPanel(user, group);
+
+                // Content Area for Posts
+                JScrollPane scrollPane = createContentScrollPane(group);
+
+                // Adding Components to Main Panel
+                mainPanel.add(navPanel, BorderLayout.SOUTH);
+                mainPanel.add(scrollPane, BorderLayout.CENTER);
+            }
+
+        }
         setVisible(true);
     }
 
@@ -56,24 +68,83 @@ public class groupsPage extends JFrame {
         groupName.setFont(new Font("SansSerif", Font.BOLD, 24));
         groupName.setForeground(Color.WHITE);
         headerPanel.add(groupName, BorderLayout.CENTER);
+        if(!user.getGroups().containsKey(group.getGroupId())) {
+            JButton joinButton = createButton("Join Group", 14, Color.WHITE, Color.decode("#4267B2"));
+            joinButton.addActionListener(evt -> {
+                group.addMember(user.getUserId());
+                GroupDBWriter.addGroup(group);
+                user.addGroup(group.getGroupId(),"member");
+                try {
+                    new UserJson().editUser(user);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    new groupsPage(user,group);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                this.dispose();
 
-        JButton joinButton = createButton("Join Group", 14, Color.WHITE, Color.decode("#4267B2"));
-        headerPanel.add(joinButton, BorderLayout.EAST);
 
+            });
+
+            headerPanel.add(joinButton, BorderLayout.EAST);
+        }
+        else if(user.getGroups().get(group.getGroupId()).equals("Requested")) {
+            JTextArea textArea = new JTextArea();
+            textArea.setEditable(false);
+            textArea.setFont(new Font("SansSerif", Font.BOLD, 24));
+            textArea.setText("Requested");
+            headerPanel.add(textArea, BorderLayout.EAST);
+
+        }
+        else
+        {
+            JTextArea textArea = new JTextArea();
+            textArea.setEditable(false);
+            textArea.setFont(new Font("SansSerif", Font.BOLD, 24));
+            textArea.setText("Welcome");
+            headerPanel.add(textArea, BorderLayout.EAST);
+
+        }
         return headerPanel;
     }
 
-    private JPanel createNavPanel(User user,String gpid) {
+    private JPanel createNavPanel(User user,Group g) {
         JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
         navPanel.setBackground(Color.WHITE);
         navPanel.setPreferredSize(new Dimension(1000, 50));
 
         JButton addPostButton = createNavButton("Add Post");
-        addPostButton.addActionListener(evt -> openContentCreationPage(user,gpid));
+        addPostButton.addActionListener(evt -> openContentCreationPage(user,g));
         navPanel.add(addPostButton);
 
         JButton membersButton = createNavButton("Members");
-        membersButton.addActionListener(evt -> navigateToProfile(user));
+        membersButton.addActionListener(evt -> {
+            try {
+                ScrollableCardPanel.view(currentGroup);
+                System.out.println("555555555555");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        if(user.getGroups().get(g.getGroupId()).equals("Owner")) {
+            JButton deletegroup = createNavButton("Delete Group");
+            navPanel.add(deletegroup);
+
+            deletegroup.addActionListener(evt -> {
+                user.getGroups().remove(g.getGroupId());
+                try {
+                    new UserJson().editUser(user);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                GroupDBWriter.deleteGroup(g);
+                this.dispose();
+            });
+        }
+
         navPanel.add(membersButton);
 
         return navPanel;
@@ -86,20 +157,27 @@ public class groupsPage extends JFrame {
 
         try {
             System.out.println("A7A ");
-            Content j= ContentDatabaseLoaderByID.loadPost("c74258b5-6a7f-4c66-9441-9a1d9cc33599");
+
             ArrayList<Content> posts =new ArrayList<>();
-            posts.add(j);
-            System.out.printf(posts.toString());
-            UserJson userJson = new UserJson();
-            if(posts!=null) {
-                for (Content post : posts) {
-                    User postAuthor = userJson.LoadUser(post.getAuthorId());
-                    contentArea.add(postCard.createPostCard(post, postAuthor.getUserName(), postAuthor.getProfilePhoto(), "admin", this::callback));
+            ArrayList<String> ids = group.getContentId();
+            if(ids.size()>0) {
+                for (String id : ids) {
+                    posts.add(ContentDatabaseLoaderByID.loadPost(id));
+                }
+
+                System.out.printf(posts.toString());
+                UserJson userJson = new UserJson();
+                if (posts != null) {
+                    for (Content post : posts) {
+                        User postAuthor = userJson.LoadUser(post.getAuthorId());
+                        contentArea.add(postCard.createPostCard(post, postAuthor.getUserName(), postAuthor.getProfilePhoto(), currentUser.getGroups().get(group.getGroupId()),this,currentGroup));
+                    }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         JScrollPane scrollPane = new JScrollPane(contentArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -131,17 +209,19 @@ public class groupsPage extends JFrame {
     }
 
     private void navigateToProfile(User user) {
+
         try {
-            new Profile(user);
-            dispose();
+            new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        dispose();
+
     }
 
-    private void openContentCreationPage(User user,String gpid) {
+    private void openContentCreationPage(User user,Group g) {
         try {
-            ContentCreationPage contentCreationPage = new ContentCreationPage(this, user.getUserId(),"group",gpid);
+            ContentCreationPage contentCreationPage = new ContentCreationPage(this, user.getUserId(),g,null,null);
             contentCreationPage.panel.remove(contentCreationPage.storyButton);
             contentCreationPage.panel.revalidate();
             contentCreationPage.getContentPane().removeAll();
@@ -154,6 +234,38 @@ public class groupsPage extends JFrame {
     }
 
     private void callback() throws IOException {
-        navigateToProfile(currentUser);
+        //new ContentCreationPage(this,currentUser.getUserId(),currentGroup,t,i);
+        var popupMenu=new JPopupMenu();
+        var item1=new JMenuItem("Edit");
+        var item2=new JMenuItem("Delete");
+        popupMenu.add(item1);
+        popupMenu.add(item2);
+        item1.addActionListener(this);
+        item2.addActionListener(this);
+        popupMenu.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==optionsButton)
+        {
+            popupMenu.show(optionsButton,200,250);
+        }
+        else if(e.getSource()==item1)
+        {
+
+        }
+        else if(e.getSource()==item2)
+        {
+            if(item2.getText().equals("Delete"))
+            {
+                item2.setText("Deleted");
+
+            }
+            else if(item2.getText().equals("Deleted"))
+            {
+
+            }
+        }
     }
 }

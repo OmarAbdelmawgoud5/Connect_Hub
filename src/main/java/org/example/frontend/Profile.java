@@ -19,11 +19,11 @@ public class Profile extends JFrame {
         setLocationRelativeTo(null); // Center the frame
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        setupLayout();
+        setupLayout(this);
         this.setVisible(true);
     }
 
-    private void setupLayout() throws IOException {
+    private void setupLayout(Profile profile) throws IOException {
         Container container = getContentPane();
         container.setLayout(null);
 
@@ -59,10 +59,13 @@ public class Profile extends JFrame {
         // Buttons
         JButton backButton = postCard.createStyledButton("Back");
         JButton groups = postCard.createStyledButton("My groups");
+        JButton newgroup = postCard.createStyledButton("Create Group");
         JButton changePasswordButton = postCard.createStyledButton("Change password");
         backButton.setBounds(10, 120, 140, 30);
-        changePasswordButton.setBounds(10, 170, 160, 30);
+        changePasswordButton.setBounds(10, 170, 140, 30);
         groups.setBounds(170, 120, 140, 30);
+        newgroup.setBounds(170,170,140,30);
+        container.add(newgroup);
         container.add(backButton);
         container.add(changePasswordButton);
         container.add(groups);
@@ -85,6 +88,13 @@ public class Profile extends JFrame {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        });
+
+        newgroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                var x=new createnewgroup(profile,myUser);
+
             }
         });
 
@@ -160,7 +170,7 @@ public class Profile extends JFrame {
             for (Content post : posts) {
                 System.out.println("ahmed "+post.getAuthorId());
 
-                contentArea.add(postCard.createPostCard(post,myUser.getUserName(),myUser.getProfilePhoto(),null,null));
+                contentArea.add(postCard.createPostCard(post,myUser.getUserName(),myUser.getProfilePhoto(),null,this,null));
             }
         }
         container.add(scrollPane);
@@ -203,9 +213,8 @@ private void buttonaction(String k) throws IOException {
         }
         case "Groups":
         {
-            var g=new Group("Test","D:\\College\\Term 5\\Programming 2\\lab9\\Connect_Hub\\src\\main\\resources\\Login.jpeg","NEW");
 
-            new groupsPage(myUser,g);
+           new MyGroupsFrame(myUser,new ArrayList<>(myUser.getGroups().keySet()),"My Groups");
             this.dispose();
             break;
         }

@@ -1,4 +1,5 @@
 package org.example.frontend;
+
 import org.example.backend.*;
 
 import javax.swing.*;
@@ -10,13 +11,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class NewsFeedFrame  {
+public class NewsFeedFrame {
+
     private NewsFeedPosts newsFeedPosts;
     private User user;
-    public NewsFeedFrame(NewsFeedPosts newsFeedPosts,User user) throws IOException {
+
+    public NewsFeedFrame(NewsFeedPosts newsFeedPosts, User user) throws IOException {
         this.newsFeedPosts = newsFeedPosts;
-        ArrayList<User> friends=newsFeedPosts.getFriends();
-        this.user=user;
+        ArrayList<User> friends = newsFeedPosts.getFriends();
+        this.user = user;
         JFrame frame = new JFrame("NewsFeed");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -54,7 +57,7 @@ public class NewsFeedFrame  {
 
         JButton suggestion = new JButton("Suggestion");
         suggestion.setFocusable(false);
-        suggestion.addActionListener(e->{
+        suggestion.addActionListener(e -> {
             frame.setVisible(false);
             try {
                 new FriendSuggestionFrame(user);
@@ -65,11 +68,11 @@ public class NewsFeedFrame  {
 
         JButton reload = new JButton("Reload");
         reload.setFocusable(false);
-        reload.addActionListener(e->{
+        reload.addActionListener(e -> {
             frame.setVisible(false);
             try {
                 frame.dispose();
-                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
+                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()), user);
 
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -78,15 +81,15 @@ public class NewsFeedFrame  {
 
         JButton post1 = new JButton("Create Post");
         post1.setFocusable(false);
-        post1.addActionListener(e->{
-            new ContentCreationPage(frame,user.getUserId()," "," ");
+        post1.addActionListener(e -> {
+            new ContentCreationPage(frame, user.getUserId(), null, null, null);
         });
 
         JButton logout = new JButton("Logout");
         logout.setFocusable(false);
-        logout.addActionListener(e->{
+        logout.addActionListener(e -> {
             frame.setVisible(false);
-            UserLogout temp= null;
+            UserLogout temp = null;
             try {
                 temp = new UserLogout();
             } catch (IOException ex) {
@@ -102,13 +105,23 @@ public class NewsFeedFrame  {
             new SearchDialog(frame,user);
         });
 
+        JButton buttonNotifications = new JButton("Notifications");
+        buttonNotifications.setFocusable(false);
+        buttonNotifications.addActionListener(e -> {
+            try {
+                new NotificationPage(user.getUserId());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
         sidePanel.add(friends1);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(profile);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(suggestion);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        sidePanel.add(reload);
+        sidePanel.add(buttonNotifications);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(reload);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -119,7 +132,6 @@ public class NewsFeedFrame  {
         sidePanel.add(Search);
         mainPanel.add(sidePanel, BorderLayout.WEST);
 
-
         JPanel storiesPanel = new JPanel();
         storiesPanel.setLayout(new BoxLayout(storiesPanel, BoxLayout.X_AXIS));
         storiesPanel.setBorder(BorderFactory.createTitledBorder("Stories"));
@@ -128,12 +140,10 @@ public class NewsFeedFrame  {
         postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
         postsPanel.setBorder(BorderFactory.createTitledBorder("Posts"));
 
-
-        postsDisplay t=new postsDisplay(friends);
-        ArrayList<Content> c=t.getContent();
-        var mp=t.getMp();
-        if(c.isEmpty())
-        {
+        postsDisplay t = new postsDisplay(friends);
+        ArrayList<Content> c = t.getContent();
+        var mp = t.getMp();
+        if (c.isEmpty()) {
             JPanel noPostsPanel = new JPanel();
             noPostsPanel.setPreferredSize(new Dimension(350, 200));
             noPostsPanel.setBackground(new Color(240, 240, 240));
@@ -144,8 +154,7 @@ public class NewsFeedFrame  {
             noPostsPanel.setLayout(new GridBagLayout());
             noPostsPanel.add(noPostsLabel);
             postsPanel.add(noPostsPanel);
-        }
-        else {
+        } else {
             for (int i = 0; i < c.size() && i < 20; i++) {
                 Content post = c.get(i);
                 User friend = mp.get(post.getAuthorId());
@@ -200,15 +209,12 @@ public class NewsFeedFrame  {
             }
         }
 
-
         JScrollPane postsScrollPane = new JScrollPane(postsPanel);
         postsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Vertical scrolling
         postsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // No horizontal scrolling
 
-
         var storiesDisplay = new StoriesDisplay(friends);
         storiesDisplay.addStories(storiesPanel);
-
 
         JScrollPane storiesScrollPane = new JScrollPane(storiesPanel);
         storiesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -221,6 +227,5 @@ public class NewsFeedFrame  {
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     }
-
 
 }

@@ -18,7 +18,7 @@ public class Group {
     }
 
     public void addContentId(String Id) {
-        membersId.add(Id);
+        contentId.add(Id);
     }
 
     public ArrayList<String> getMembersId() {
@@ -91,6 +91,10 @@ public class Group {
     {
         contentId.add(ContentId);
     }
+    public void removeContent(String ContentId)
+    {
+        contentId.remove(ContentId);
+    }
     public Map<String,Object> toMap(){
         Map<String,Object> map=new HashMap<>();
         map.put("name",name);
@@ -98,6 +102,7 @@ public class Group {
         map.put("description",description);
         map.put("membersId",membersId);
         map.put("contentId",contentId);
+        map.put("groupId",groupId);
         return map;
     }
 }
