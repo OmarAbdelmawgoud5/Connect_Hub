@@ -61,6 +61,10 @@ public class Group {
         this.groupId = groupId;
     }
 
+    public void removeMembersId(String Id) {
+        membersId.remove(Id);
+    }
+
     String description;
     public Group(String name, String photoPath, String description)
     {

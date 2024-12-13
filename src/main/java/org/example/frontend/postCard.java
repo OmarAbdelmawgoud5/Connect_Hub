@@ -48,26 +48,26 @@ public class postCard {
             optionsButton.setBorderPainted(false);
             optionsButton.addActionListener(evt -> {
 
-                    var popupMenu=new JPopupMenu() {
-                        @Override
-                        public Dimension getPreferredSize() {
-                            return new Dimension(300, 200); // Set desired dimensions
-                        }
-                    };;
-                    var item1=new JMenuItem("Edit");
-                    var item2=new JMenuItem("Delete");
-                    popupMenu.add(item1);
-                    popupMenu.add(item2);
-                    item1.addActionListener(panel);
-                    item2.addActionListener(panel);
-                    panel.setItem1(item1);
-                    panel.setItem2(item2);
-                    panel.setPopupMenu(popupMenu);
-                    panel.setC(post);
-                    panel.setG(g);
-                    panel.setP(parent);
-                    popupMenu.setLocation(600,300);
-                    popupMenu.setVisible(true);
+                var popupMenu=new JPopupMenu() {
+                    @Override
+                    public Dimension getPreferredSize() {
+                        return new Dimension(300, 200); // Set desired dimensions
+                    }
+                };
+                var item1=new JMenuItem("Edit");
+                var item2=new JMenuItem("Delete");
+                popupMenu.add(item1);
+                popupMenu.add(item2);
+                item1.addActionListener(panel);
+                item2.addActionListener(panel);
+                panel.setItem1(item1);
+                panel.setItem2(item2);
+                panel.setPopupMenu(popupMenu);
+                panel.setC(post);
+                panel.setG(g);
+                panel.setP(parent);
+                popupMenu.setLocation(600,300);
+                popupMenu.setVisible(true);
             });
 
             JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
