@@ -97,6 +97,7 @@ public class ContentCreationPage extends JDialog {
                     groupPostsJson.SaveJson();
                     g.addContent(post.getContentId());
                     GroupDBWriter.addGroup(g);
+                    GroupDBWriter.notifytoAddingPostToGroup(g.getGroupId(), userId);
                 }
                 else
                      ContentDatabaseSaver.saveContent(post);

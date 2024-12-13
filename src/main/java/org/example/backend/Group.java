@@ -18,7 +18,7 @@ public class Group {
     }
 
     public void addContentId(String Id) {
-        membersId.add(Id);
+        contentId.add(Id);
     }
 
     public ArrayList<String> getMembersId() {
