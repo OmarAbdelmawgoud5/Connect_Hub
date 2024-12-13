@@ -2,7 +2,6 @@ package org.example.backend;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 public class GroupActivityNotification extends NotificationAbstract {
 
@@ -18,9 +17,9 @@ public class GroupActivityNotification extends NotificationAbstract {
         Group group = gettingGroup.getGroup(senderId);
 
         if (group != null) {
-            return "You have added been added to the group : " + group.getName();
+            return "You have been added to the group: " + group.getName();
         } else {
-            return "You have added been added to the group";
+            return "You have been added to a group";
         }
     }
 
