@@ -99,6 +99,11 @@ public class NewsFeedFrame {
             new LoginPage();
             frame.dispose();
         });
+        JButton Search = new JButton("Search");
+        Search.setFocusable(false);
+        Search.addActionListener(e->{
+            new SearchDialog(frame,user);
+        });
 
         JButton buttonNotifications = new JButton("Notifications");
         buttonNotifications.setFocusable(false);
@@ -123,6 +128,8 @@ public class NewsFeedFrame {
         sidePanel.add(post1);
         sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidePanel.add(logout);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        sidePanel.add(Search);
         mainPanel.add(sidePanel, BorderLayout.WEST);
 
         JPanel storiesPanel = new JPanel();

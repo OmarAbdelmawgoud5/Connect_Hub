@@ -5,10 +5,13 @@ public class Search {
     private static Search instance;
     private Map<String, ArrayList<String>> map;
     private Collection<User> users;
-    private Search() {
+    private Search() throws IOException {
         map = new HashMap<>();
+        users = new ArrayList<>();
+        setData();
+        setMap();
     }
-    public static synchronized Search getInstance() {
+    public static synchronized Search getInstance() throws IOException {
         if (instance == null) {
             instance = new Search();
         }
@@ -26,12 +29,14 @@ public class Search {
         }
     }
     public ArrayList<User> getUsers(String username) throws IOException {
-        setData();
-        setMap();
         ArrayList<String> list = map.get(username);
         ArrayList<User> users = new ArrayList<>();
+        UserJson userJson = new UserJson();
+        if (list == null) {
+            return new ArrayList<>();
+        }
         for (String s : list) {
-            users.add(new UserJson().LoadUser(s));
+            users.add(userJson.LoadUser(s));
         }
         return users;
     }
