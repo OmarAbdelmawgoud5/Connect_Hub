@@ -203,9 +203,8 @@ private void buttonaction(String k) throws IOException {
         }
         case "Groups":
         {
-            var g=new Group("Test","D:\\College\\Term 5\\Programming 2\\lab9\\Connect_Hub\\src\\main\\resources\\Login.jpeg","NEW");
 
-            new groupsPage(myUser,g);
+           new MyGroupsFrame(myUser);
             this.dispose();
             break;
         }

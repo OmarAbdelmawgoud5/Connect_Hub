@@ -1,5 +1,10 @@
 {
-
-
-
+  "G001" : {
+    "membersId" : [ ],
+    "photoPath" : "src/main/resources/yamal.jpg",
+    "groupId" : "G001",
+    "name" : "mo7bin lamine yamal",
+    "contentId" : [ ],
+    "description" : " we love yamal forever"
+  }
 }
