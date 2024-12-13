@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class ExternalGroupPanel extends JPanel {
-    public ExternalGroupPanel(Group group, User user) {
+    public ExternalGroupPanel(Group group, User user,Frame frame) {
         super();
         setPreferredSize(new Dimension(500, 200));
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -43,6 +43,7 @@ public class ExternalGroupPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 try {
                     new groupsPage(user,group);
+                    frame.dispose();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

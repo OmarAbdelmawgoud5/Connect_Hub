@@ -15,7 +15,7 @@ public class ContentCreationPage extends JDialog {
     MediaDetails mediaDetails;
     JButton storyButton;
     JPanel panel ;
-    public ContentCreationPage(JFrame parent, String userId,String type,String gpid) {
+    public ContentCreationPage(JFrame parent, String userId,Group g) {
         super(parent, "Create Post or Story", true);
         this.userId = userId;
         setSize(600, 450);
@@ -86,13 +86,15 @@ public class ContentCreationPage extends JDialog {
                 ContentFactory contentFactory = ContentFactoryRegistry.getInstance().getContentFactory("post");
                 Content post = contentFactory.createContent(userId, timeStamp, mediaDetails);
                 User user=new UserJson().LoadUser(userId);
-                if(type.equals("group"))
+                if(g!=null)
                 {
-                    groupPostsJson.editContent(post,gpid);
+                    groupPostsJson.editContent(post);
                     groupPostsJson.SaveJson();
+                    g.addContent(post.getContentId());
+                    GroupDBWriter.addGroup(g);
                 }
                 else
-                ContentDatabaseSaver.saveContent(post);
+                     ContentDatabaseSaver.saveContent(post);
             } catch (IOException ex) {
                 Logger.getLogger(ContentCreationPage.class.getName()).log(Level.SEVERE, null, ex);
             }
