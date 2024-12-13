@@ -170,7 +170,7 @@ public class Profile extends JFrame {
             for (Content post : posts) {
                 System.out.println("ahmed "+post.getAuthorId());
 
-                contentArea.add(postCard.createPostCard(post,myUser.getUserName(),myUser.getProfilePhoto(),null,null));
+                contentArea.add(postCard.createPostCard(post,myUser.getUserName(),myUser.getProfilePhoto(),null,this,null));
             }
         }
         container.add(scrollPane);

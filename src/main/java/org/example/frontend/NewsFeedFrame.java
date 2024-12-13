@@ -79,7 +79,7 @@ public class NewsFeedFrame  {
         JButton post1 = new JButton("Create Post");
         post1.setFocusable(false);
         post1.addActionListener(e->{
-            new ContentCreationPage(frame,user.getUserId(),null);
+            new ContentCreationPage(frame,user.getUserId(),null,null,null);
         });
 
         JButton logout = new JButton("Logout");

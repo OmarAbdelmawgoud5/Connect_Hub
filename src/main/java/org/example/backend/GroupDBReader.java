@@ -52,10 +52,9 @@ public class GroupDBReader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         return group;
-
     }
+
 
 
 }

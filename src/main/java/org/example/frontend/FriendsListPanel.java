@@ -66,7 +66,7 @@ public class FriendsListPanel extends JPanel implements ActionListener {
         optionsButton.setBorderPainted(false);
 
         optionsButton.addActionListener(this);
-       add(optionsButton);
+        add(optionsButton);
         popupMenu=new JPopupMenu();
          item1=new JMenuItem("Unfriend");
          item2=new JMenuItem("Block");
