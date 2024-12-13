@@ -9,124 +9,74 @@
     "type" : "friend request",
     "message" : "You have a new friend request from Ali"
   } ],
-  "e7cc1603-9853-4b39-be55-ce51d2fb7f03" : [ {
-    "timeStamp" : "2024-12-13T19:54:25.868464406",
-    "senderId" : "23c53980-fb8a-4523-aa97-3f209e963260",
-    "expireTime" : "2024-12-14T19:54:25.868513552",
-    "isRead" : true,
-    "recipientId" : "e7cc1603-9853-4b39-be55-ce51d2fb7f03",
-    "notificationId" : "notify-1734112465868",
+
+  "23c53980-fb8a-4523-aa97-3f209e963260" : [ {
+    "timeStamp" : "2024-12-13T23:00:34.536446400",
+    "senderId" : "1106bf71-948a-4590-8f76-0294e2a8b475",
+    "expireTime" : "2024-12-14T23:00:34.537302",
+    "isRead" : false,
+    "recipientId" : "23c53980-fb8a-4523-aa97-3f209e963260",
+    "notificationId" : "notify-1734123634530",
     "type" : "friend request",
-    "message" : "You have a new friend request from Yousef"
+    "message" : "You have a new friend request from OmarAbdelmawgoud"
+  }, {
+    "timeStamp" : "2024-12-13T23:13:31.688305900",
+    "senderId" : "569f936e-d46c-4a8d-a3f6-484bd106e8fc",
+    "expireTime" : "2024-12-14T23:13:31.688305900",
+    "isRead" : false,
+    "recipientId" : "23c53980-fb8a-4523-aa97-3f209e963260",
+    "notificationId" : "notif-1734124411688",
+    "type" : "group activity",
+    "message" : "You have added been added to the group : Final"
   } ],
-  "21250e09-54bc-4886-aafd-8e85ad172dea" : [ {
-    "timeStamp" : "2024-12-13T19:58:40.026168181",
-    "senderId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "expireTime" : "2024-12-14T19:58:40.026193716",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notify-1734112720025",
+  "6cf03d15-4d24-4b8b-bd65-17d7804133f7" : [ {
+    "timeStamp" : "2024-12-13T23:00:38.316585600",
+    "senderId" : "1106bf71-948a-4590-8f76-0294e2a8b475",
+    "expireTime" : "2024-12-14T23:00:38.316585600",
+    "isRead" : false,
+    "recipientId" : "6cf03d15-4d24-4b8b-bd65-17d7804133f7",
+    "notificationId" : "notify-1734123638316",
     "type" : "friend request",
-    "message" : "You have a new friend request from A"
-  }, {
-    "timeStamp" : "2024-12-13T20:15:11.759976993",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T20:15:11.760009043",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notif-1734113711759",
-    "type" : "group activity",
-    "message" : "You have added been added to the group : AlAhly"
-  }, {
-    "timeStamp" : "2024-12-13T20:52:38.019756414",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T20:52:38.019782640",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notif-1734115958019",
-    "type" : "group activity",
-    "message" : "You have been added to the group : AlAhly"
-  }, {
-    "timeStamp" : "2024-12-13T21:36:27.193012396",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T21:36:27.193036221",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notif-1734118587192",
-    "type" : "group activity",
-    "message" : "You have been added to the group : AlAhly"
-  }, {
-    "timeStamp" : "2024-12-13T22:37:48.873568187",
-    "senderId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "expireTime" : "2024-12-14T22:37:48.874322613",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notify-1734122268868",
-    "type" : "friend request",
-    "message" : "You have a new friend request from A"
-  }, {
-    "timeStamp" : "2024-12-13T22:45:57.055240376",
-    "senderId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "expireTime" : "2024-12-14T22:45:57.056368872",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notify-1734122757046",
-    "type" : "friend request",
-    "message" : "You have a new friend request from A"
-  }, {
-    "timeStamp" : "2024-12-13T22:48:35.645381791",
-    "senderId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "expireTime" : "2024-12-14T22:48:35.646596535",
-    "isRead" : true,
-    "recipientId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "notificationId" : "notify-1734122915638",
-    "type" : "friend request",
-    "message" : "You have a new friend request from A"
+    "message" : "You have a new friend request from OmarAbdelmawgoud"
   } ],
-  "c0ba4cb6-aad8-45ba-afc0-b7c91da34453" : [ {
-    "timeStamp" : "2024-12-13T20:17:26.262455715",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T20:17:26.262478479",
-    "isRead" : true,
-    "recipientId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "notificationId" : "notif-1734113846262",
-    "type" : "group activity",
-    "message" : "You have added been added to the group : AlAhly"
-  }, {
-    "timeStamp" : "2024-12-13T21:37:59.443812008",
-    "senderId" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "expireTime" : "2024-12-14T21:37:59.445030949",
-    "isRead" : true,
-    "recipientId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "notificationId" : "notify-1734118679436",
+  "65bf0ee9-6921-4d8f-84d1-490da14dc792" : [ {
+    "timeStamp" : "2024-12-13T23:04:31.382001",
+    "senderId" : "1106bf71-948a-4590-8f76-0294e2a8b475",
+    "expireTime" : "2024-12-14T23:04:31.382001",
+    "isRead" : false,
+    "recipientId" : "65bf0ee9-6921-4d8f-84d1-490da14dc792",
+    "notificationId" : "notify-1734123871382",
     "type" : "friend request",
-    "message" : "You have a new friend request from B"
-  }, {
-    "timeStamp" : "2024-12-13T21:38:53.936710020",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T21:38:53.936737183",
-    "isRead" : true,
-    "recipientId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "notificationId" : "notif-1734118733936",
+    "message" : "You have a new friend request from OmarAbdelmawgoud"
+  } ],
+  "1106bf71-948a-4590-8f76-0294e2a8b475" : [ {
+    "timeStamp" : "2024-12-13T23:10:15.320031600",
+    "senderId" : "569f936e-d46c-4a8d-a3f6-484bd106e8fc",
+    "expireTime" : "2024-12-14T23:10:15.320031600",
+    "isRead" : false,
+    "recipientId" : "1106bf71-948a-4590-8f76-0294e2a8b475",
+    "notificationId" : "notif-1734124215320",
     "type" : "group activity",
-    "message" : "You have been added to the group : AlAhly"
+    "message" : "You have added been added to the group : Final"
   }, {
-    "timeStamp" : "2024-12-13T21:40:04.568015679",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T21:40:04.568041140",
-    "isRead" : true,
-    "recipientId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "notificationId" : "notif-1734118804567",
+    "timeStamp" : "2024-12-13T23:29:32.992469300",
+    "senderId" : "569f936e-d46c-4a8d-a3f6-484bd106e8fc",
+    "expireTime" : "2024-12-14T23:29:32.992469300",
+    "isRead" : false,
+    "recipientId" : "1106bf71-948a-4590-8f76-0294e2a8b475",
+    "notificationId" : "notif-1734125372992",
     "type" : "group activity",
-    "message" : "You have been added to the group : AlAhly"
-  }, {
-    "timeStamp" : "2024-12-13T21:40:11.961910148",
-    "senderId" : "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920",
-    "expireTime" : "2024-12-14T21:40:11.961931417",
-    "isRead" : true,
-    "recipientId" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
-    "notificationId" : "notif-1734118811961",
+    "message" : "You have added been added to the group : Final"
+  } ],
+  "7e6f869a-0abb-4bd8-ab63-d1187926b480" : [ {
+    "timeStamp" : "2024-12-13T23:29:32.997605800",
+    "senderId" : "569f936e-d46c-4a8d-a3f6-484bd106e8fc",
+    "expireTime" : "2024-12-14T23:29:32.997605800",
+    "isRead" : false,
+    "recipientId" : "7e6f869a-0abb-4bd8-ab63-d1187926b480",
+    "notificationId" : "notif-1734125372997",
     "type" : "group activity",
-    "message" : "You have been added to the group : AlAhly"
+    "message" : "You have added been added to the group : Final"
+
   } ]
 }

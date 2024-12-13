@@ -10,17 +10,6 @@
     "bio" : null,
     "id" : "f6582e5d-e5cd-4b35-98be-a554d5fdd022"
   },
-  "65bf0ee9-6921-4d8f-84d1-490da14dc792" : {
-    "userName" : "Moeen",
-    "email" : "m@gmail.com",
-    "dateOfBirth" : "2004-12-12",
-    "profilePhoto" : "D:\\Graphic\\logo 2.jpg",
-    "coverPhoto" : "C:\\Users\\Etijah\\Desktop\\IMG-20241128-WA0056.jpg",
-    "password" : "$2a$10$E.Tvu/FENaho7hb9RuEfp.IKpJGMTDEh7d0UQsIMFBp4dF1xeZ1t2",
-    "status" : "Offline",
-    "bio" : null,
-    "id" : "65bf0ee9-6921-4d8f-84d1-490da14dc792"
-  },
   "6cf03d15-4d24-4b8b-bd65-17d7804133f7" : {
     "userName" : "eyad",
     "email" : "e@gmail.com",
@@ -65,17 +54,6 @@
     "bio" : null,
     "id" : "33c4074c-5582-493e-9383-ceaea52fc3e1"
   },
-  "1ab07644-1945-4d26-8e87-de6b17567544" : {
-    "userName" : "Zahran",
-    "email" : "z@gmail.com",
-    "dateOfBirth" : "2004-12-12",
-    "profilePhoto" : "D:\\Graphic\\card 1.jpg",
-    "coverPhoto" : "C:\\Users\\Etijah\\Desktop\\IMG-20241128-WA0055.jpg",
-    "password" : "$2a$10$85PJ3M2I82S93VpCETjeyuWAvF6fosV/SREn26SkQcX3IBV6tL7Iy",
-    "status" : "Offline",
-    "bio" : null,
-    "id" : "1ab07644-1945-4d26-8e87-de6b17567544"
-  },
   "d5c804f3-ab45-4bab-b9f3-9263a0f41b43" : {
     "userName" : "nabil",
     "email" : "n@gmail.com",
@@ -98,6 +76,7 @@
     "bio" : "Hello",
     "id" : "3edf7101-272a-42d1-8a55-9849a80b0227"
   },
+
   "1106bf71-948a-4590-8f76-0294e2a8b475" : {
     "userName" : "OmarAbdelmawgoud",
     "email" : "ooo@gmail.com",
@@ -112,6 +91,7 @@
       "G001" : "member"
     }
   },
+
   "e7cc1603-9853-4b39-be55-ce51d2fb7f03" : {
     "userName" : "Omar",
     "email" : "o@gmail.com",
@@ -125,6 +105,77 @@
     "groups" : {
       "2e9c8b7e-2cdb-4b7d-b9a4-203f97ae28e2" : "owner"
     }
+
+  },
+  "65bf0ee9-6921-4d8f-84d1-490da14dc792" : {
+    "userName" : "Moeen",
+    "email" : "m@gmail.com",
+    "dateOfBirth" : "2004-12-12",
+    "profilePhoto" : "D:\\Graphic\\logo 2.jpg",
+    "coverPhoto" : "C:\\Users\\Etijah\\Desktop\\IMG-20241128-WA0056.jpg",
+    "password" : "$2a$10$E.Tvu/FENaho7hb9RuEfp.IKpJGMTDEh7d0UQsIMFBp4dF1xeZ1t2",
+    "status" : "Offline",
+    "bio" : null,
+    "id" : "65bf0ee9-6921-4d8f-84d1-490da14dc792",
+    "groups" : null
+  },
+  "1ab07644-1945-4d26-8e87-de6b17567544" : {
+    "userName" : "Zahran",
+    "email" : "z@gmail.com",
+    "dateOfBirth" : "2004-12-12",
+    "profilePhoto" : "D:\\Graphic\\card 1.jpg",
+    "coverPhoto" : "C:\\Users\\Etijah\\Desktop\\IMG-20241128-WA0055.jpg",
+    "password" : "$2a$10$85PJ3M2I82S93VpCETjeyuWAvF6fosV/SREn26SkQcX3IBV6tL7Iy",
+    "status" : "Offline",
+    "bio" : null,
+    "id" : "1ab07644-1945-4d26-8e87-de6b17567544",
+    "groups" : null
+  },
+  "23c53980-fb8a-4523-aa97-3f209e963260" : {
+    "userName" : "Yousef",
+    "email" : "y@gmail.com",
+    "dateOfBirth" : "2005-12-12",
+    "profilePhoto" : "D:\\Me\\vv.jpg",
+    "coverPhoto" : "C:\\Users\\Etijah\\Desktop\\IMG-20241128-WA0055.jpg",
+    "password" : "$2a$10$JSGbG0uP/8p.pLQFowmfkO3RYKY4zNGoAcuwlpy7tGXXMyrjkckRa",
+    "status" : "Offline",
+    "bio" : "Elhezawy",
+    "id" : "23c53980-fb8a-4523-aa97-3f209e963260",
+    "groups" : { }
+  },
+  "7e6f869a-0abb-4bd8-ab63-d1187926b480" : {
+    "userName" : "hi",
+    "email" : "ha@gmail.com",
+    "dateOfBirth" : "2004-12-12",
+    "profilePhoto" : "D:\\Graphic\\card 1.jpg",
+    "coverPhoto" : "D:\\College\\Term 5\\Term 5.png",
+    "password" : "$2a$10$t8sKBAtIc.8n4E9qlr/6juDI/Ad.DYRtHF9hnlQeqjn1IMHsd5sdq",
+    "status" : "Online",
+    "bio" : null,
+    "id" : "7e6f869a-0abb-4bd8-ab63-d1187926b480",
+    "groups" : { }
+  },
+
+  "1106bf71-948a-4590-8f76-0294e2a8b475" : {
+    "userName" : "OmarAbdelmawgoud",
+    "email" : "ooo@gmail.com",
+    "dateOfBirth" : "2001-02-02",
+    "profilePhoto" : "src/main/resources/user.png",
+    "coverPhoto" : "C:\\Users\\Etijah\\Pictures\\12_3_2023 5_40_30 PM.png",
+    "password" : "$2a$10$STxoEvN4UrmGXq7oRwQspOHc8ZUR.VYQz1xdUlg43xH2F5yQJ/EcG",
+    "status" : "Online",
+
+    "bio" : null,
+    "id" : "1106bf71-948a-4590-8f76-0294e2a8b475",
+    "groups" : {
+
+      "2e9c8b7e-2cdb-4b7d-b9a4-203f97ae28e2" : "member",
+      "ba42298d-434c-4544-b3d9-d4f4986849e5" : "member",
+      "569f936e-d46c-4a8d-a3f6-484bd106e8fc" : "admin"
+
+    }
+
+
   },
   "23c53980-fb8a-4523-aa97-3f209e963260" : {
     "userName" : "Yousef",

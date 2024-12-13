@@ -15,7 +15,8 @@ public class ScrollableCardPanel {
     public static void view(Group g,User coreUser) throws IOException {
         // Create the main frame
         JFrame frame = new JFrame("Members of the group");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 800); // Make the panel bigger
 
 
@@ -100,14 +101,14 @@ public class ScrollableCardPanel {
                       });
                     }
 
-                    else if(statue.equals("Owner")||statue.equals("admin")) {
+                    else if(statue.equals("owner")||statue.equals("admin")) {
                         JMenuItem item = new JMenuItem("no options to do");
                         popupMenu.add(item);
                         popupMenu.show(button,0,0);
                     }
 
                 }
-                else if(coreUserStatue.equals("Owner")) {
+                else if(coreUserStatue.equals("owner")) {
                      if(statue.equals("member")) {
                         JMenuItem item = new JMenuItem("Premote");
                         JMenuItem item2=new JMenuItem("kick");
