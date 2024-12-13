@@ -16,7 +16,7 @@ public class FriendSuggestionFrame extends JFrame implements ActionListener {
     public FriendSuggestionFrame(User user) throws IOException {
         super("Friend Suggestion");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 800);
+        setSize(700, 650);
         setLocationRelativeTo(null);
         setResizable(false);
 

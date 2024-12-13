@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import org.example.backend.*;
 
@@ -76,7 +78,6 @@ public class NotificationPage extends JDialog {
         markAsReadButton.setBounds(230, 50, 150, 30);
         notificationPanel.add(markAsReadButton);
 
-        // Handle different types of notifications
         if (notification instanceof FriendRequestNotification) {
             handleFriendRequest(notificationPanel, (FriendRequestNotification) notification, messageLabel, markAsReadButton);
         } else if (notification instanceof GroupActivityNotification) {
@@ -99,6 +100,17 @@ public class NotificationPage extends JDialog {
         declineButton.setBounds(120, 50, 100, 30);
         messageLabel.setText(friendRequestNotification.getMessage());
         markAsReadButton.setEnabled(true);
+
+        markAsReadButton.addActionListener(e -> {
+            friendRequestNotification.markAsRead();
+            markAsReadButton.setEnabled(false);
+            try {
+                NotificationDatabaseSaver.updateNotificationStatus(friendRequestNotification.getNotificationId(), friendRequestNotification.getRecipientId(), true);
+            } catch (IOException ex) {
+                Logger.getLogger(NotificationPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
 
         acceptButton.addActionListener(e -> {
             friendRequestNotification.markAsRead();
@@ -129,40 +141,82 @@ public class NotificationPage extends JDialog {
     }
 
     private void handleGroupActivity(JPanel notificationPanel, GroupActivityNotification groupActivityNotification, JLabel messageLabel, JButton markAsReadButton) throws IOException {
-        messageLabel.setText(groupActivityNotification.getMessage());
-        markAsReadButton.setEnabled(true);
 
         JButton moveToGroupButton = new JButton("Move to Group");
         moveToGroupButton.setBounds(10, 50, 150, 30);
-        notificationPanel.add(moveToGroupButton);
+
+        messageLabel.setText(groupActivityNotification.getMessage());
+        markAsReadButton.setEnabled(true);
+
+        markAsReadButton.addActionListener(e -> {
+            groupActivityNotification.markAsRead();
+            markAsReadButton.setEnabled(false);
+            try {
+                NotificationDatabaseSaver.updateNotificationStatus(groupActivityNotification.getNotificationId(), groupActivityNotification.getRecipientId(), true);
+            } catch (IOException ex) {
+                Logger.getLogger(NotificationPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
 
         moveToGroupButton.addActionListener(e -> {
-            // try {
-            Group group = new GettingGroupByGroupId().getGroup(groupActivityNotification.getRecipientId());
-/////////////////////////////////////////////////////////////////////عايزين هنا نروح لصفحة الجروب 
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
+            groupActivityNotification.markAsRead();
+            try {
+                Group group = new GettingGroupByGroupId().getGroup(groupActivityNotification.getSenderId());
+
+                User currentUser = new GettingUserByUserId().getUser(userId);
+
+                new groupsPage(currentUser, group);
+
+                NotificationDatabaseSaver.updateNotificationStatus(groupActivityNotification.getNotificationId(), groupActivityNotification.getRecipientId(), true);
+
+                this.dispose();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         });
+        notificationPanel.add(moveToGroupButton);
     }
 
     private void handleNewPost(JPanel notificationPanel, NewPostNotification newPostNotification, JLabel messageLabel, JButton markAsReadButton) throws IOException {
+        JButton showButton = new JButton("Show");
+        showButton.setBounds(10, 50, 150, 30);
+
         messageLabel.setText(newPostNotification.getMessage());
         markAsReadButton.setEnabled(true);
 
-        JButton showButton = new JButton("Show");
-        showButton.setBounds(10, 50, 100, 30);
-        notificationPanel.add(showButton);
+        markAsReadButton.addActionListener(e -> {
+            newPostNotification.markAsRead();
+            markAsReadButton.setEnabled(false);
+            try {
+                NotificationDatabaseSaver.updateNotificationStatus(newPostNotification.getNotificationId(), newPostNotification.getRecipientId(), true);
+            } catch (IOException ex) {
+                Logger.getLogger(NotificationPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
 
         showButton.addActionListener(e -> {
-            // try {
-            Group group = new GettingGroupByGroupId().getGroup(newPostNotification.getSenderId());
-/////////////////////////////////////////////////////////////////////عايزين هنا نروح لصفحة الجروب 
+            newPostNotification.markAsRead();
+            try {
+                Group group = new GettingGroupByGroupId().getGroup(newPostNotification.getSenderId());
 
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
+                User currentUser = new GettingUserByUserId().getUser(userId);
+
+                new groupsPage(currentUser, group);
+
+                NotificationDatabaseSaver.updateNotificationStatus(newPostNotification.getNotificationId(), newPostNotification.getRecipientId(), true);
+
+                this.dispose();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         });
+        notificationPanel.add(showButton);
     }
 
     private void disableButtons(JButton acceptButton, JButton declineButton, JButton markAsReadButton) {
@@ -172,14 +226,5 @@ public class NotificationPage extends JDialog {
         acceptButton.setBackground(Color.LIGHT_GRAY);
         declineButton.setBackground(Color.LIGHT_GRAY);
         markAsReadButton.setBackground(Color.LIGHT_GRAY);
-    }
-
-    public static void main(String[] args) {
-        FlatLightLaf.setup();
-        try {
-            new NotificationPage("d4805154-8f3d-42b4-affe-609395e309de"); // Use a valid userId here
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
