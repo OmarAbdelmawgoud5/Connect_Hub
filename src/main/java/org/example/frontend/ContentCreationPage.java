@@ -15,7 +15,7 @@ public class ContentCreationPage extends JDialog {
     MediaDetails mediaDetails;
     JButton storyButton;
     JPanel panel ;
-    public ContentCreationPage(JFrame parent, String userId,Group g) {
+    public ContentCreationPage(JFrame parent, String userId,Group g,String t,String path) {
         super(parent, "Create Post or Story", true);
         this.userId = userId;
         setSize(600, 450);
@@ -33,6 +33,8 @@ public class ContentCreationPage extends JDialog {
         panel.add(contentLabel);
 
         JTextArea contentTextArea = new JTextArea();
+        if(t!=null)
+            contentTextArea.setText(t);
         contentTextArea.setBounds(20, 60, 540, 100);
         contentTextArea.setLineWrap(true);
         contentTextArea.setWrapStyleWord(true);
@@ -43,8 +45,11 @@ public class ContentCreationPage extends JDialog {
         attachImageButton.setBounds(20, 180, 150, 30);
         attachImageButton.setBackground(Color.LIGHT_GRAY);
         panel.add(attachImageButton);
-
-        JLabel imagePathLabel = new JLabel("No image attached");
+        JLabel imagePathLabel;
+        if(path==null)
+            imagePathLabel = new JLabel("No image attached");
+        else
+            imagePathLabel = new JLabel(path);
         imagePathLabel.setBounds(200, 180, 360, 30);
         panel.add(imagePathLabel);
 

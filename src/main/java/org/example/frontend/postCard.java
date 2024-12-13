@@ -10,26 +10,73 @@ import java.io.IOException;
 
 public class postCard {
 
-    static public JPanel createPostCard(Content post, String name, String pf, String extraproprites, Myfunction s) {
-        System.out.println("ahmed 2" + post.getContentId());
-        System.out.println("ahmed " + post.getContent().getText());
 
-        JPanel panel = new JPanel();
+    static public JPanel createPostCard(Content post, String name, String pf, String extraproprites, JFrame parent,Group g) {
+        System.out.println("Post ID: " + post.getContentId());
+        System.out.println("Post Content: " + post.getContent().getText());
+
+        custom panel = new custom();
         panel.setLayout(new BorderLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         panel.setBackground(Color.WHITE);
 
         String path = post.getContent().getImage();
-        if (path == null)
-            panel.setPreferredSize(new Dimension(780, 100));
-        else {
-            panel.setPreferredSize(new Dimension(780, 200));
-        }
+        panel.setPreferredSize(new Dimension(780, path == null ? 100 : 400));
 
-        // Profile Photo in Post
+        // Top section (Profile photo, name, options button)
+        JPanel topSection = new JPanel(new BorderLayout());
+        topSection.setBackground(Color.WHITE);
+
+        // Profile Photo
         JLabel postProfilePhoto = new JLabel(new ImageIcon(new ImageIcon(pf).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         postProfilePhoto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(postProfilePhoto, BorderLayout.WEST);
+        topSection.add(postProfilePhoto, BorderLayout.WEST);
+
+        // Name label
+        JLabel nameLabel = new JLabel(name);
+        nameLabel.setFont(new Font("Arial", Font.PLAIN, 12)); // Smaller font
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        topSection.add(nameLabel, BorderLayout.CENTER);
+
+        // Options Button (for admin/owner)
+        if ("admin".equals(extraproprites) || "owner".equals(extraproprites)) {
+            JButton optionsButton = new JButton("...");
+            optionsButton.setFont(new Font("Arial", Font.BOLD, 12));
+            optionsButton.setPreferredSize(new Dimension(30, 30));
+            optionsButton.setOpaque(false);
+            optionsButton.setContentAreaFilled(false);
+            optionsButton.setBorderPainted(false);
+            optionsButton.addActionListener(evt -> {
+
+                    var popupMenu=new JPopupMenu() {
+                        @Override
+                        public Dimension getPreferredSize() {
+                            return new Dimension(300, 200); // Set desired dimensions
+                        }
+                    };;
+                    var item1=new JMenuItem("Edit");
+                    var item2=new JMenuItem("Delete");
+                    popupMenu.add(item1);
+                    popupMenu.add(item2);
+                    item1.addActionListener(panel);
+                    item2.addActionListener(panel);
+                    panel.setItem1(item1);
+                    panel.setItem2(item2);
+                    panel.setPopupMenu(popupMenu);
+                    panel.setC(post);
+                    panel.setG(g);
+                    panel.setP(parent);
+                    popupMenu.setLocation(600,300);
+                    popupMenu.setVisible(true);
+            });
+
+            JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+            buttonContainer.setOpaque(false);
+            buttonContainer.add(optionsButton);
+            topSection.add(buttonContainer, BorderLayout.EAST);
+        }
+
+        panel.add(topSection, BorderLayout.NORTH);
 
         // Post Content
         String contentText = post.getContent().getText();
@@ -37,76 +84,43 @@ public class postCard {
         postContent.setFont(new Font("Arial", Font.PLAIN, 15));
         postContent.setWrapStyleWord(true);
         postContent.setLineWrap(true);
+        postContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         postContent.setOpaque(false);
-        postContent.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
 
         JScrollPane contentScrollPane = new JScrollPane(postContent);
         contentScrollPane.setBorder(BorderFactory.createEmptyBorder());
-
-        if (path != null) {
-            JLabel c = new JLabel(new ImageIcon(
-                    new ImageIcon(post.getContent().getImage()).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
-            c.setBounds(450, 50, 500, 100);
-            panel.add(c);
-        }
         panel.add(contentScrollPane, BorderLayout.CENTER);
 
-        // "See More" Button if Text is Long
-        if (contentText.length() > 100) {
-            postContent.setText(contentText.substring(0, 100)); // Adjust threshold as needed
-            JButton seeMoreButton = createStyledButton("See More");
-            seeMoreButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JDialog dialog = new JDialog();
-                    dialog.setTitle("Post Details");
-                    dialog.setSize(400, 300);
-                    dialog.setLocationRelativeTo(null);
-
-                    JTextArea fullText = new JTextArea(contentText);
-                    fullText.setFont(new Font("Arial", Font.PLAIN, 12));
-                    fullText.setEditable(false);
-                    fullText.setWrapStyleWord(true);
-                    fullText.setLineWrap(true);
-                    fullText.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-                    JScrollPane dialogScroll = new JScrollPane(fullText);
-                    dialog.add(dialogScroll);
-
-                    dialog.setVisible(true);
-                }
-            });
-            seeMoreButton.setFont(new Font("Arial", Font.PLAIN, 10));
-            panel.add(seeMoreButton, BorderLayout.SOUTH);
+        // Post Image
+        if (path != null) {
+            JLabel postImage = new JLabel(new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+            postImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            panel.add(postImage, BorderLayout.EAST);
         }
 
-        // Add admin-specific properties
-        if (extraproprites != null) {
-            if (extraproprites.equals("admin")) {
-                var optionsButton = new JButton("...");
-                optionsButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font
-                optionsButton.setPreferredSize(new Dimension(30, 30));  // Small size
-                optionsButton.setOpaque(false);
-                optionsButton.setBackground(null);
-                optionsButton.setBorderPainted(false);
-                optionsButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        try {
-                            s.execute();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
+        // "See More" Button for Long Content
+        if (contentText.length() > 100) {
+            postContent.setText(contentText.substring(0, 100) + "...");
+            JButton seeMoreButton = createStyledButton("See More");
+            seeMoreButton.addActionListener(e -> {
+                JDialog dialog = new JDialog();
+                dialog.setTitle("Post Details");
+                dialog.setSize(400, 300);
+                dialog.setLocationRelativeTo(null);
 
-                // Create a container for alignment
-                JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                buttonContainer.setOpaque(false); // Transparent background
-                buttonContainer.add(optionsButton);
+                JTextArea fullText = new JTextArea(contentText);
+                fullText.setFont(new Font("Arial", Font.PLAIN, 12));
+                fullText.setEditable(false);
+                fullText.setWrapStyleWord(true);
+                fullText.setLineWrap(true);
+                fullText.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                // Add the container to the panel
-                panel.add(buttonContainer, BorderLayout.NORTH); // Align to the top-right
-            }
+                JScrollPane dialogScroll = new JScrollPane(fullText);
+                dialog.add(dialogScroll);
+
+                dialog.setVisible(true);
+            });
+            panel.add(seeMoreButton, BorderLayout.SOUTH);
         }
 
         return panel;

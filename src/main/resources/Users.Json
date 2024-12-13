@@ -135,8 +135,7 @@
     "bio" : null,
     "id" : "1106bf71-948a-4590-8f76-0294e2a8b475",
     "groups" : {
-      "G001" : "admin",
-      "0934b965-950b-46c5-b43d-f2f85b75de08" : "Owner"
+      "G001" : "member"
     }
   }
 }
