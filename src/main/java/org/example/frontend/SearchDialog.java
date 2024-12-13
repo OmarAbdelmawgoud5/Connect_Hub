@@ -87,6 +87,10 @@ public class SearchDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "No groups found!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        try {
+            new SearchGroup(this,user,groups);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
