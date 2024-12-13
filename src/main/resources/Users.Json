@@ -107,7 +107,8 @@
     "password" : "$2a$10$JSGbG0uP/8p.pLQFowmfkO3RYKY4zNGoAcuwlpy7tGXXMyrjkckRa",
     "status" : "Online",
     "bio" : "Elhezawy",
-    "id" : "23c53980-fb8a-4523-aa97-3f209e963260"
+    "id" : "23c53980-fb8a-4523-aa97-3f209e963260",
+    "groups" : null
   },
   "e7cc1603-9853-4b39-be55-ce51d2fb7f03" : {
     "userName" : "Omar",
@@ -118,20 +119,22 @@
     "password" : "$2a$10$oMUfdIn4ed9t.TOZRIsheObkdCIrroUHLtkeBdsdJZQ47MxZDSE42",
     "status" : "Online",
     "bio" : "okay",
-    "id" : "e7cc1603-9853-4b39-be55-ce51d2fb7f03"
+    "id" : "e7cc1603-9853-4b39-be55-ce51d2fb7f03",
+    "groups" : null
   },
   "1106bf71-948a-4590-8f76-0294e2a8b475" : {
     "userName" : "OmarAbdelmawgoud",
     "email" : "ooo@gmail.com",
     "dateOfBirth" : "2001-02-02",
-    "profilePhoto" : "C:\\Users\\Etijah\\Pictures\\12_3_2023 5_40_30 PM.png",
+    "profilePhoto" : "D:\\College\\Term 5\\Programming 2\\Lab10\\Connect_Hub\\src\\main\\resources\\hi.jpg",
     "coverPhoto" : "C:\\Users\\Etijah\\Pictures\\12_3_2023 5_40_30 PM.png",
-    "password" : "$2a$10$LS50KQFiQsEXg719xfjYau2Cy3CIGCuTpzoaqFOERk9jRZr3vQ/l6",
+    "password" : "$2a$10$STxoEvN4UrmGXq7oRwQspOHc8ZUR.VYQz1xdUlg43xH2F5yQJ/EcG",
     "status" : "Online",
     "bio" : null,
     "id" : "1106bf71-948a-4590-8f76-0294e2a8b475",
     "groups" : {
-      "G001" : "admin"
+      "G001" : "admin",
+      "0934b965-950b-46c5-b43d-f2f85b75de08" : "Owner"
     }
   }
 }

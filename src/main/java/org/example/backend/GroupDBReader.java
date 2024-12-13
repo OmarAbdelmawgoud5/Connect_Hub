@@ -23,10 +23,8 @@ public class GroupDBReader {
         }
     }
     public static GroupDBReader getInstance() {
-        if (instance == null) {
-            instance = new GroupDBReader();
-        }
-        return instance;
+
+        return new GroupDBReader();
     }
 
     public ArrayList<Group> readGroups() {

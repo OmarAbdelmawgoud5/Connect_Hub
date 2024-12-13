@@ -32,7 +32,7 @@ public class MyGroupsFrame extends JFrame implements ActionListener {
 
         for(Map.Entry<String,String> entry:groups.entrySet()){
             Group group= GroupDBReader.getInstance().readGroups(entry.getKey());
-            ExternalGroupPanel groupPanel = new ExternalGroupPanel(group,user);
+            ExternalGroupPanel groupPanel = new ExternalGroupPanel(group,user,this);
             groupPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(groupPanel);
         panel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -44,7 +44,7 @@ public class MyGroupsFrame extends JFrame implements ActionListener {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollPane.setBounds(0,0,780,800);
 
-         backButton = new JButton("Back");
+        backButton = new JButton("Back");
         backButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
         backButton.addActionListener(this);
         backButton.setSize(backButton.getPreferredSize());
