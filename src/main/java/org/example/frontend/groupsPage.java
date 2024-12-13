@@ -120,11 +120,29 @@ public class groupsPage extends JFrame implements ActionListener {
         addPostButton.addActionListener(evt -> openContentCreationPage(user,g));
         navPanel.add(addPostButton);
 
+        JButton leaveButton = createNavButton("Leave Group");
+        leaveButton.addActionListener(evt -> {
+            g.removeMembersId(user.getUserId());
+            user.removeGroup(g.getGroupId());
+            try {
+                new UserJson().editUser(user);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            GroupDBWriter.addGroup(g);
+            dispose();
+            try {
+                new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        navPanel.add(leaveButton);
+
         JButton membersButton = createNavButton("Members");
         membersButton.addActionListener(evt -> {
             try {
-                ScrollableCardPanel.view(currentGroup);
-                System.out.println("555555555555");
+                ScrollableCardPanel.view(currentGroup,user);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -156,7 +174,7 @@ public class groupsPage extends JFrame implements ActionListener {
         contentArea.setBackground(Color.WHITE);
 
         try {
-            System.out.println("A7A ");
+
 
             ArrayList<Content> posts =new ArrayList<>();
             ArrayList<String> ids = group.getContentId();
@@ -170,7 +188,7 @@ public class groupsPage extends JFrame implements ActionListener {
                 if (posts != null) {
                     for (Content post : posts) {
                         User postAuthor = userJson.LoadUser(post.getAuthorId());
-                        contentArea.add(postCard.createPostCard(post, postAuthor.getUserName(), postAuthor.getProfilePhoto(), currentUser.getGroups().get(group.getGroupId()),this,currentGroup));
+                        contentArea.add(postCard.createPostCard(post, postAuthor.getUserName(), postAuthor.getProfilePhoto(), currentUser.getGroups().get(group.getGroupId()),groupsPage.this,currentGroup));
                     }
                 }
             }

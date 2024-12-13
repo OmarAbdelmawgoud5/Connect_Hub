@@ -1,6 +1,8 @@
 package org.example.frontend;
 
 import org.example.backend.Group;
+import org.example.backend.GroupDBWriter;
+import org.example.backend.User;
 import org.example.backend.UserJson;
 
 import javax.swing.*;
@@ -10,13 +12,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class ScrollableCardPanel {
-    public static void view(Group g) throws IOException {
+    public static void view(Group g,User coreUser) throws IOException {
         // Create the main frame
-        JFrame frame = new JFrame("Scrollable Cards Example");
+        JFrame frame = new JFrame("Members of the group");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 800); // Make the panel bigger
 
-        // Create the scrollable panel
+
         JPanel cardPanel = new JPanel();
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
 
@@ -26,7 +28,7 @@ public class ScrollableCardPanel {
         // Add cards to the panel
         for (int i = 0; i < g.getMembersId().size(); i++) {
 
-            cardPanel.add(createCard(new UserJson().LoadUser(g.getMembersId().get(i)).getUserName() ,new UserJson().LoadUser(g.getMembersId().get(i)).getProfilePhoto()));
+            cardPanel.add(createCard(new UserJson().LoadUser(g.getMembersId().get(i)),g,coreUser));
         }
 
         // Add the scroll pane to the frame
@@ -34,21 +36,21 @@ public class ScrollableCardPanel {
         frame.setVisible(true);
     }
 
-    private static JPanel createCard(String name, String imagePath) {
+    private static JPanel createCard(User user,Group group,User coreUser) {
         // Create a panel for the card
         JPanel card = new JPanel();
         card.setLayout(new BorderLayout());
         card.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        card.setPreferredSize(new Dimension(550, 150)); // Make the panel bigger
+        card.setPreferredSize(new Dimension(550, 150));
 
         // Add photo
         JLabel photoLabel = new JLabel();
-        photoLabel.setIcon(resizeImage(imagePath, 120, 120)); // Resize image to fit
+        photoLabel.setIcon(resizeImage(user.getProfilePhoto(), 120, 120));
         card.add(photoLabel, BorderLayout.WEST);
 
         // Add name and button in a panel
         JPanel centerPanel = new JPanel(new BorderLayout());
-        JLabel nameLabel = new JLabel(name);
+        JLabel nameLabel = new JLabel(user.getUserName());
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
         centerPanel.add(nameLabel, BorderLayout.CENTER);
 
@@ -61,11 +63,120 @@ public class ScrollableCardPanel {
         button.setFocusPainted(false);                // Remove focus border
         button.setFont(new Font("Arial", Font.BOLD, 12)); // Set a custom font
         button.setBorder(BorderFactory.createLineBorder(new Color(30, 90, 140), 1));
+        JPopupMenu popupMenu = new JPopupMenu();
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Button clicked for " + name);
+                popupMenu.removeAll();
+                String statue=user.getGroups().get(group.getGroupId());
+                String coreUserStatue=coreUser.getGroups().get(group.getGroupId());
+                if(coreUserStatue.equals("member")) {
+                  JMenuItem item = new JMenuItem("no options to do");
+                  popupMenu.add(item);
+                  popupMenu.show(button,0,0);
+
+
+                }
+                else if(coreUserStatue.equals("admin")) {
+                    if(statue.equals("member")) {
+                      JMenuItem item = new JMenuItem("kick");
+                      popupMenu.add(item);
+                      popupMenu.show(button,0,0);
+                      item.addActionListener(new ActionListener() {
+
+                          @Override
+                          public void actionPerformed(ActionEvent e) {
+                              user.removeGroup(group.getGroupId());
+                              group.removeMembersId(user.getUserId());
+                              try {
+                                  new UserJson().editUser(user);
+                              } catch (IOException ex) {
+                                  throw new RuntimeException(ex);
+                              }
+                              GroupDBWriter.addGroup(group);
+
+                          }
+                      });
+                    }
+
+                    else if(statue.equals("Owner")||statue.equals("admin")) {
+                        JMenuItem item = new JMenuItem("no options to do");
+                        popupMenu.add(item);
+                        popupMenu.show(button,0,0);
+                    }
+
+                }
+                else if(coreUserStatue.equals("Owner")) {
+                     if(statue.equals("member")) {
+                        JMenuItem item = new JMenuItem("Premote");
+                        JMenuItem item2=new JMenuItem("kick");
+                        popupMenu.add(item);
+                        popupMenu.add(item2);
+                        popupMenu.show(button,0,0);
+                        item.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                user.addGroup(group.getGroupId(), "admin");
+                                try {
+                                    new UserJson().editUser(user);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        });
+                         item2.addActionListener(new ActionListener() {
+
+                             @Override
+                             public void actionPerformed(ActionEvent e) {
+                                 user.removeGroup(group.getGroupId());
+                                 group.removeMembersId(user.getUserId());
+                                 try {
+                                     new UserJson().editUser(user);
+                                 } catch (IOException ex) {
+                                     throw new RuntimeException(ex);
+                                 }
+                                 GroupDBWriter.addGroup(group);
+
+                             }
+                         });
+                     }
+                     else if(statue.equals("admin")) {
+                         JMenuItem item = new JMenuItem("demote");
+                         JMenuItem item2=new JMenuItem("kick");
+
+                         popupMenu.add(item);
+                         popupMenu.add(item2);
+                         popupMenu.show(button,0,0);
+                         item.addActionListener(new ActionListener() {
+                             @Override
+                             public void actionPerformed(ActionEvent e) {
+                                 user.addGroup(group.getGroupId(), "member");
+                                 try {
+                                     new UserJson().editUser(user);
+                                 } catch (IOException ex) {
+                                     throw new RuntimeException(ex);
+                                 }
+                             }
+                         });
+                         item2.addActionListener(new ActionListener() {
+
+                             @Override
+                             public void actionPerformed(ActionEvent e) {
+                                 user.removeGroup(group.getGroupId());
+                                 group.removeMembersId(user.getUserId());
+                                 try {
+                                     new UserJson().editUser(user);
+                                 } catch (IOException ex) {
+                                     throw new RuntimeException(ex);
+                                 }
+                                 GroupDBWriter.addGroup(group);
+
+                             }
+                         });
+                     }
+                }
+
             }
         });
 

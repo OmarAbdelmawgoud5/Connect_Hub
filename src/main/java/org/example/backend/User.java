@@ -139,6 +139,9 @@ public class User {
     public Map<String, String> getGroups() {
         return groups;
     }
+    public void removeGroup(String groupId) {
+        groups.remove(groupId);
+    }
 
     public void addGroup(String groupId, String role) {
         this.groups.put(groupId, role);

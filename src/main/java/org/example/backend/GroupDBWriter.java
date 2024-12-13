@@ -15,10 +15,12 @@ public class GroupDBWriter {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Map<String, Object>> map = new HashMap<>();
         try {
-            map = mapper.readValue(GroupsFile.getInstance().getDatabaseFile(), new TypeReference<>() {
-            });
-            map.put(group.getGroupId(), group.toMap());
-            mapper.writerWithDefaultPrettyPrinter().writeValue(GroupsFile.getInstance().getDatabaseFile(), map);
+
+            map=mapper.readValue(GroupsFile.getInstance().getDatabaseFile(), new TypeReference<>() {});
+            map.put(group.getGroupId(),group.toMap());
+            mapper.writerWithDefaultPrettyPrinter().writeValue(GroupsFile.getInstance().getDatabaseFile(),map);
+            GroupDBReader.getInstance().reload();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -31,7 +33,10 @@ public class GroupDBWriter {
             map = mapper.readValue(GroupsFile.getInstance().getDatabaseFile(), new TypeReference<>() {
             });
             map.remove(group.getGroupId());
-            mapper.writerWithDefaultPrettyPrinter().writeValue(GroupsFile.getInstance().getDatabaseFile(), map);
+
+            mapper.writerWithDefaultPrettyPrinter().writeValue(GroupsFile.getInstance().getDatabaseFile(),map);
+            GroupDBReader.getInstance().reload();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
