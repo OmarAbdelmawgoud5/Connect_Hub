@@ -27,6 +27,15 @@ public class groupPostsJson {
         objectNode.put(c.getContentId(), c.toJsonNode());
         SaveJson();
     }
+    public static synchronized  void delete(Content c) throws IOException {
+        File f=FileGenerator.getFile(DatabaseFiles.GROUPPOSTS_DB);
+        ObjectMapper objectMapper = new ObjectMapper();
+        rootNode = objectMapper.readTree(f);
+        System.out.println(rootNode.toString());
+        ObjectNode objectNode = (ObjectNode) rootNode;
+        objectNode.remove(c.getContentId());
+        SaveJson();
+    }
 
     static public synchronized  void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();

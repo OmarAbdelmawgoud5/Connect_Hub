@@ -5,15 +5,23 @@ import org.example.backend.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class groupsPage extends JFrame {
+public class groupsPage extends JFrame implements ActionListener {
     private User currentUser;
+    private Group currentGroup;
 
+    private JButton optionsButton;
+    private JPopupMenu popupMenu;
+    private JMenuItem item1;
+    private JMenuItem item2;
     public groupsPage(User user, Group group) throws IOException {
         this.currentUser = user;
+        this.currentGroup = group;
         this.setTitle("Groups");
         setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,7 +102,15 @@ public class groupsPage extends JFrame {
         navPanel.add(addPostButton);
 
         JButton membersButton = createNavButton("Members");
-        membersButton.addActionListener(evt -> navigateToProfile(user));
+        membersButton.addActionListener(evt -> {
+            try {
+                ScrollableCardPanel.view(currentGroup);
+                System.out.println("555555555555");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         navPanel.add(membersButton);
 
         return navPanel;
@@ -120,7 +136,7 @@ public class groupsPage extends JFrame {
                 if (posts != null) {
                     for (Content post : posts) {
                         User postAuthor = userJson.LoadUser(post.getAuthorId());
-                        contentArea.add(postCard.createPostCard(post, postAuthor.getUserName(), postAuthor.getProfilePhoto(), "admin", this::callback));
+                        contentArea.add(postCard.createPostCard(post, postAuthor.getUserName(), postAuthor.getProfilePhoto(), currentUser.getGroups().get(group.getGroupId()),this,currentGroup));
                     }
                 }
             }
@@ -167,7 +183,7 @@ public class groupsPage extends JFrame {
 
     private void openContentCreationPage(User user,Group g) {
         try {
-            ContentCreationPage contentCreationPage = new ContentCreationPage(this, user.getUserId(),g);
+            ContentCreationPage contentCreationPage = new ContentCreationPage(this, user.getUserId(),g,null,null);
             contentCreationPage.panel.remove(contentCreationPage.storyButton);
             contentCreationPage.panel.revalidate();
             contentCreationPage.getContentPane().removeAll();
@@ -180,6 +196,38 @@ public class groupsPage extends JFrame {
     }
 
     private void callback() throws IOException {
-        navigateToProfile(currentUser);
+        //new ContentCreationPage(this,currentUser.getUserId(),currentGroup,t,i);
+        var popupMenu=new JPopupMenu();
+        var item1=new JMenuItem("Edit");
+        var item2=new JMenuItem("Delete");
+        popupMenu.add(item1);
+        popupMenu.add(item2);
+        item1.addActionListener(this);
+        item2.addActionListener(this);
+        popupMenu.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==optionsButton)
+        {
+            popupMenu.show(optionsButton,200,250);
+        }
+        else if(e.getSource()==item1)
+        {
+
+        }
+        else if(e.getSource()==item2)
+        {
+            if(item2.getText().equals("Delete"))
+            {
+                item2.setText("Deleted");
+
+            }
+            else if(item2.getText().equals("Deleted"))
+            {
+
+            }
+        }
     }
 }

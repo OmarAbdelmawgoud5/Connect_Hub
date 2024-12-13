@@ -91,6 +91,10 @@ public class Group {
     {
         contentId.add(ContentId);
     }
+    public void removeContent(String ContentId)
+    {
+        contentId.remove(ContentId);
+    }
     public Map<String,Object> toMap(){
         Map<String,Object> map=new HashMap<>();
         map.put("name",name);

@@ -19,8 +19,5 @@ public class GroupDBWriter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-
     }
 }

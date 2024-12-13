@@ -1,10 +1,10 @@
 {
   "G001" : {
-    "membersId" : [ ],
+    "membersId" : ["1106bf71-948a-4590-8f76-0294e2a8b475","23c53980-fb8a-4523-aa97-3f209e963260" ],
     "photoPath" : "src/main/resources/yamal.jpg",
     "groupId" : "G001",
     "name" : "mo7bin lamine yamal",
-    "contentId" : [ "277348d0-6b0f-4277-a2c8-5e5dee8db8d2", "24f562fd-2088-45a0-b9db-0886e61bbd4b", "42f0878e-1606-4256-aeee-9055fef1fa82", "3047e79c-b761-4786-b6f4-ed3cedc845cc", "96837161-81ff-4d8f-9222-c4acae587735", "9859e11d-0fe1-4b01-a9e0-32fd8cb913fa" ],
+    "contentId" : [ "989d4c6c-4859-42bb-b501-6bb6f8a0a954" ],
     "description" : " we love yamal forever"
   },
   "2e9c8b7e-2cdb-4b7d-b9a4-203f97ae28e2" : {
@@ -28,7 +28,7 @@
     "photoPath" : "D:\\Graphic\\VS.png",
     "groupId" : "0934b965-950b-46c5-b43d-f2f85b75de08",
     "name" : "1211",
-    "contentId" : [ ],
+    "contentId" : [ "fd1448f0-ece3-4268-904e-0c143d29ecb0" ],
     "description" : "1212"
   }
 }
