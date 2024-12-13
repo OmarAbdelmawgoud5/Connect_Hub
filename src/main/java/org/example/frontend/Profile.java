@@ -214,7 +214,7 @@ private void buttonaction(String k) throws IOException {
         case "Groups":
         {
 
-           new MyGroupsFrame(myUser);
+           new MyGroupsFrame(myUser,new ArrayList<>(myUser.getGroups().keySet()),"My Groups");
             this.dispose();
             break;
         }

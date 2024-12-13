@@ -2,6 +2,7 @@ package org.example.frontend;
 
 import org.example.backend.Group;
 import org.example.backend.GroupDBReader;
+import org.example.backend.NewsFeedPosts;
 import org.example.backend.User;
 
 import javax.swing.*;
@@ -9,20 +10,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MyGroupsFrame extends JFrame implements ActionListener {
    JButton backButton;
    User user;
-    public MyGroupsFrame(User user) {
-        super("My Groups");
+   String frameName;
+    public MyGroupsFrame(User user, ArrayList<String> groups,String frameName) {
+        super(frameName);
+        this.frameName = frameName;
         this.user = user;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setSize(800,800);
         setLocationRelativeTo(null);
         setBackground(Color.WHITE);
-        Map<String,String> groups=user.getGroups();
+
 
 
 
@@ -30,8 +34,8 @@ public class MyGroupsFrame extends JFrame implements ActionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 
-        for(Map.Entry<String,String> entry:groups.entrySet()){
-            Group group= GroupDBReader.getInstance().readGroups(entry.getKey());
+        for(String groupId : groups) {
+            Group group= GroupDBReader.getInstance().readGroups(groupId);
             ExternalGroupPanel groupPanel = new ExternalGroupPanel(group,user,this);
             groupPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(groupPanel);
@@ -57,11 +61,22 @@ public class MyGroupsFrame extends JFrame implements ActionListener {
         if(e.getSource()==backButton)
         {
             this.setVisible(false);
-            try {
-                new Profile(user);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            if(frameName=="My Groups"){
+                try {
+                    new Profile(user);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
+            else {
+                try {
+                    new NewsFeedFrame(new NewsFeedPosts(user.getUserId()),user);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
         }
     }
 
