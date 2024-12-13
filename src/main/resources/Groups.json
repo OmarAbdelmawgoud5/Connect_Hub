@@ -22,5 +22,13 @@
     "name" : "popo",
     "contentId" : [ ],
     "description" : "popo"
+  },
+  "569f936e-d46c-4a8d-a3f6-484bd106e8fc" : {
+    "membersId" : [ "1106bf71-948a-4590-8f76-0294e2a8b475" ],
+    "photoPath" : "D:\\Graphic\\logo 2.jpg",
+    "groupId" : "569f936e-d46c-4a8d-a3f6-484bd106e8fc",
+    "name" : "Final",
+    "contentId" : [ "3bcf5714-9ec7-4c4c-a156-519aefbd03ee", "1cc469c3-77c0-467f-bb54-026a6079749b", "c1b9066a-007d-49dd-bf4a-de18f4ecac65" ],
+    "description" : "WHy"
   }
 }

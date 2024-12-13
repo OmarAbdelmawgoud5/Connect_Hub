@@ -17,7 +17,7 @@ public class Profile extends JFrame {
         setTitle("My Profile");
         setSize(820, 600);
         setLocationRelativeTo(null); // Center the frame
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      //  setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         setupLayout(this);
         this.setVisible(true);
