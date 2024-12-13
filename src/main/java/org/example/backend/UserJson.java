@@ -41,7 +41,7 @@ public class UserJson {
     }
     public synchronized  void SaveJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(FileGenerator.getFile(DatabaseFiles.USERS_DB),rootNode);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(FileGenerator.getFile(DatabaseFiles.USERS_DB),rootNode);
         System.out.println(rootNode.toString());
     }
     public synchronized  void LoadUser() throws IOException {

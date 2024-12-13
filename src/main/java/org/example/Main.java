@@ -21,10 +21,7 @@ public class Main {
        FlatLightLaf.setup();
         UIManager.put( "Button.arc", 15 );
         new LoginPage();
-//        Group group =new Group("test","photopath","description");
-//        group.addMember("member1");
-//        GroupDBWriter.addGroup(group);
-      //  GroupDBReader.readGroups();
+
 
 
     }

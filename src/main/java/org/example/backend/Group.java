@@ -98,6 +98,7 @@ public class Group {
         map.put("description",description);
         map.put("membersId",membersId);
         map.put("contentId",contentId);
+        map.put("groupId",groupId);
         return map;
     }
 }

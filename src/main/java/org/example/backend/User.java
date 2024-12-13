@@ -3,16 +3,15 @@ package org.example.backend;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.security.KeyPair;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import javax.swing.*;
 
 public class User {
 
@@ -25,7 +24,7 @@ public class User {
     private String Bio;
     private String password;
     private String status;
-    private ArrayList<Map<String,String>> groups;
+    private Map<String,String> groups;
 
     @JsonCreator
     public User(
@@ -37,7 +36,8 @@ public class User {
             @JsonProperty("bio") String bio, // Included the "bio" field
             @JsonProperty("password") String password,
             @JsonProperty("status") String status,
-            @JsonProperty("id") String id
+            @JsonProperty("id") String id,
+            @JsonProperty("groups") Map<String,String>groups
     ) {
         this.id = id ;  // Assign an ID if not provided
         this.userName = userName;
@@ -48,6 +48,7 @@ public class User {
         this.Bio = bio;
         this.password = password;
         this.status = status;
+        this.groups = groups;
     }
 
 
@@ -64,7 +65,7 @@ public class User {
         this.Bio = Bio;
         this.password = password;
         this.status = status;
-        groups = new ArrayList<>();
+        groups = new HashMap<>();
     }
 
     public void setUserId(String userId) {
@@ -135,6 +136,14 @@ public class User {
         return profilePhoto;
     }
 
+    public Map<String, String> getGroups() {
+        return groups;
+    }
+
+    public void addGroup(String groupId, String role) {
+        this.groups.put(groupId, role);
+    }
+
     public ObjectNode toJsonNode() {
         ObjectNode userNode = new ObjectMapper().createObjectNode();
         userNode.put("userName", this.userName);
@@ -146,6 +155,9 @@ public class User {
         userNode.put("status", this.status);
         userNode.put("bio", this.Bio);
         userNode.put("id", this.id);
+        ObjectMapper mapper=new ObjectMapper();
+        JsonNode groupsNode = mapper.valueToTree(this.groups);
+        userNode.set("groups", groupsNode);
         return userNode;
     }
     public String getCoverPhoto() {
