@@ -106,7 +106,6 @@
     "coverPhoto" : "C:\\Users\\Etijah\\Pictures\\12_3_2023 5_40_30 PM.png",
     "password" : "$2a$10$STxoEvN4UrmGXq7oRwQspOHc8ZUR.VYQz1xdUlg43xH2F5yQJ/EcG",
     "status" : "Online",
-
     "bio" : null,
     "id" : "1106bf71-948a-4590-8f76-0294e2a8b475",
     "groups" : {
@@ -126,7 +125,6 @@
     "groups" : {
       "2e9c8b7e-2cdb-4b7d-b9a4-203f97ae28e2" : "owner"
     }
-
   },
   "23c53980-fb8a-4523-aa97-3f209e963260" : {
     "userName" : "Yousef",
@@ -140,22 +138,6 @@
     "id" : "23c53980-fb8a-4523-aa97-3f209e963260",
     "groups" : null
   },
-  "21250e09-54bc-4886-aafd-8e85ad172dea" : {
-    "userName" : "B",
-    "email" : "b@gmail.com",
-    "dateOfBirth" : "2003-12-22",
-    "profilePhoto" : "/home/amr/Pictures/Screenshot_2024-08-29_01_55_32.png",
-    "coverPhoto" : "/home/amr/Pictures/Screenshot_2024-08-29_02_00_38.png",
-    "password" : "$2a$10$9/HDKU5d6ntdqtK.W8bLVehfn4aZFdC0QPycsApEadyl24PbK86q2",
-    "status" : "Offline",
-    "bio" : null,
-    "id" : "21250e09-54bc-4886-aafd-8e85ad172dea",
-    "groups" : {
-
-      "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920" : "admin",
-      "f16d4b12-3894-44dc-97c0-3f948f9827e1" : "Owner"
-    }
-  },
   "c0ba4cb6-aad8-45ba-afc0-b7c91da34453" : {
     "userName" : "A",
     "email" : "a@gmail.com",
@@ -168,8 +150,38 @@
     "id" : "c0ba4cb6-aad8-45ba-afc0-b7c91da34453",
     "groups" : {
       "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920" : "Owner",
-      "f16d4b12-3894-44dc-97c0-3f948f9827e1" : "member"
-
+      "f16d4b12-3894-44dc-97c0-3f948f9827e1" : "member",
+      "bf4f6121-7d6f-41cc-aece-4ad3aa28c92b" : "member"
+    }
+  },
+  "a4edc84a-5a71-46f9-a56c-a1203dde3384" : {
+    "userName" : "C",
+    "email" : "c@gmail.com",
+    "dateOfBirth" : "2003-12-22",
+    "profilePhoto" : "/home/amr/Pictures/Screenshot_2024-08-29_00_33_52.png",
+    "coverPhoto" : "/home/amr/Pictures/Screenshot_2024-08-29_00_39_29.png",
+    "password" : "$2a$10$YvJDWiO/HukrNDE19nC5p.6CBR/kOXe.sCNt4YxHVgC3n0vZAYpLm",
+    "status" : "Offline",
+    "bio" : null,
+    "id" : "a4edc84a-5a71-46f9-a56c-a1203dde3384",
+    "groups" : {
+      "bf4f6121-7d6f-41cc-aece-4ad3aa28c92b" : "Owner"
+    }
+  },
+  "21250e09-54bc-4886-aafd-8e85ad172dea" : {
+    "userName" : "B",
+    "email" : "b@gmail.com",
+    "dateOfBirth" : "2003-12-22",
+    "profilePhoto" : "/home/amr/Pictures/Screenshot_2024-08-29_01_55_32.png",
+    "coverPhoto" : "/home/amr/Pictures/Screenshot_2024-08-29_02_00_38.png",
+    "password" : "$2a$10$9/HDKU5d6ntdqtK.W8bLVehfn4aZFdC0QPycsApEadyl24PbK86q2",
+    "status" : "Offline",
+    "bio" : null,
+    "id" : "21250e09-54bc-4886-aafd-8e85ad172dea",
+    "groups" : {
+      "f4c64e1c-a1f9-4aa3-a5c0-4f25dfb9b920" : "admin",
+      "f16d4b12-3894-44dc-97c0-3f948f9827e1" : "Owner",
+      "bf4f6121-7d6f-41cc-aece-4ad3aa28c92b" : "member"
     }
   }
 }
