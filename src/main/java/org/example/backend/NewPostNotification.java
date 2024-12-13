@@ -13,13 +13,13 @@ public class NewPostNotification extends NotificationAbstract {
     }
 
     private static String generateMessage(String senderId) throws IOException {
-        GettingUserByUserId gettingUser = new GettingUserByUserId();
-        User user = gettingUser.getUser(senderId);
+        GettingGroupByGroupId gettingGroup = new GettingGroupByGroupId();
+        Group group = gettingGroup.getGroup(senderId);
 
-        if (user != null) {
-            return " " + user.getUserName();
+        if (group != null) {
+            return "A new post has been added to the group:" + group.getName();
         } else {
-            return "";
+            return "A new post has been added to the group";
         }
     }
 

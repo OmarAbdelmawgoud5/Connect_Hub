@@ -27,7 +27,8 @@ public class NotificationPage extends JDialog {
         setResizable(false);
 
         panel = new JPanel();
-        panel.setLayout(null);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setPreferredSize(new java.awt.Dimension(570, 1000));
 
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setBounds(10, 50, 570, 500);
@@ -75,56 +76,93 @@ public class NotificationPage extends JDialog {
         markAsReadButton.setBounds(230, 50, 150, 30);
         notificationPanel.add(markAsReadButton);
 
+        // Handle different types of notifications
         if (notification instanceof FriendRequestNotification) {
-            GettingUserByUserId gettingUser = new GettingUserByUserId();
-            User recipientUser = gettingUser.getUser(userId);
-            User senderUser = gettingUser.getUser(notification.getSenderId());
-
-            JButton acceptButton = new JButton("Accept");
-            JButton declineButton = new JButton("Decline");
-            acceptButton.setBounds(10, 50, 100, 30);
-            declineButton.setBounds(120, 50, 100, 30);
-            notificationPanel.add(acceptButton);
-            notificationPanel.add(declineButton);
-
-            acceptButton.addActionListener(e -> {
-                notification.markAsRead();
-                messageLabel.setText("Friend request accepted.");
-                disableButtons(acceptButton, declineButton, markAsReadButton);
-                try {
-                    FriendsManagerWriter.friendsWriter(senderUser, recipientUser, UserAction.AcceptRequest);
-                    NotificationDatabaseSaver.updateNotificationStatus(notification.getNotificationId(), notification.getRecipientId(), true);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            });
-
-            declineButton.addActionListener(e -> {
-                notification.markAsRead();
-                messageLabel.setText("Friend request declined.");
-                disableButtons(acceptButton, declineButton, markAsReadButton);
-                try {
-                    FriendsManagerWriter.friendsWriter(senderUser, recipientUser, UserAction.UnFriend);
-                    NotificationDatabaseSaver.updateNotificationStatus(notification.getNotificationId(), notification.getRecipientId(), true);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            });
+            handleFriendRequest(notificationPanel, (FriendRequestNotification) notification, messageLabel, markAsReadButton);
+        } else if (notification instanceof GroupActivityNotification) {
+            handleGroupActivity(notificationPanel, (GroupActivityNotification) notification, messageLabel, markAsReadButton);
+        } else if (notification instanceof NewPostNotification) {
+            handleNewPost(notificationPanel, (NewPostNotification) notification, messageLabel, markAsReadButton);
         }
 
-        markAsReadButton.addActionListener(e -> {
-            notification.markAsRead();
-            messageLabel.setText("Notification marked as read.");
-            markAsReadButton.setEnabled(false);
-            markAsReadButton.setBackground(Color.LIGHT_GRAY);
+        return notificationPanel;
+    }
+
+    private void handleFriendRequest(JPanel notificationPanel, FriendRequestNotification friendRequestNotification, JLabel messageLabel, JButton markAsReadButton) throws IOException {
+        GettingUserByUserId gettingUser = new GettingUserByUserId();
+        User recipientUser = gettingUser.getUser(userId);
+        User senderUser = gettingUser.getUser(friendRequestNotification.getSenderId());
+
+        JButton acceptButton = new JButton("Accept");
+        JButton declineButton = new JButton("Decline");
+        acceptButton.setBounds(10, 50, 100, 30);
+        declineButton.setBounds(120, 50, 100, 30);
+        messageLabel.setText(friendRequestNotification.getMessage());
+        markAsReadButton.setEnabled(true);
+
+        acceptButton.addActionListener(e -> {
+            friendRequestNotification.markAsRead();
+            messageLabel.setText("Friend request accepted.");
+            disableButtons(acceptButton, declineButton, markAsReadButton);
             try {
-                NotificationDatabaseSaver.updateNotificationStatus(notification.getNotificationId(), notification.getRecipientId(), true);
+                FriendsManagerWriter.friendsWriter(senderUser, recipientUser, UserAction.AcceptRequest);
+                NotificationDatabaseSaver.updateNotificationStatus(friendRequestNotification.getNotificationId(), friendRequestNotification.getRecipientId(), true);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
 
-        return notificationPanel;
+        declineButton.addActionListener(e -> {
+            friendRequestNotification.markAsRead();
+            messageLabel.setText("Friend request declined.");
+            disableButtons(acceptButton, declineButton, markAsReadButton);
+            try {
+                FriendsManagerWriter.friendsWriter(senderUser, recipientUser, UserAction.UnFriend);
+                NotificationDatabaseSaver.updateNotificationStatus(friendRequestNotification.getNotificationId(), friendRequestNotification.getRecipientId(), true);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        notificationPanel.add(acceptButton);
+        notificationPanel.add(declineButton);
+    }
+
+    private void handleGroupActivity(JPanel notificationPanel, GroupActivityNotification groupActivityNotification, JLabel messageLabel, JButton markAsReadButton) throws IOException {
+        messageLabel.setText(groupActivityNotification.getMessage());
+        markAsReadButton.setEnabled(true);
+
+        JButton moveToGroupButton = new JButton("Move to Group");
+        moveToGroupButton.setBounds(10, 50, 150, 30);
+        notificationPanel.add(moveToGroupButton);
+
+        moveToGroupButton.addActionListener(e -> {
+            // try {
+            Group group = new GettingGroupByGroupId().getGroup(groupActivityNotification.getRecipientId());
+/////////////////////////////////////////////////////////////////////عايزين هنا نروح لصفحة الجروب 
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+        });
+    }
+
+    private void handleNewPost(JPanel notificationPanel, NewPostNotification newPostNotification, JLabel messageLabel, JButton markAsReadButton) throws IOException {
+        messageLabel.setText(newPostNotification.getMessage());
+        markAsReadButton.setEnabled(true);
+
+        JButton showButton = new JButton("Show");
+        showButton.setBounds(10, 50, 100, 30);
+        notificationPanel.add(showButton);
+
+        showButton.addActionListener(e -> {
+            // try {
+            Group group = new GettingGroupByGroupId().getGroup(newPostNotification.getSenderId());
+/////////////////////////////////////////////////////////////////////عايزين هنا نروح لصفحة الجروب 
+
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+        });
     }
 
     private void disableButtons(JButton acceptButton, JButton declineButton, JButton markAsReadButton) {
@@ -136,4 +174,12 @@ public class NotificationPage extends JDialog {
         markAsReadButton.setBackground(Color.LIGHT_GRAY);
     }
 
+    public static void main(String[] args) {
+        FlatLightLaf.setup();
+        try {
+            new NotificationPage("d4805154-8f3d-42b4-affe-609395e309de"); // Use a valid userId here
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
