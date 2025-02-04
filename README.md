@@ -1,4 +1,4 @@
-Project Objective
+###Project Objective
 The goal of this project is to create a functional social networking platform with the following features:
 
 User Account Management: Signup, login, logout, and user status tracking.
